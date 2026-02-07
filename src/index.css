@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slate-950: #020617;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+:root {
+  /* Premium Deep Blue AI Interface Theme */
+  --bg-primary: #020617;
+  /* Slate 950 - Deep Blue */
+  --bg-secondary: #0f172a;
+  /* Slate 900 */
+  --bg-tertiary: #1e293b;
+  /* Slate 800 */
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  /* Slate 50 */
+  --text-secondary: #94a3b8;
+  /* Slate 400 */
+  --text-tertiary: #64748b;
+  /* Slate 500 */
+
+  --border-color: #1e293b;
+  /* Slate 800 */
+
+  /* Accent Colors - Electric Blue/Indigo */
+  --accent-primary: #3b82f6;
+  /* Blue 500 */
+  --accent-secondary: #6366f1;
+  /* Indigo 500 */
+  --accent-glow: rgba(59, 130, 246, 0.4);
+
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    @apply selection:bg-blue-500/30 selection:text-white;
+  }
+
+  /* Refined Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #334155;
+    /* Slate 700 */
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+    /* Slate 600 */
+  }
+}
+
+/* Glassmorphism Utilities - Enhanced for Blue Theme */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.4) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.6) 100%);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* Text Gradients */
+.text-gradient {
+  background: linear-gradient(to right, #f8fafc, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Button Styles - Premium Blue/Purple Theme */
+.btn-primary {
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  /* Blue-600 to Purple-600 */
+  color: white;
+  border-radius: 0.75rem;
+  /* rounded-xl */
+  font-weight: 600;
+  transition: all 0.2s ease-out;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+  /* Subtle blue glow */
+}
+
+.btn-primary:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+  /* Purple glow on hover */
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Secondary Button - Gradient Border Effect */
+.btn-secondary {
+  background: transparent;
+  color: #e2e8f0;
+  /* Slate 200 */
+  border-radius: 0.75rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  padding: 1px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-out;
+  z-index: -1;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+  color: white;
+  border-color: transparent;
+  transform: scale(1.03);
+}
+
+.btn-secondary:hover::before {
+  opacity: 1;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Icon Button */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  transition: all 0.2s ease-out;
+}
+
+.btn-icon:hover {
+  color: white;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(124, 58, 237, 0.2));
+  border-color: rgba(124, 58, 237, 0.3);
+  transform: scale(1.1);
+}
