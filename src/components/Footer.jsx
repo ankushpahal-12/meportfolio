@@ -1,144 +1,176 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { ArrowUp, Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Github, Linkedin, Mail, Twitter, FileText, ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Resume from '../assets/ankushcv.pdf';
+import MediaModal from './MediaModal';
 
 const Footer = () => {
-    const [time, setTime] = useState("");
     const footerRef = useRef(null);
+    const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-    // Clock Logic
     useEffect(() => {
-        const updateTime = () => {
-            const now = new Date();
-            setTime(now.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true,
-                timeZone: 'Asia/Kolkata' // display user's local time or IST if preferred
-            }));
-        };
-        updateTime();
-        const interval = setInterval(updateTime, 1000);
-        return () => clearInterval(interval);
+        const ctx = gsap.context(() => {
+
+            // Staggered Fade In for Footer Content
+            gsap.fromTo('.footer-element',
+                { y: 30, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: footerRef.current,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+
+            // Magnetic Effect for Social Icons & Buttons
+            const magnetics = document.querySelectorAll('.magnetic-btn');
+
+            magnetics.forEach((btn) => {
+                btn.addEventListener('mousemove', (e) => {
+                    const { left, top, width, height } = btn.getBoundingClientRect();
+                    const x = e.clientX - (left + width / 2);
+                    const y = e.clientY - (top + height / 2);
+
+                    gsap.to(btn, {
+                        x: x * 0.3,
+                        y: y * 0.3,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+
+        }, footerRef);
+
+        return () => ctx.revert();
     }, []);
 
-    // Scroll to Top
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    // Magnetic Hover Base Logic (Simplified for Footer)
-    const handleMagnetic = (e) => {
-        const btn = e.currentTarget;
-        const { width, height, left, top } = btn.getBoundingClientRect();
-        const x = e.clientX - (left + width / 2);
-        const y = e.clientY - (top + height / 2);
-
-        gsap.to(btn, { x: x * 0.5, y: y * 0.5, duration: 0.3, ease: "power2.out" });
-    };
-
-    const resetMagnetic = (e) => {
-        gsap.to(e.currentTarget, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+    const scrollToSection = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
-        <footer ref={footerRef} className="relative pt-24 pb-12 px-6 bg-slate-950 border-t border-slate-900 overflow-hidden">
-            <div className="max-w-7xl mx-auto relative z-10">
+        <footer ref={footerRef} className="relative pt-32 pb-12 bg-slate-950 overflow-hidden border-t border-slate-900/50">
 
-                {/* Upper Section */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-20">
-                    <div>
-                        <p className="text-blue-500 font-mono text-sm mb-4 tracking-wider">HAVE AN IDEA?</p>
-                        <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tight hover:text-slate-200 transition-colors cursor-pointer">
-                            Let's build <br /> the future.
-                        </h2>
-                    </div>
+            {/* Ambient Background Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-                    <div className="flex flex-col items-start md:items-end gap-6">
-                        {/* Back to Top Button - Magnetic */}
-                        <button
-                            onClick={scrollToTop}
-                            onMouseMove={handleMagnetic}
-                            onMouseLeave={resetMagnetic}
-                            className="group relative w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-blue-600 hover:border-blue-500 transition-all duration-300"
-                        >
-                            <ArrowUp size={24} className="text-slate-400 group-hover:text-white transition-colors" />
-                        </button>
-                    </div>
+            <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+
+                {/* 1. Main Heading */}
+                <h2 className="footer-element text-5xl md:text-7xl font-bold tracking-tight mb-6">
+                    <span className="text-white">Let's build </span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 animate-gradient-x">
+                        intelligent systems
+                    </span>
+                    <span className="text-white"> together.</span>
+                </h2>
+
+                {/* 2. Call-to-Action Buttons */}
+                <div className="footer-element flex flex-wrap justify-center gap-6 mt-12 mb-20">
+                    <a
+                        href="mailto:ankushpayal58@gmail.com"
+                        className="magnetic-btn btn-primary px-8 py-4 flex items-center gap-2 text-lg group"
+                    >
+                        <Mail size={20} />
+                        <span>Contact Me</span>
+                    </a>
+
+                    <a
+                        href="https://github.com/ankushpahal-12"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="magnetic-btn btn-secondary px-8 py-4 flex items-center gap-2 text-lg group bg-slate-900/50 backdrop-blur-sm"
+                    >
+                        <Github size={20} />
+                        <span>View GitHub</span>
+                        <ArrowUpRight size={16} className="opacity-50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </a>
+
+                    <button
+                        onClick={() => setIsResumeOpen(true)}
+                        className="magnetic-btn btn-secondary px-8 py-4 flex items-center gap-2 text-lg group bg-slate-900/50 backdrop-blur-sm cursor-pointer"
+                    >
+                        <FileText size={20} />
+                        <span>View CV</span>
+                    </button>
                 </div>
 
-                {/* Divider */}
-                <div className="h-px bg-slate-900 mb-12 w-full"></div>
+                {/* Divider Line with Gradient Center */}
+                <div className="footer-element w-full h-px bg-slate-800 relative mb-12">
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-[1px]"></div>
+                </div>
 
-                {/* Middle Section - Links & Info */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                    {/* Brand */}
-                    <div className="md:col-span-1">
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold mb-6">
-                            AI
-                        </div>
-                        <p className="text-slate-500 text-sm leading-relaxed">
-                            Crafting intelligent solutions with code and creativity.
-                        </p>
-                    </div>
+                {/* 3. Footer Navigation & Socials */}
+                <div className="footer-element w-full flex flex-col md:flex-row justify-between items-center gap-8">
 
-                    {/* Socials - Magnetic List */}
-                    <div className="md:col-span-2 flex flex-wrap gap-x-12 gap-y-4">
-                        {[
-                            { name: "GitHub", href: "#", icon: Github },
-                            { name: "LinkedIn", href: "#", icon: Linkedin },
-                            { name: "Twitter", href: "#", icon: Twitter },
-                            { name: "Email", href: "mailto:hello@example.com", icon: Mail }
-                        ].map((social) => (
-                            <a
-                                key={social.name}
-                                href={social.href}
-                                className="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-medium"
+                    {/* Navigation */}
+                    <nav className="flex gap-8">
+                        {['Home', 'Projects', 'Skills', 'Contact'].map((item) => (
+                            <button
+                                key={item}
+                                onClick={() => scrollToSection(item.toLowerCase())}
+                                className="text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors uppercase tracking-wider"
                             >
-                                <span className="p-2 bg-slate-900 rounded-full group-hover:bg-blue-600/20 group-hover:text-blue-500 transition-all">
-                                    <social.icon size={16} />
-                                </span>
-                                {social.name}
+                                {item}
+                            </button>
+                        ))}
+                    </nav>
+
+                    {/* Social Icons (Minimal) */}
+                    <div className="flex gap-6">
+                        {[
+                            { icon: Github, href: "https://github.com/ankushpahal-12" },
+                            { icon: Linkedin, href: "https://www.linkedin.com/in/pahalankush/" },
+                            { icon: Mail, href: "mailto:ankushpayal58@gmail.com" }
+                        ].map((social, idx) => (
+                            <a
+                                key={idx}
+                                href={social.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="magnetic-btn p-3 rounded-full bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-600/10 transition-all duration-300"
+                            >
+                                <social.icon size={20} />
                             </a>
                         ))}
                     </div>
-
-                    {/* Status & Time */}
-                    <div className="md:col-span-1 flex flex-col items-start md:items-end gap-2">
-                        <div className="flex items-center gap-2 px-3 py-1 bg-green-900/20 border border-green-900/30 rounded-full">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                            </span>
-                            <span className="text-xs font-bold text-green-500 uppercase tracking-wide">Open to Work</span>
-                        </div>
-                        <p className="text-slate-500 text-xs font-mono mt-2">
-                            LOCAL TIME: <span className="text-slate-300">{time}</span>
-                        </p>
-                    </div>
                 </div>
 
-                {/* Bottom Section */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-slate-900/50">
-                    <div className="flex flex-col md:flex-row gap-4 items-center">
-                        <p className="text-xs text-slate-600">
-                            &copy; {new Date().getFullYear()} Ankush.Eng. All Rights Reserved.
-                        </p>
-                        <span className="hidden md:block text-slate-800">|</span>
-                        <p className="text-xs text-slate-500">
-                            Designed & Built with <span className="text-blue-500">💙</span> by <span className="text-white">Ankush</span>
-                        </p>
-                    </div>
-
-                    <div className="flex gap-6">
-                        <a href="#" className="text-xs text-slate-600 hover:text-slate-400 transition-colors">Privacy Policy</a>
-                        <a href="#" className="text-xs text-slate-600 hover:text-slate-400 transition-colors">Terms of Service</a>
-                    </div>
+                {/* 4. Meta & Signature */}
+                <div className="footer-element mt-16 text-center">
+                    <p className="text-slate-600 text-sm font-light">
+                        &copy; {new Date().getFullYear()} Ankush. Built with
+                        <span className="text-slate-400 font-medium"> React</span>,
+                        <span className="text-slate-400 font-medium"> GSAP</span> &
+                        <span className="text-slate-400 font-medium"> Vite</span>.
+                    </p>
                 </div>
+
             </div>
 
-            {/* Background Glow */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-blue-600/5 rounded-full blur-[100px] -z-0 pointer-events-none"></div>
+            {/* Resume Preview Modal */}
+            <MediaModal
+                isOpen={isResumeOpen}
+                onClose={() => setIsResumeOpen(false)}
+                title="My Resume"
+                fileName="ankushcv.pdf"
+                fileSrc={Resume}
+            />
         </footer>
     );
 };
