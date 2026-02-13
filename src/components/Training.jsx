@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Briefcase, Award, Calendar } from 'lucide-react';
+import GlassCard from './GlassCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,16 +32,16 @@ const trainings = [
     }
 ];
 
-const TrainingCard = ({ item, index }) => (
+const TrainingCard = ({ item }) => (
     <div className="training-card group relative h-full">
-        <div className="relative p-6 h-full rounded-2xl bg-slate-900/40 border border-slate-800/50 backdrop-blur-sm hover:bg-slate-800/40 transition-all duration-300 hover:border-blue-500/30 group-hover:-translate-y-2 hover:shadow-xl hover:shadow-blue-500/10 flex flex-col">
+        <div className="relative p-6 h-full rounded-2xl bg-slate-900/60 border border-white/5 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/30 group-hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 flex flex-col">
             {/* Header */}
             <div className="flex flex-col gap-3 mb-4">
                 <div className="flex justify-between items-start">
                     <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
                         {item.role}
                     </h3>
-                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 bg-slate-950/50 px-2.5 py-1 rounded-full border border-slate-800 shrink-0">
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 bg-slate-950/80 px-2.5 py-1 rounded-full border border-slate-800 shrink-0">
                         <Calendar size={10} />
                         {item.period}
                     </div>
@@ -93,26 +94,28 @@ const Training = () => {
 
     return (
         <section ref={containerRef} id="training" className="relative py-20 px-6 max-w-7xl mx-auto">
-            {/* Section Header */}
-            <div className="mb-16 text-center">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium uppercase tracking-wider mb-4">
-                    <Award size={14} />
-                    Experience & Learning
+            <GlassCard className="p-0 sm:p-0 overflow-visible bg-transparent border-0 shadow-none backdrop-blur-none">
+                {/* Section Header */}
+                <div className="mb-16 text-center">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium uppercase tracking-wider mb-4 shadow-lg shadow-blue-500/10">
+                        <Award size={14} />
+                        Experience & Learning
+                    </div>
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Training & <span className="text-slate-500">Internships</span>
+                    </h2>
+                    <p className="text-slate-400 max-w-xl mx-auto">
+                        Professional experience and specialized training that have shaped my technical expertise.
+                    </p>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                    Training & <span className="text-slate-500">Internships</span>
-                </h2>
-                <p className="text-slate-400 max-w-xl mx-auto">
-                    Professional experience and specialized training that have shaped my technical expertise.
-                </p>
-            </div>
 
-            {/* Horizontal Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {trainings.map((item, index) => (
-                    <TrainingCard key={index} item={item} index={index} />
-                ))}
-            </div>
+                {/* Horizontal Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {trainings.map((item, index) => (
+                        <TrainingCard key={index} item={item} />
+                    ))}
+                </div>
+            </GlassCard>
         </section>
     );
 };

@@ -1,6 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { Github, FileText, ChevronRight, Terminal, Cpu, Database, Cloud, Linkedin, Twitter, Mail, Brain, Code, Network } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Github, FileText, ChevronRight, Terminal, Cpu, Database, Cloud, Linkedin, Mail, Brain, Code, Network } from 'lucide-react';
 import profileImg from '../assets/profile.jpg';
+import ankushcv from '../assets/ankushcv.pdf';
+import MediaModal from './MediaModal';
 import gsap from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
 import NeuralBackground from './NeuralBackground';
@@ -20,6 +22,7 @@ const SocialLink = ({ href, icon: Icon }) => (
 const Hero = () => {
     const heroRef = useRef(null);
     const tl = useRef(null);
+    const [isResumeOpen, setIsResumeOpen] = useState(false);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -78,14 +81,14 @@ const Hero = () => {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                         </span>
-                        System Online • Ready to Deploy
+                        System Online • Open to Work
                     </div>
 
                     {/* Headline */}
                     <h1 className="hero-title text-5xl lg:text-7xl font-bold tracking-tighter text-white mb-4 leading-[1.1]">
-                        <span className="block opacity-0 translate-y-8">Architecting</span>
+                        <span className="block opacity-0 translate-y-8">AI & Machine Learning</span>
                         <span className="block opacity-0 translate-y-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-white">
-                            Intelligent Systems
+                            Engineer
                         </span>
                     </h1>
 
@@ -99,7 +102,7 @@ const Hero = () => {
 
                     {/* Description */}
                     <p className="hero-desc text-slate-400 text-base lg:text-lg max-w-xl leading-relaxed mb-8 opacity-0 translate-y-4 border-l-2 border-slate-800 pl-4">
-                        Transforming complex data into actionable intelligence. Passionate about building scalable ML models and pushing the boundaries of what's possible with code.
+                        Transforming complex data into actionable business insights. I build scalable ML models and reliable software systems to drive organizational success.
                     </p>
 
                     {/* Buttons */}
@@ -108,10 +111,13 @@ const Hero = () => {
                             <Brain size={18} className="group-hover:animate-pulse" />
                             View Projects
                         </a>
-                        <a href="/resume.pdf" className="hero-btn btn-secondary px-8 py-4 flex items-center justify-center gap-2 opacity-0 translate-y-4 bg-slate-900/50 hover:bg-slate-800 text-white border border-slate-700 hover:border-blue-500/50 rounded-xl transition-all backdrop-blur-sm">
+                        <button
+                            onClick={() => setIsResumeOpen(true)}
+                            className="hero-btn btn-secondary px-8 py-4 flex items-center justify-center gap-2 opacity-0 translate-y-4 bg-slate-900/50 hover:bg-slate-800 text-white border border-slate-700 hover:border-blue-500/50 rounded-xl transition-all backdrop-blur-sm cursor-pointer"
+                        >
                             <FileText size={18} />
-                            Download CV
-                        </a>
+                            View CV
+                        </button>
                     </div>
 
                     {/* Tech Stack - "Model Parameters" style */}
@@ -192,6 +198,15 @@ const Hero = () => {
                 </div>
 
             </div>
+
+            {/* Resume Preview Modal */}
+            <MediaModal
+                isOpen={isResumeOpen}
+                onClose={() => setIsResumeOpen(false)}
+                title="My Resume"
+                fileName="ankushcv.pdf"
+                fileSrc={ankushcv}
+            />
         </section>
     );
 };

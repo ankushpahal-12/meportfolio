@@ -25,7 +25,7 @@ const Outro = () => {
             tl.to('.typing-text', {
                 duration: 3.5,
                 text: {
-                    value: "Building intelligent systems that scale.",
+                    value: "Engineering scalable AI solutions for enterprise success.",
                     delimiter: ""
                 },
                 ease: "none",
@@ -79,7 +79,7 @@ const Outro = () => {
                     </a>
                     <a href="#contact" className="btn-secondary px-8 py-4 flex items-center gap-2">
                         <Sparkles size={20} />
-                        Let's Build Something
+                        Get In Touch
                     </a>
                 </div>
             </div>

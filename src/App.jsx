@@ -7,12 +7,10 @@ import ProjectGrid from './components/ProjectGrid';
 import Education from './components/Education';
 import Training from './components/Training';
 import Certification from './components/Certification';
+import Contact from './components/Contact';
 import CustomCursor from './components/CustomCursor';
 import Footer from './components/Footer';
 
-import Contact from './components/Contact';
-
-import Outro from './components/Outro';
 import { ArrowUpRight, Github, Linkedin, Twitter } from 'lucide-react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
@@ -70,9 +68,8 @@ function App() {
           <Certification />
         </div>
 
-
-        <Outro />
         <Contact />
+
       </div>
 
       <Footer />

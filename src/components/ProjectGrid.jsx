@@ -2,29 +2,22 @@ import React, { useEffect, useRef } from 'react';
 import { ExternalLink, Github, BarChart2, Layers } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import GlassCard from './GlassCard';
 
 const ProjectCard = ({ project }) => {
     const cardRef = useRef(null);
 
-    // Hover Effect via GSAP
-    const onEnter = () => {
-        gsap.to(cardRef.current, { scale: 1.05, duration: 0.3, ease: "power2.out" });
-    };
-
-    const onLeave = () => {
-        gsap.to(cardRef.current, { scale: 1, duration: 0.3, ease: "power2.out" });
-    };
-
     return (
         <div
-            className="project-card group relative bg-slate-900/50 backdrop-blur-md border border-slate-800/50 rounded-2xl overflow-hidden hover:border-blue-500/30 transition-colors h-full flex flex-col hover:shadow-2xl hover:shadow-blue-900/10 opacity-0 translate-y-10" // Initial state for GSAP
+            ref={cardRef}
+            className="project-card group relative bg-slate-900/60 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden hover:border-blue-500/30 transition-all duration-500 h-full flex flex-col hover:shadow-2xl hover:shadow-blue-500/10 opacity-0 translate-y-10"
         >
             <div className="h-48 bg-slate-950 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] to-transparent z-10"></div>
                 {/* Placeholder gradient for project image */}
                 <div className={`absolute inset-0 opacity-40 bg-gradient-to-br ${project.gradient} group-hover:opacity-60 transition-opacity duration-500 group-hover:scale-110 transform transition-transform duration-700`}></div>
                 <div className="absolute bottom-4 left-4 z-20">
-                    <span className="px-3 py-1 bg-slate-900/90 backdrop-blur border border-slate-700 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-300 shadow-lg">
+                    <span className="px-3 py-1 bg-slate-950/80 backdrop-blur border border-slate-700/50 rounded-lg text-xs font-bold uppercase tracking-wider text-white shadow-lg">
                         {project.category}
                     </span>
                 </div>
@@ -39,7 +32,7 @@ const ProjectCard = ({ project }) => {
                 </p>
 
                 {/* Metrics/Details */}
-                <div className="space-y-3 mb-6 bg-slate-950/30 p-4 rounded-xl border border-slate-800/50">
+                <div className="space-y-3 mb-6 bg-slate-950/40 p-4 rounded-xl border border-white/5 group-hover:border-white/10 transition-colors">
                     <div className="flex items-start gap-3">
                         <Layers size={16} className="text-blue-500 mt-0.5 shrink-0" />
                         <div>
@@ -61,19 +54,19 @@ const ProjectCard = ({ project }) => {
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
                     {project.tags.map((tag, i) => (
-                        <span key={i} className="px-2 py-1 bg-slate-900/50 border border-slate-700/50 text-slate-400 text-[10px] font-mono rounded-md">
+                        <span key={i} className="px-2 py-1 bg-slate-900/40 border border-slate-700/30 text-slate-400 text-[10px] font-mono rounded-md">
                             {tag}
                         </span>
                     ))}
                 </div>
 
                 {/* Links */}
-                <div className="flex gap-3 mt-auto pt-4 border-t border-slate-800/50">
-                    <a href={project.github} className="btn-secondary flex px-4 py-2 text-sm items-center gap-2 transition-all flex-1 justify-center rounded-lg">
+                <div className="flex gap-3 mt-auto pt-4 border-t border-white/5">
+                    <a href={project.github} className="btn-secondary flex px-4 py-2 text-sm items-center gap-2 transition-all flex-1 justify-center rounded-lg hover:bg-white/5">
                         <Github size={16} /> Code
                     </a>
                     {project.demo && (
-                        <a href={project.demo} className="btn-secondary flex px-4 py-2 text-sm items-center gap-2 transition-all flex-1 justify-center rounded-lg">
+                        <a href={project.demo} className="btn-secondary flex px-4 py-2 text-sm items-center gap-2 transition-all flex-1 justify-center rounded-lg hover:bg-white/5">
                             <ExternalLink size={16} /> Demo
                         </a>
                     )}
@@ -168,8 +161,6 @@ const ProjectGrid = () => {
                 const isOdd = i % 2 !== 0;
                 const isMobile = window.innerWidth < 768;
 
-                // Determine direction: Odd -> Left (-100), Even -> Right (100)
-                // On Mobile: Fade up only
                 const startX = isMobile ? 0 : (isOdd ? -100 : 100);
                 const startY = isMobile ? 60 : 0;
 
@@ -195,21 +186,23 @@ const ProjectGrid = () => {
 
     return (
         <section ref={sectionRef} id="projects" className="py-32 px-6 max-w-7xl mx-auto overflow-hidden">
-            <div ref={headerRef} className="mb-20">
-                <div className="flex items-center gap-4 mb-6">
-                    <span className="h-px w-8 bg-blue-500"></span>
-                    <span className="text-blue-400 text-sm uppercase tracking-[0.2em] font-bold">Selected Works</span>
+            <GlassCard className="p-0 sm:p-0 overflow-visible bg-transparent border-0 shadow-none backdrop-blur-none">
+                <div ref={headerRef} className="mb-20">
+                    <div className="flex items-center gap-4 mb-6">
+                        <span className="h-px w-8 bg-blue-500"></span>
+                        <span className="text-blue-400 text-sm uppercase tracking-[0.2em] font-bold">Portfolio</span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
+                        Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Projects</span>
+                    </h2>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
-                    Solving Complexities <br /> with <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Intelligence</span>.
-                </h2>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.map((project, index) => (
-                    <ProjectCard key={index} project={project} index={index} />
-                ))}
-            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {projects.map((project, index) => (
+                        <ProjectCard key={index} project={project} index={index} />
+                    ))}
+                </div>
+            </GlassCard>
         </section>
     );
 };

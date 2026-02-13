@@ -4,10 +4,12 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Resume from '../assets/ankushcv.pdf';
 import MediaModal from './MediaModal';
+import Typewriter from './Typewriter';
 
 const Footer = () => {
     const footerRef = useRef(null);
     const [isResumeOpen, setIsResumeOpen] = useState(false);
+    const [startTyping, setStartTyping] = useState(false);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -24,7 +26,8 @@ const Footer = () => {
                     scrollTrigger: {
                         trigger: footerRef.current,
                         start: "top 80%",
-                        toggleActions: "play none none reverse"
+                        toggleActions: "play none none reverse",
+                        onEnter: () => setStartTyping(true) // Trigger typing on scroll
                     }
                 }
             );
@@ -73,11 +76,11 @@ const Footer = () => {
 
                 {/* 1. Main Heading */}
                 <h2 className="footer-element text-5xl md:text-7xl font-bold tracking-tight mb-6">
-                    <span className="text-white">Let's build </span>
+                    <span className="text-white">Ready to drive </span>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 animate-gradient-x">
-                        intelligent systems
+                        {startTyping && <Typewriter text="innovation & impact" delay={50} />}
                     </span>
-                    <span className="text-white"> together.</span>
+                    <span className="text-white"> in your team.</span>
                 </h2>
 
                 {/* 2. Call-to-Action Buttons */}
