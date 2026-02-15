@@ -74,7 +74,7 @@ const About = () => {
     }, []);
 
     return (
-        <section ref={containerRef} id="about" className="py-32 relative overflow-hidden bg-slate-950">
+        <section ref={containerRef} id="about" className="py-16 md:py-32 relative overflow-hidden bg-slate-950">
             {/* Background Layers */}
             <div className="absolute inset-0 bg-slate-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
             <MatrixRain />

@@ -157,7 +157,7 @@ const Education = () => {
     ];
 
     return (
-        <section id="education" className="min-h-screen py-24 relative overflow-hidden bg-slate-950 flex flex-col items-center">
+        <section id="education" className="min-h-screen py-16 md:py-24 relative overflow-hidden bg-slate-950 flex flex-col items-center">
 
             {/* Grid Overlay */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.05)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>

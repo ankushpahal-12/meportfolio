@@ -49,7 +49,7 @@ function App() {
 
         <Navbar />
 
-        <div className="relative z-10 flex flex-col gap-24">
+        <div className="relative z-10 flex flex-col gap-0">
           <Hero />
           <About />
           <Projects />

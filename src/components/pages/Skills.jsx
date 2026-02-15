@@ -77,7 +77,7 @@ const SkillItem = ({ skill, onClick }) => {
 const SkillOrbit = ({ skills, onSkillClick, isPaused }) => {
     return (
         <div
-            className="absolute w-full h-full rounded-full animate-[spin_50s_linear_infinite]"
+            className="absolute w-full h-full rounded-full animate-[spin_50s_linear_infinite] will-change-transform"
             style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
         >
             {skills.map((skill, index) => {
@@ -94,7 +94,7 @@ const SkillOrbit = ({ skills, onSkillClick, isPaused }) => {
                     >
                         {/* Counter-rotation to keep icon upright */}
                         <div
-                            className="animate-[spin_50s_linear_infinite_reverse]"
+                            className="animate-[spin_50s_linear_infinite_reverse] will-change-transform"
                             style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
                         >
                             <SkillItem skill={skill} onClick={onSkillClick} />
@@ -125,7 +125,7 @@ const Skills = () => {
     };
 
     return (
-        <section id="skills" className="relative min-h-screen py-20 overflow-hidden flex items-center justify-center">
+        <section id="skills" className="relative min-h-screen py-16 md:py-20 overflow-hidden flex items-center justify-center">
             {/* Background Elements */}
             <div className="absolute inset-0 bg-slate-950 pointer-events-none">
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>

@@ -61,7 +61,7 @@ const Certification = () => {
     }, []);
 
     return (
-        <section id="certifications" className="py-24 px-6 bg-slate-950 relative overflow-hidden min-h-screen flex items-center">
+        <section id="certifications" className="py-16 md:py-24 px-6 bg-slate-950 relative overflow-hidden min-h-screen flex items-center">
             {/* Background Decorations - Cyberspace Grid */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]"></div>
@@ -104,8 +104,8 @@ const Certification = () => {
                                 transition={{ delay: index * 0.1 }}
                                 onClick={() => setActiveIndex(index)}
                                 className={`relative pl-12 pr-6 py-4 rounded-xl cursor-pointer border transition-all duration-300 group ${activeIndex === index
-                                        ? "bg-blue-500/10 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.15)]"
-                                        : "bg-slate-900/40 border-slate-800 hover:border-slate-600 hover:bg-slate-900/60"
+                                    ? "bg-blue-500/10 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.15)]"
+                                    : "bg-slate-900/40 border-slate-800 hover:border-slate-600 hover:bg-slate-900/60"
                                     }`}
                             >
                                 {/* Activation Node/Dot */}

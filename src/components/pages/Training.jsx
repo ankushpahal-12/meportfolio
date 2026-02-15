@@ -103,7 +103,7 @@ const Training = () => {
     }, []);
 
     return (
-        <section ref={containerRef} id="training" className="relative py-24 px-6 max-w-7xl mx-auto">
+        <section ref={containerRef} id="training" className="relative py-16 md:py-24 px-6 max-w-7xl mx-auto">
             {/* Decorative Background */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-600/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 

@@ -96,7 +96,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" className="min-h-screen py-20 px-6 relative overflow-hidden bg-slate-950 flex items-center justify-center">
+        <section id="contact" className="min-h-screen py-16 md:py-20 px-6 relative overflow-hidden bg-slate-950 flex items-center justify-center">
 
             {/* Background Atmosphere */}
             <div className="absolute inset-0 bg-gradient-to-tr from-[#020617] via-[#0f172a] to-[#1e1b4b]"></div>
