@@ -11,7 +11,7 @@ const projects = [
         metrics: { accuracy: "96.5%", f1: "0.95" },
         tags: ["PyTorch", "Hugging Face", "BERT", "FastAPI"],
         color: "from-orange-500 to-red-600",
-        icon: Database,
+        icon: "devicon-pytorch-original colored",
         status: "Operational",
         github: "#",
         demo: "#"
@@ -24,7 +24,7 @@ const projects = [
         metrics: { ctr: "+15%", revenue: "+20%" },
         tags: ["Scikit-learn", "TensorFlow", "Pandas", "Redis"],
         color: "from-blue-500 to-cyan-400",
-        icon: Globe,
+        icon: "devicon-tensorflow-original colored",
         status: "Deployed",
         github: "#",
         demo: null
@@ -37,7 +37,7 @@ const projects = [
         metrics: { fps: "45", map: "0.89" },
         tags: ["OpenCV", "YOLO", "PyTorch", "Docker"],
         color: "from-green-500 to-emerald-400",
-        icon: Zap,
+        icon: "devicon-opencv-plain colored",
         status: "Prototype",
         github: "#",
         demo: "#"
@@ -50,7 +50,7 @@ const projects = [
         metrics: { anomaly_detection: "85%", false_positives: "<1%" },
         tags: ["Keras", "Plotly", "Streamlit", "InfluxDB"],
         color: "from-purple-500 to-pink-500",
-        icon: BarChart2,
+        icon: "devicon-keras-plain colored",
         status: "Beta",
         github: "#",
         demo: null
@@ -63,7 +63,7 @@ const projects = [
         metrics: { automation: "40%", satisfaction: "4.8/5" },
         tags: ["LangChain", "OpenAI", "Pinecone", "React"],
         color: "from-indigo-500 to-violet-500",
-        icon: MessageSquare => <Code size={20} />, // Placeholder icon fix
+        icon: "devicon-react-original colored",
         status: "Live",
         github: "#",
         demo: "#"
@@ -162,6 +162,12 @@ const ProjectGrid = () => {
                                     transition={{ duration: 0.4, ease: "circOut" }}
                                     className="relative h-full bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-3xl overflow-hidden flex flex-col group shadow-2xl"
                                 >
+                                    {/* HUD Corners */}
+                                    <div className="hud-corner hud-tl"></div>
+                                    <div className="hud-corner hud-tr"></div>
+                                    <div className="hud-corner hud-bl"></div>
+                                    <div className="hud-corner hud-br"></div>
+
                                     {/* Top Bar: Holo-Header */}
                                     <div className="h-12 bg-slate-950/80 border-b border-white/5 flex items-center justify-between px-6">
                                         <div className="flex gap-2">
@@ -183,8 +189,12 @@ const ProjectGrid = () => {
                                         <div className="relative z-10 flex flex-col h-full justify-between">
                                             <div>
                                                 <div className="flex items-center gap-3 mb-4">
-                                                    <div className={`p-2 rounded-lg bg-gradient-to-br ${activeProject.color} bg-opacity-10 border border-white/10`}>
-                                                        {React.createElement(activeProject.icon || Database, { size: 24, className: "text-white" })}
+                                                    <div className={`p-2 rounded-lg bg-gradient-to-br ${activeProject.color} bg-opacity-10 border border-white/10 flex items-center justify-center`}>
+                                                        {typeof activeProject.icon === 'string' ? (
+                                                            <i className={`${activeProject.icon} text-2xl text-white`} />
+                                                        ) : (
+                                                            React.createElement(activeProject.icon || Database, { size: 24, className: "text-white" })
+                                                        )}
                                                     </div>
                                                     <span className="text-cyan-400 font-mono text-sm tracking-wider uppercase">
                                                         {activeProject.subtitle}

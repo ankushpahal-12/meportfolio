@@ -2,60 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, Loader2, Github, Linkedin, Instagram, ArrowRight } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// --- Animated Starfield Background ---
-const StarField = () => {
-    const canvasRef = useRef(null);
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-        let stars = [];
-
-        for (let i = 0; i < 100; i++) {
-            stars.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 1.5,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                alpha: Math.random()
-            });
-        }
-
-        const animate = () => {
-            ctx.clearRect(0, 0, width, height);
-            stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-                ctx.fill();
-                star.x += star.vx;
-                star.y += star.vy;
-                if (star.x < 0) star.x = width;
-                if (star.x > width) star.x = 0;
-                if (star.y < 0) star.y = height;
-                if (star.y > height) star.y = 0;
-                star.alpha += (Math.random() - 0.5) * 0.05;
-                if (star.alpha < 0.1) star.alpha = 0.1;
-                if (star.alpha > 1) star.alpha = 1;
-            });
-            requestAnimationFrame(animate);
-        };
-        animate();
-
-        const handleResize = () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen" />;
-};
+import StarField from '../StarField';
 
 const Contact = () => {
     const form = useRef();
@@ -96,7 +43,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" className="min-h-screen py-16 md:py-20 px-6 relative overflow-hidden bg-slate-950 flex items-center justify-center">
+        <section id="contact" className="min-h-screen pt-8 md:pt-12 pb-16 md:pb-20 px-6 relative overflow-hidden bg-slate-950 flex items-center justify-center">
 
             {/* Background Atmosphere */}
             <div className="absolute inset-0 bg-gradient-to-tr from-[#020617] via-[#0f172a] to-[#1e1b4b]"></div>

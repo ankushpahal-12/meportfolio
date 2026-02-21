@@ -74,7 +74,7 @@ const About = () => {
     }, []);
 
     return (
-        <section ref={containerRef} id="about" className="py-16 md:py-32 relative overflow-hidden bg-slate-950">
+        <section ref={containerRef} id="about" className="py-16 md:py-32 relative overflow-hidden bg-slate-950" style={{ position: 'relative' }}>
             {/* Background Layers */}
             <div className="absolute inset-0 bg-slate-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
             <MatrixRain />
@@ -83,8 +83,14 @@ const About = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                     {/* Left Column - Holographic ID Card */}
-                    <div className="relative group perspective-1000">
-                        {/* Decorative Elements */}
+                    <div className="relative glass-card p-6 md:p-10 rounded-3xl overflow-hidden group">
+                        {/* HUD Corners */}
+                        <div className="hud-corner hud-tl"></div>
+                        <div className="hud-corner hud-tr"></div>
+                        <div className="hud-corner hud-bl"></div>
+                        <div className="hud-corner hud-br"></div>
+
+                        {/* Biometric Scan Line */}
                         <div className="absolute -top-12 -left-12 w-32 h-32 border-t-2 border-l-2 border-blue-500/30 rounded-tl-3xl"></div>
                         <div className="absolute -bottom-12 -right-12 w-32 h-32 border-b-2 border-r-2 border-purple-500/30 rounded-br-3xl"></div>
 
@@ -167,10 +173,10 @@ const About = () => {
 
                         <div className="reveal-text grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {[
-                                { icon: Cpu, title: "Neural Networks", desc: "Architecting Deep Learning models.", color: "blue" },
-                                { icon: Database, title: "Data Engineering", desc: "Building scalable value pipelines.", color: "purple" },
-                                { icon: Rocket, title: "Model Deployment", desc: "Serving AI at scale.", color: "green" },
-                                { icon: Sparkles, title: "GenAI Solutions", desc: "Crafting LLM-driven experiences.", color: "pink" }
+                                { icon: "devicon-python-plain colored", title: "Neural Networks", desc: "Architecting Deep Learning models.", color: "blue" },
+                                { icon: "devicon-pandas-plain colored", title: "Data Engineering", desc: "Building scalable value pipelines.", color: "purple" },
+                                { icon: "devicon-docker-plain colored", title: "Model Deployment", desc: "Serving AI at scale.", color: "green" },
+                                { icon: "devicon-react-original colored", title: "GenAI Solutions", desc: "Crafting LLM-driven experiences.", color: "pink" }
                             ].map((item, idx) => (
                                 <div
                                     key={idx}
@@ -186,7 +192,7 @@ const About = () => {
 
                                     <div className="relative z-10 flex gap-4">
                                         <div className={`min-w-[48px] h-12 rounded-xl bg-slate-950 border border-white/10 flex items-center justify-center text-${item.color}-400 group-hover:text-white group-hover:scale-110 group-hover:border-${item.color}-500/50 transition-all duration-500 shadow-lg`}>
-                                            <item.icon size={24} />
+                                            <i className={`${item.icon} text-2xl`} />
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-white text-base mb-1 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-400 transition-all duration-300">

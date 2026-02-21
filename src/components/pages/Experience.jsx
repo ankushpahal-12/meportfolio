@@ -15,7 +15,11 @@ const Experience = () => {
             location: "Remote",
             period: "2024 - Present",
             description: "Developing advanced AI models for predictive analytics and automating data pipelines.",
-            tags: ["Python", "TensorFlow", "AWS"],
+            tags: [
+                { name: "Python", icon: "devicon-python-plain colored" },
+                { name: "TensorFlow", icon: "devicon-tensorflow-original colored" },
+                { name: "AWS", icon: "devicon-amazonwebservices-plain-wordmark colored" }
+            ],
             status: "Active"
         },
         {
@@ -24,7 +28,11 @@ const Experience = () => {
             location: "Remote",
             period: "2023",
             description: "Worked on computer vision projects and implemented object detection algorithms.",
-            tags: ["OpenCV", "PyTorch", "YOLO"],
+            tags: [
+                { name: "OpenCV", icon: "devicon-opencv-plain colored" },
+                { name: "PyTorch", icon: "devicon-pytorch-original colored" },
+                { name: "YOLO", icon: "devicon-python-plain colored" } // Placeholder for YOLO
+            ],
             status: "Completed"
         }
     ];
@@ -84,7 +92,12 @@ const Experience = () => {
                             <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-4 border-slate-950 shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-colors duration-300 ${job.status === 'Active' ? 'bg-green-500 animate-pulse' : 'bg-blue-500'}`}></div>
 
                             {/* Card */}
-                            <div className="relative p-8 rounded-2xl bg-slate-900/40 border border-white/5 overflow-hidden transition-all duration-500 group-hover:border-white/10 group-hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.15)] group-hover:-translate-y-1">
+                            <div className="relative p-8 rounded-2xl bg-slate-900/40 border border-white/5 overflow-hidden transition-all duration-500 group-hover:border-blue-500/30 group-hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.15)] group-hover:-translate-y-1">
+                                {/* HUD Corners */}
+                                <div className="hud-corner hud-tl"></div>
+                                <div className="hud-corner hud-tr"></div>
+                                <div className="hud-corner hud-bl"></div>
+                                <div className="hud-corner hud-br"></div>
 
                                 {/* Glow Effects */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -122,8 +135,9 @@ const Experience = () => {
 
                                     <div className="flex flex-wrap gap-2">
                                         {job.tags.map((tag, i) => (
-                                            <span key={i} className="px-3 py-1.5 bg-slate-950 text-slate-400 text-xs font-mono rounded-lg border border-slate-800 group-hover:border-blue-500/30 group-hover:text-blue-300 transition-all">
-                                                #{tag}
+                                            <span key={i} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-950 text-slate-400 text-xs font-black tracking-[0.1em] rounded-lg border border-slate-800 group-hover:border-blue-500/30 group-hover:text-blue-300 transition-all font-mono">
+                                                <i className={`${tag.icon} text-xs opacity-70 group-hover:opacity-100 transition-opacity`} />
+                                                #{tag.name}
                                             </span>
                                         ))}
                                     </div>

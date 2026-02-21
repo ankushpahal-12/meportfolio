@@ -49,6 +49,7 @@ const Magnetic = ({ children }) => {
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isResumeOpen, setIsResumeOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('');
     const navRef = useRef(null);
     const containerRef = useRef(null);
     const menuRef = useRef(null);
@@ -86,6 +87,23 @@ const Navbar = () => {
                     }
                 }
             });
+
+            // Active Section Highlighting
+            navLinks.forEach(link => {
+                if (link.href.startsWith('#')) {
+                    const element = document.querySelector(link.href);
+                    if (element) {
+                        ScrollTrigger.create({
+                            trigger: element,
+                            start: "top center",
+                            end: "bottom center",
+                            onEnter: () => setActiveSection(link.href),
+                            onEnterBack: () => setActiveSection(link.href),
+                        });
+                    }
+                }
+            });
+
         }, navRef);
 
         return () => ctx.revert();
@@ -121,7 +139,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div ref={navRef} className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 pointer-events-none">
+            <div ref={navRef} className="main-navbar fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 pointer-events-none transition-all duration-500">
                 {/* 
                 Floating Pill Container 
                 pointer-events-auto needed because parent has pointer-events-none to let click through to sides 
@@ -155,13 +173,23 @@ const Navbar = () => {
                                             if (link.name === 'Resume') {
                                                 e.preventDefault();
                                                 setIsResumeOpen(true);
+                                            } else {
+                                                setActiveSection(link.href);
                                             }
                                         }}
-                                        className="relative px-5 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors rounded-full hover:bg-white/5 block group overflow-hidden"
+                                        className={`relative px-5 py-2 text-sm font-medium transition-all duration-300 rounded-full block group overflow-hidden ${activeSection === link.href
+                                                ? 'text-white bg-white/10 shadow-[0_0_20px_rgba(59,130,246,0.3)]'
+                                                : 'text-slate-300 hover:text-white hover:bg-white/5'
+                                            }`}
                                     >
                                         <span className="relative z-10">{link.name}</span>
                                         {/* Hover Glow Effect */}
                                         <span className="absolute inset-0 bg-blue-500/10 scale-0 group-hover:scale-100 rounded-full transition-transform duration-300 ease-out origin-center"></span>
+
+                                        {/* Active Indicator Dot */}
+                                        {activeSection === link.href && (
+                                            <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-400 rounded-full shadow-[0_0_5px_#60a5fa]"></span>
+                                        )}
                                     </a>
                                 </Magnetic>
                             </li>

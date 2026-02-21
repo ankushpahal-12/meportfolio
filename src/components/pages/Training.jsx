@@ -13,7 +13,12 @@ const trainings = [
         location: "Remote",
         period: "June 2024 - Aug 2024",
         description: "Optimized computer vision models for real-time object detection. Reduced inference time by 40% using TensorRT.",
-        skills: ["Python", "PyTorch", "OpenCV", "Docker"],
+        skills: [
+            { name: "Python", icon: "devicon-python-plain colored" },
+            { name: "PyTorch", icon: "devicon-pytorch-original colored" },
+            { name: "OpenCV", icon: "devicon-opencv-plain colored" },
+            { name: "Docker", icon: "devicon-docker-plain colored" }
+        ],
         type: "Internship"
     },
     {
@@ -22,7 +27,11 @@ const trainings = [
         location: "Chandigarh, India",
         period: "Jan 2024 - May 2024",
         description: "Assisted in data preprocessing and feature engineering for large-scale predictive maintenance datasets.",
-        skills: ["Scikit-learn", "Pandas", "Data Visualization"],
+        skills: [
+            { name: "Scikit-learn", icon: "devicon-scikitlearn-plain colored" },
+            { name: "Pandas", icon: "devicon-pandas-plain colored" },
+            { name: "Data Visualization", icon: "devicon-python-plain colored" }
+        ],
         type: "Training"
     },
     {
@@ -30,7 +39,11 @@ const trainings = [
         company: "Coursera / DeepLearning.AI",
         period: "2023",
         description: "Comprehensive training on Neural Networks, CNNs, RNNs, and Hyperparameter tuning.",
-        skills: ["Deep Learning", "Neural Networks", "TensorFlow"],
+        skills: [
+            { name: "Deep Learning", icon: "devicon-python-plain colored" },
+            { name: "Neural Networks", icon: "devicon-pytorch-original colored" },
+            { name: "TensorFlow", icon: "devicon-tensorflow-original colored" }
+        ],
         type: "Certification"
     }
 ];
@@ -71,8 +84,9 @@ const TrainingCard = ({ item }) => (
                 {/* Skills */}
                 <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/5 group-hover:border-white/10 transition-colors">
                     {item.skills.map((skill, i) => (
-                        <span key={i} className="text-[10px] font-medium px-2.5 py-1 rounded-md bg-purple-500/5 text-purple-300/80 border border-purple-500/10 group-hover:bg-purple-500/10 group-hover:text-purple-300 transition-colors">
-                            {skill}
+                        <span key={i} className="flex items-center gap-1 text-[10px] font-medium px-2.5 py-1 rounded-md bg-purple-500/5 text-purple-300/80 border border-purple-500/10 group-hover:bg-purple-500/10 group-hover:text-purple-300 transition-colors">
+                            <i className={`${skill.icon} text-[10px]`} />
+                            {skill.name}
                         </span>
                     ))}
                 </div>

@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, ExternalLink } from 'lucide-react';
 
 const MediaModal = ({ isOpen, onClose, title, fileSrc, fileName }) => {
+
+    // Manage Body Class for Navbar Hiding
+    useEffect(() => {
+        if (isOpen) {
+            document.body.classList.add('modal-is-open');
+        } else {
+            document.body.classList.remove('modal-is-open');
+        }
+        return () => {
+            document.body.classList.remove('modal-is-open');
+        };
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     const isPdf = (typeof fileSrc === 'string' && fileSrc.toLowerCase().endsWith('.pdf')) ||
@@ -14,7 +27,7 @@ const MediaModal = ({ isOpen, onClose, title, fileSrc, fileName }) => {
         >
             {/* Modal Container - "Secure Vault" Look */}
             <div
-                className="relative w-full max-w-5xl h-[85vh] bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-2xl flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 ease-out group"
+                className="relative w-full max-w-6xl h-[95vh] bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-2xl flex flex-col animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 ease-out group"
                 onClick={e => e.stopPropagation()}
             >
                 {/* Decorative Corner Flashes */}

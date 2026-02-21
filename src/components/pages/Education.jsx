@@ -62,10 +62,10 @@ const EduCard = ({ edu, index }) => {
             <div className={`relative p-6 bg-slate-900/80 backdrop-blur-md border ${isInView ? 'border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.15)]' : 'border-slate-800'} transition-all duration-500 group overflow-hidden`}>
 
                 {/* HUD Corners */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-cyan-500 opacity-50"></div>
-                <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-cyan-500 opacity-50"></div>
-                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-cyan-500 opacity-50"></div>
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-cyan-500 opacity-50"></div>
+                <div className="hud-corner hud-tl"></div>
+                <div className="hud-corner hud-tr"></div>
+                <div className="hud-corner hud-bl"></div>
+                <div className="hud-corner hud-br"></div>
 
                 {/* Scanline Overlay */}
                 {isInView && <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-transparent h-[20%] animate-scan-fast pointer-events-none"></div>}

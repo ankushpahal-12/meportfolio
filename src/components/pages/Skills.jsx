@@ -34,11 +34,11 @@ const SkillItem = ({ skill, onClick }) => {
             onClick={() => onClick(skill)}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative w-14 h-14 md:w-20 md:h-20 rounded-2xl bg-slate-800/80 border border-slate-700 flex flex-col items-center justify-center p-2 transition-all duration-300 cursor-pointer backdrop-blur-md overflow-hidden animate-float"
+            className="relative w-14 h-14 md:w-20 md:h-20 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center p-2 transition-all duration-300 cursor-pointer backdrop-blur-md overflow-hidden animate-float group"
             style={{
-                transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+                transform: isHovered ? 'scale(1.2) translateY(-5px)' : 'scale(1.1)',
                 borderColor: isHovered ? skillColor : '',
-                boxShadow: isHovered ? `0 0 20px ${skillColor}40` : '',
+                boxShadow: isHovered ? `0 10px 30px -5px ${skillColor}60, 0 0 20px ${skillColor}40` : '',
             }}
         >
             {/* Shine Effect */}
@@ -49,15 +49,14 @@ const SkillItem = ({ skill, onClick }) => {
                 className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none"
                 style={{
                     opacity: isHovered ? 1 : 0,
-                    boxShadow: `inset 0 0 20px ${skillColor}40`,
+                    boxShadow: `inset 0 0 30px ${skillColor}30`,
                 }}
             ></div>
 
             <i
-                className={`${skill.icon} text-2xl md:text-4xl transition-colors duration-300 drop-shadow-lg`}
+                className={`${skill.icon} text-2xl md:text-4xl transition-all duration-300 drop-shadow-xl`}
                 style={{
-                    color: isHovered ? skillColor : '#94a3b8', // Slate-400 equivalent
-                    filter: isHovered ? `drop-shadow(0 0 8px ${skillColor}60)` : '',
+                    filter: isHovered ? `drop-shadow(0 0 12px ${skillColor})` : 'none',
                 }}
             ></i>
 
@@ -127,9 +126,21 @@ const Skills = () => {
     return (
         <section id="skills" className="relative min-h-screen py-16 md:py-20 overflow-hidden flex items-center justify-center">
             {/* Background Elements */}
-            <div className="absolute inset-0 bg-slate-950 pointer-events-none">
-                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+            <div className="absolute inset-0 bg-slate-950 pointer-events-none overflow-hidden">
+                {/* Cyber Grid Layer */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black,transparent)]"></div>
+
+                {/* Secondary Finer Grid */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.02)_1px,transparent_1px)] bg-[size:8px_8px] opacity-20"></div>
+
+                {/* Ambient Orbs */}
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
+                <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-purple-500/5 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
+
+                {/* Interactive Scanline Animation */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+                    <div className="w-full h-[400px] bg-gradient-to-b from-transparent via-blue-500/10 to-transparent animate-[scan_8s_ease-in-out_infinite]"></div>
+                </div>
             </div>
 
             <div className="container mx-auto px-6 lg:pl-28 relative z-10">
@@ -187,27 +198,33 @@ const Skills = () => {
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ duration: 0.5 }}
-                                className="absolute z-10 w-32 h-32 md:w-44 md:h-44 rounded-full bg-slate-900/90 border border-blue-500/50 flex flex-col items-center justify-center shadow-[0_0_60px_rgba(37,99,235,0.5),inset_0_0_20px_rgba(37,99,235,0.2)] backdrop-blur-xl group"
+                                className="absolute z-10 w-32 h-32 md:w-44 md:h-44 rounded-full bg-slate-900/90 border border-blue-500/30 flex flex-col items-center justify-center shadow-[0_0_80px_rgba(37,99,235,0.4),inset_0_0_25px_rgba(37,99,235,0.2)] backdrop-blur-2xl group overflow-hidden"
                             >
+                                {/* Static Energy Ring */}
+                                <div className="absolute inset-[4px] rounded-full border border-blue-400/10"></div>
+
                                 {/* Inner Pulse */}
-                                <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-pulse"></div>
+                                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 animate-pulse"></div>
 
                                 {/* Rotating Circular Text */}
                                 <CircularText
                                     text="• ARTIFICIAL INTELLIGENCE • MACHINE LEARNING • FULL STACK •"
-                                    className="w-[140%] h-[140%] opacity-80"
+                                    className="w-[145%] h-[145%] opacity-60"
                                 />
 
-                                <div className="text-4xl md:text-5xl mb-2 group-hover:scale-110 transition-transform duration-300 relative z-10">
+                                <div className="text-4xl md:text-5xl mb-2 group-hover:scale-110 transition-transform duration-300 relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
                                     {activeCategory === "AI & ML"
                                         ? "🤖"
                                         : activeCategory === "Languages"
                                             ? "💻"
                                             : "🛠️"}
                                 </div>
-                                <div className="text-blue-100 text-[10px] md:text-xs font-bold tracking-widest uppercase text-center px-1 relative z-10 drop-shadow-md">
+                                <div className="text-blue-400 text-[10px] md:text-xs font-black tracking-[0.2em] uppercase text-center px-1 relative z-10 drop-shadow-md font-mono">
                                     {activeCategory.split(" ")[0]}
                                 </div>
+
+                                {/* Scanner Effect */}
+                                <div className="absolute inset-0 w-full h-[2px] bg-blue-500/40 blur-sm animate-[scan_3s_linear_infinite] pointer-events-none opacity-50"></div>
                             </motion.div>
 
                             {/* Orbit Rings - Enhanced Shine */}

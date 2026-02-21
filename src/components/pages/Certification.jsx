@@ -146,6 +146,12 @@ const Certification = () => {
                             transition={{ duration: 0.4, ease: "backOut" }}
                             className="relative w-full max-w-md aspect-[3/4] bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-blue-500/30 p-1 flex flex-col transform-style-3d group"
                         >
+                            {/* HUD Corners */}
+                            <div className="hud-corner hud-tl"></div>
+                            <div className="hud-corner hud-tr"></div>
+                            <div className="hud-corner hud-bl"></div>
+                            <div className="hud-corner hud-br"></div>
+
                             {/* Projector Beam Effect */}
                             <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-32 h-64 bg-gradient-to-b from-blue-500/20 to-transparent blur-3xl rounded-full pointer-events-none"></div>
 

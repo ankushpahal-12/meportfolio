@@ -8,6 +8,8 @@ import Experience from './components/pages/Experience';
 import Education from './components/pages/Education';
 import Certification from './components/pages/Certification';
 import Training from './components/pages/Training';
+import Impact from './components/pages/Impact';
+import WhyHireMe from './components/pages/WhyHireMe';
 import Contact from './components/pages/Contact';
 import Footer from './components/pages/Footer';
 import CustomCursor from './components/CustomCursor';
@@ -36,6 +38,9 @@ function App() {
       <main className="relative min-h-screen bg-slate-950 text-slate-200 selection:bg-blue-500/20 overflow-x-hidden cursor-none">
         <CustomCursor />
 
+        {/* Global Scanline Effect */}
+        <div className="scanline"></div>
+
         {/* Subtle Noise Texture Overlay */}
         <div className="fixed inset-0 z-[100] opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
@@ -51,6 +56,7 @@ function App() {
 
         <div className="relative z-10 flex flex-col gap-0">
           <Hero />
+          <Impact />
           <About />
           <Projects />
           <Skills />
@@ -62,6 +68,7 @@ function App() {
 
           <Training />
 
+          <WhyHireMe />
           <Contact />
         </div>
 
