@@ -1,4 +1,3 @@
-/* Hide Navbar when Media Modal is open */
 body.modal-is-open .main-navbar {
   opacity: 0;
   pointer-events: none;
@@ -50,34 +49,36 @@ body.modal-is-open .main-navbar {
   }
 }
 
-:root {
-  /* Premium Deep Blue AI Interface Theme */
-  --bg-primary: #020617;
-  /* Slate 950 - Deep Blue */
-  --bg-secondary: #0f172a;
-  /* Slate 900 */
-  --bg-tertiary: #1e293b;
-  /* Slate 800 */
-
-  /* Text Colors */
-  --text-primary: #f8fafc;
-  /* Slate 50 */
-  --text-secondary: #94a3b8;
-  /* Slate 400 */
-  --text-tertiary: #64748b;
-  /* Slate 500 */
-
-  --border-color: #1e293b;
-  /* Slate 800 */
-  --border-color-blue: rgba(59, 130, 246, 0.2);
-
-  /* Accent Colors - Electric Blue/Indigo */
-  --accent-primary: #3b82f6;
-  /* Blue 500 */
+:root[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --border-color: #e2e8f0;
+  --border-color-accent: rgba(79, 70, 229, 0.1);
+  --accent-primary: #4f46e5;
   --accent-secondary: #6366f1;
-  /* Indigo 500 */
-  --accent-glow: rgba(59, 130, 246, 0.4);
+  --accent-glow: rgba(79, 70, 229, 0.1);
+}
 
+:root[data-theme='dark'] {
+  --bg-primary: #050a18;
+  --bg-secondary: #0a1128;
+  --bg-tertiary: #111b36;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-color-accent: rgba(99, 102, 241, 0.2);
+  --accent-primary: #6366f1;
+  --accent-secondary: #22d3ee;
+  --accent-glow: rgba(99, 102, 241, 0.3);
+}
+
+:root {
+  transition: background-color 0.3s ease, color 0.3s ease;
   scroll-behavior: smooth;
 }
 
@@ -93,7 +94,7 @@ body.modal-is-open .main-navbar {
     color: var(--text-primary);
     font-family: var(--font-sans);
     overflow-x: hidden;
-    @apply selection:bg-blue-500/30 selection:text-white;
+    @apply selection:bg-indigo-500/30 selection:text-white;
   }
 
   /* Refined Custom Scrollbar */
@@ -106,39 +107,39 @@ body.modal-is-open .main-navbar {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #334155;
-    /* Slate 700 */
+    background: #1e293b;
+    /* Slate 800 */
     border-radius: 10px;
     transition: background 0.2s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-    /* Slate 600 */
+    background: #334155;
+    /* Slate 700 */
   }
 }
 
-/* Glassmorphism Utilities - Enhanced for Premium AI Theme */
+/* Glassmorphism Utilities - Refined for Light Theme */
 .glass-panel {
-  background: rgba(8, 14, 28, 0.7);
+  background: rgba(5, 10, 24, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1.5rem;
 }
 
 .glass-card:hover {
-  border-color: rgba(59, 130, 246, 0.5);
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+  border-color: rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
   transform: translateY(-5px);
 }
 
@@ -627,4 +628,17 @@ body.modal-is-open .main-navbar {
 
 .animate-dash {
   animation: dash 10s linear infinite;
+}
+
+/* Hero 2.0 Utilities */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, var(--border-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.mask-radial-fade {
+  mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
 }
