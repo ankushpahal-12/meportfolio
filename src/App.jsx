@@ -4,9 +4,12 @@ import ProjectCard from './components/ProjectCard';
 import SkillsModal from './components/SkillsModal';
 import Education from './components/Education';
 import Certifications from './components/Certifications';
+import About from './components/About';
+import Interenships from './components/Interenships';
 import { projects } from './data/projects';
 import { skills } from './data/skills';
 import { motion } from 'framer-motion';
+
 import {
     Github, Linkedin, Mail, ArrowRight, ChevronRight, Code2,
     Cpu, Brain, Sparkles, MessageSquare, Copy, Check,
@@ -230,43 +233,8 @@ const App = () => {
                     </div>
                 </section>
 
-                {/* Professional Bio Section (Below Name & Photo) */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="p-8 lg:p-12 rounded-[3.5rem] bg-[var(--bg-tertiary)] border border-[var(--border-color)] relative overflow-hidden group/bio"
-                >
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover/bio:bg-indigo-600/10 transition-colors"></div>
-
-                    <div className="grid lg:grid-cols-3 gap-12 items-start relative z-10">
-                        <div className="lg:col-span-2">
-                            <h3 className="text-3xl font-black text-[var(--text-primary)] mb-6">
-                                Developing Intelligence <br />
-                                <span className="text-indigo-500">Beyond Boundaries.</span>
-                            </h3>
-                            <div className="space-y-6">
-                                <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
-                                    Hello! I'm Ankush Pahal, a Senior AI Engineer dedicated to building systems that don't just process data, but understand it. With a deep foundation in neural architectures and distributed systems, I bridge the gap between academic AI research and production-grade applications.
-                                </p>
-                                <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
-                                    My mission is to create technology that empowers organizations to harness the total potential of artificial intelligence, focusing on scalability, ethics, and performance. Currently, I'm scaling LLM interfaces for enterprise-grade security and reliability.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-6">
-                            <div className="p-6 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:border-indigo-500/30 transition-all group/stat">
-                                <h4 className="text-3xl font-black text-indigo-500 mb-1 group-hover/stat:scale-110 transition-transform origin-left inline-block">05+</h4>
-                                <p className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-widest">Years Experience</p>
-                            </div>
-                            <div className="p-6 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:border-indigo-500/30 transition-all group/stat">
-                                <h4 className="text-3xl font-black text-indigo-500 mb-1 group-hover/stat:scale-110 transition-transform origin-left inline-block">40+</h4>
-                                <p className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-widest">AI Models Deployed</p>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
+                {/* Professional Bio Section (Replaced by About Component) */}
+                <About />
 
                 {/* Professional History Sections */}
                 <div className="relative">
@@ -275,11 +243,12 @@ const App = () => {
                     <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent"></div>
                 </div>
                 <Certifications />
+                <Interenships />
 
                 {/* Projects Section */}
                 <section id="projects" className="py-24 relative">
                     <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent"></div>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
                         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
                             <div className="max-w-xl text-center md:text-left">
                                 <h2 className="text-4xl font-black text-[var(--text-primary)] mb-6">Innovative Work</h2>
@@ -421,7 +390,7 @@ const App = () => {
                 <section id="contact" className="py-24 lg:py-40 relative">
                     <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent"></div>
 
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
                         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
                             {/* Left: Contact Info */}
                             <motion.div
@@ -600,7 +569,7 @@ const App = () => {
                     <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px]"></div>
                 </div>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
                     {/* Pre-footer CTA */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

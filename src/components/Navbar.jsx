@@ -36,6 +36,7 @@ const Navbar = ({ theme, toggleTheme }) => {
         { name: 'About', href: '#about', id: 'about' },
         { name: 'Education', href: '#education', id: 'education' },
         { name: 'Certs', href: '#certifications', id: 'certifications' },
+        { name: 'Interns', href: '#internships', id: 'internships' },
         { name: 'Projects', href: '#projects', id: 'projects' },
         { name: 'Skills', href: '#skills', id: 'skills' },
         { name: 'Contact', href: '#contact', id: 'contact' },
@@ -64,7 +65,6 @@ const Navbar = ({ theme, toggleTheme }) => {
                         Ankush<span className="text-indigo-500">.</span>
                     </span>
                 </motion.div>
-
                 {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-1">
                     {navLinks.map((link) => (

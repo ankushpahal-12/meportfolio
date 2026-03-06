@@ -36,7 +36,7 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.98, y: 20 }}
                         transition={{ type: "spring", damping: 30, stiffness: 200 }}
-                        className={`relative w-full max-w-7xl max-h-[92vh] ${isDark ? 'bg-[#0a0a0a] border-white/5 shadow-[0_0_120px_rgba(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-[0_40px_100px_rgba(0,0,0,0.1)]'} border rounded-[4rem] overflow-hidden flex flex-col`}
+                        className={`relative w-full max-w-[1400px] max-h-[92vh] ${isDark ? 'bg-[#0a0a0a] border-white/5 shadow-[0_0_120px_rgba(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-[0_40px_100px_rgba(0,0,0,0.1)]'} border rounded-[4rem] overflow-hidden flex flex-col`}
                     >
                         {/* Header */}
                         <div className={`p-6 md:p-8 border-b ${isDark ? 'border-white/[0.03]' : 'border-gray-100'} flex items-center justify-end sticky top-0 z-20 ${isDark ? 'bg-[#0a0a0a]' : 'bg-white'}`}>
