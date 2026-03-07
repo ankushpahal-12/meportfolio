@@ -34,7 +34,7 @@ const Internships = ({ openMediaModal }) => {
 
     return (
         <section id="internships" className="py-32 relative bg-transparent overflow-hidden">
-            {/* Ambient Background Glows */}
+
             <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-[120px] -z-10 animate-pulse-slow"></div>
             <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] -z-10 animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
 

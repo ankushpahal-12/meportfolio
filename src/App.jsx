@@ -121,61 +121,10 @@ const App = () => {
 
             <Navbar theme={theme} toggleTheme={toggleTheme} />
 
-            {/* Floating Sidebar for CV Links */}
-            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex-row md:left-0 md:top-1/2 md:-translate-x-0 md:-translate-y-1/2 z-[60] flex md:flex-col gap-4 p-4 md:p-6 shadow-2xl md:shadow-none bg-[var(--bg-secondary)]/80 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-[var(--border-color)] md:border-transparent rounded-full md:rounded-none">
-                <motion.div
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="relative group"
-                >
-                    <button
-                        onClick={() => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV')}
-                        className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
-                    >
-                        <Play size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
-                    </button>
-                    {/* Hover Download Button */}
-                    <a
-                        href="https://www.w3schools.com/html/mov_bbb.mp4"
-                        download
-                        className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
-                        title="Download Video CV"
-                    >
-                        <Download size={16} />
-                    </a>
-                    <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
-                        Watch / Download Video CV
-                    </span>
-                </motion.div>
-
-                <motion.div
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="relative group mt-2 md:mt-0"
-                >
-                    <button
-                        onClick={() => openMediaModal('pdf', cvPdf, 'Specialized CV')}
-                        className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
-                    >
-                        <FileText size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
-                    </button>
-                    {/* Hover Download Button */}
-                    <a
-                        href={cvPdf}
-                        download="Ankush_Pahal_CV.pdf"
-                        className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
-                        title="Download Specialized CV"
-                    >
-                        <Download size={16} />
-                    </a>
-                    <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
-                        View / Download CV
-                    </span>
-                </motion.div>
+            {/* Floating Sidebar for CV Links (Desktop) / Under Profile (Mobile) */}
+            <div className="md:fixed md:left-0 md:top-1/2 md:-translate-y-1/2 md:z-[60] flex flex-row md:flex-col justify-center items-center gap-4 p-4 md:p-6 shadow-2xl md:shadow-none bg-[var(--bg-secondary)]/80 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-[var(--border-color)] md:border-transparent rounded-full md:rounded-none relative z-50 mt-8 md:mt-0 w-max mx-auto md:mx-0 md:w-auto lg:hidden hidden" id="mobile-cv-placeholder">
+                {/* We will extract these buttons to a component or render them conditionally to move them under the profile picture on mobile */}
             </div>
-
             <main>
                 {/* Hero Section 2.0 (Extreme Redesign) */}
                 <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
@@ -270,6 +219,72 @@ const App = () => {
                                 </motion.div>
                             </motion.div>
 
+                            {/* CV Buttons Component for Reuse */}
+                            {(() => {
+                                const CVButtons = ({ className }) => (
+                                    <div className={`flex gap-4 p-4 shadow-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-xl border border-[var(--border-color)] ${className}`}>
+                                        <motion.div
+                                            initial={{ y: 50, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.5 }}
+                                            className="relative group"
+                                        >
+                                            <button
+                                                onClick={() => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV')}
+                                                className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
+                                            >
+                                                <Play size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
+                                            </button>
+                                            {/* Hover Download Button */}
+                                            <a
+                                                href="https://www.w3schools.com/html/mov_bbb.mp4"
+                                                download
+                                                className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
+                                                title="Download Video CV"
+                                            >
+                                                <Download size={16} />
+                                            </a>
+                                            <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
+                                                Watch / Download Video CV
+                                            </span>
+                                        </motion.div>
+
+                                        <motion.div
+                                            initial={{ y: 50, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.6 }}
+                                            className="relative group"
+                                        >
+                                            <button
+                                                onClick={() => openMediaModal('pdf', cvPdf, 'Specialized CV')}
+                                                className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
+                                            >
+                                                <FileText size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
+                                            </button>
+                                            {/* Hover Download Button */}
+                                            <a
+                                                href={cvPdf}
+                                                download="Ankush_Pahal_CV.pdf"
+                                                className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
+                                                title="Download Specialized CV"
+                                            >
+                                                <Download size={16} />
+                                            </a>
+                                            <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
+                                                View / Download CV
+                                            </span>
+                                        </motion.div>
+                                    </div>
+                                );
+
+                                return (
+                                    <>
+                                        {/* CV Buttons: Desktop Only (Fixed Sidebar on left) */}
+                                        <CVButtons className="hidden md:flex md:fixed md:left-0 md:top-1/2 md:-translate-y-1/2 md:z-[60] md:flex-col md:bg-transparent md:backdrop-blur-none md:border-transparent md:shadow-none md:p-6" />
+                                    </>
+                                );
+                            })()}
+
                             {/* Right Column: Profile with Floating Badges & 3D Element */}
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
@@ -362,6 +377,34 @@ const App = () => {
                                 {/* Decorative Background Elements */}
                                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] -z-10 bg-indigo-500/5 rounded-full blur-[100px] animate-pulse"></div>
                             </motion.div>
+
+                            {/* Mobile Only: CV Buttons render exactly under the Profile Card */}
+                            <div className="md:hidden flex justify-center mt-[-2rem] relative z-40 w-full mb-8">
+                                {(() => {
+                                    // Repeating simple version for mobile layout scope
+                                    return (
+                                        <div className="flex flex-row justify-center items-center gap-4 p-4 shadow-2xl bg-[var(--bg-secondary)]/90 backdrop-blur-xl border border-[var(--border-color)] rounded-full w-max mt-4">
+                                            <div className="relative group">
+                                                <button
+                                                    onClick={() => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV')}
+                                                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl"
+                                                >
+                                                    <Play size={20} className="text-indigo-500" />
+                                                </button>
+                                            </div>
+                                            <div className="w-px h-8 bg-[var(--border-color)]"></div>
+                                            <div className="relative group">
+                                                <button
+                                                    onClick={() => openMediaModal('pdf', cvPdf, 'Specialized CV')}
+                                                    className="flex items-center justify-center w-12 h-12 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl"
+                                                >
+                                                    <FileText size={20} className="text-indigo-500" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })()}
+                            </div>
                         </div>
 
                         {/* Premium Scroll Indicator */}
@@ -458,7 +501,7 @@ const App = () => {
                             </motion.div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                             {primarySkills.map((skill, i) => (
                                 <motion.div
                                     key={i}
@@ -476,22 +519,22 @@ const App = () => {
                                         scale: 1.05,
                                         transition: { type: "spring", damping: 10, stiffness: 200 }
                                     }}
-                                    className="relative p-8 rounded-[2.5rem] bg-[var(--bg-tertiary)] border border-[var(--border-color)] group hover:border-indigo-500/50 hover:bg-indigo-500/[0.08] transition-colors overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-indigo-500/10"
+                                    className="relative p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] bg-[var(--bg-tertiary)] border border-[var(--border-color)] group hover:border-indigo-500/50 hover:bg-indigo-500/[0.08] transition-colors overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-indigo-500/10"
                                 >
                                     {/* Inner Glow */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/0 to-indigo-600/0 group-hover:from-indigo-600/10 group-hover:to-transparent transition-all pointer-events-none duration-500"></div>
 
                                     <div className="relative z-10 flex flex-col items-center text-center">
-                                        <div className="w-20 h-20 rounded-3xl bg-[var(--bg-primary)] flex items-center justify-center mb-6 shadow-xl group-hover:shadow-indigo-500/30 group-hover:scale-110 transition-all duration-500 border border-[var(--border-color)] group-hover:border-indigo-500/40">
-                                            <i className={`${skill.icon} text-4xl text-indigo-500 group-hover:rotate-6 transition-transform duration-500`}></i>
+                                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-[var(--bg-primary)] flex items-center justify-center mb-4 md:mb-6 shadow-xl group-hover:shadow-indigo-500/30 group-hover:scale-110 transition-all duration-500 border border-[var(--border-color)] group-hover:border-indigo-500/40">
+                                            <i className={`${skill.icon} text-3xl md:text-4xl text-indigo-500 group-hover:rotate-6 transition-transform duration-500`}></i>
                                         </div>
-                                        <h4 className="text-xl font-black text-[var(--text-primary)] mb-2 uppercase tracking-tighter group-hover:text-indigo-400 transition-colors">{skill.name}</h4>
-                                        <div className="w-10 h-1 bg-[var(--border-color)] group-hover:bg-indigo-500 group-hover:w-20 transition-all duration-500 rounded-full mb-4"></div>
-                                        <p className="text-[var(--text-tertiary)] text-[10px] font-black uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100 transition-all duration-500 transform group-hover:translate-y-0 translate-y-2">Core Proficiency</p>
+                                        <h4 className="text-sm md:text-xl font-black text-[var(--text-primary)] mb-2 uppercase tracking-tighter group-hover:text-indigo-400 transition-colors leading-tight">{skill.name}</h4>
+                                        <div className="w-8 md:w-10 h-1 bg-[var(--border-color)] group-hover:bg-indigo-500 group-hover:w-16 md:group-hover:w-20 transition-all duration-500 rounded-full mb-3 md:mb-4"></div>
+                                        <p className="text-[var(--text-tertiary)] text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] opacity-40 group-hover:opacity-100 transition-all duration-500 transform group-hover:translate-y-0 translate-y-2">Core Proficiency</p>
                                     </div>
 
                                     {/* Corner Decoration */}
-                                    <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-indigo-600/5 rounded-full group-hover:scale-[4] group-hover:bg-indigo-600/10 transition-all duration-1000"></div>
+                                    <div className="absolute -bottom-4 -right-4 w-12 h-12 md:w-16 md:h-16 bg-indigo-600/5 rounded-full group-hover:scale-[4] md:group-hover:scale-[4] group-hover:bg-indigo-600/10 transition-all duration-1000"></div>
                                 </motion.div>
                             ))}
                         </div>
