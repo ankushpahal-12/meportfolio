@@ -1,26 +1,79 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import ProjectCard from './components/ProjectCard';
 import SkillsModal from './components/SkillsModal';
 import Education from './components/Education';
 import Certifications from './components/Certifications';
 import About from './components/About';
-import Interenships from './components/Interenships';
+import Internships from './components/Internships';
+import MediaModal from './components/MediaModal';
 import { projects } from './data/projects';
 import { skills } from './data/skills';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 import {
     Github, Linkedin, Mail, ArrowRight, ChevronRight, Code2,
     Cpu, Brain, Sparkles, MessageSquare, Copy, Check,
-    Phone, MapPin, Send, Twitter, ExternalLink
+    Phone, MapPin, Send, Twitter, ExternalLink, Play, FileText, Download
 } from 'lucide-react';
+import meImage from './assets/profile.jpg';
+import cvPdf from './assets/ankushcv.pdf';
+import ParticleBackground from './components/ParticleBackground';
 
 const App = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [theme, setTheme] = useState(() => {
         return localStorage.getItem('portfolio-theme') || 'dark';
     });
+
+    // Media modal state
+    const [mediaModal, setMediaModal] = useState({
+        isOpen: false,
+        type: 'image',
+        url: '',
+        title: ''
+    });
+
+    // 3D Card Hover Effect State
+    const cardRef = useRef(null);
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+    const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+
+        const width = rect.width;
+        const height = rect.height;
+
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    const openMediaModal = (type, url, title) => {
+        setMediaModal({ isOpen: true, type, url, title });
+    };
+
+    const closeMediaModal = () => {
+        setMediaModal(prev => ({ ...prev, isOpen: false }));
+    };
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -62,8 +115,66 @@ const App = () => {
     const primarySkills = skills.find(cat => cat.category === "AI & ML")?.items || [];
 
     return (
-        <div className="min-h-screen bg-transparent font-sans transition-colors duration-300">
+        <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative overflow-hidden">
+            {/* Particle Background */}
+            <ParticleBackground theme={theme} />
+
             <Navbar theme={theme} toggleTheme={toggleTheme} />
+
+            {/* Floating Sidebar for CV Links */}
+            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex-row md:left-0 md:top-1/2 md:-translate-x-0 md:-translate-y-1/2 z-[60] flex md:flex-col gap-4 p-4 md:p-6 shadow-2xl md:shadow-none bg-[var(--bg-secondary)]/80 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border border-[var(--border-color)] md:border-transparent rounded-full md:rounded-none">
+                <motion.div
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="relative group"
+                >
+                    <button
+                        onClick={() => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV')}
+                        className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
+                    >
+                        <Play size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
+                    </button>
+                    {/* Hover Download Button */}
+                    <a
+                        href="https://www.w3schools.com/html/mov_bbb.mp4"
+                        download
+                        className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
+                        title="Download Video CV"
+                    >
+                        <Download size={16} />
+                    </a>
+                    <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
+                        Watch / Download Video CV
+                    </span>
+                </motion.div>
+
+                <motion.div
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="relative group mt-2 md:mt-0"
+                >
+                    <button
+                        onClick={() => openMediaModal('pdf', cvPdf, 'Specialized CV')}
+                        className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
+                    >
+                        <FileText size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
+                    </button>
+                    {/* Hover Download Button */}
+                    <a
+                        href={cvPdf}
+                        download="Ankush_Pahal_CV.pdf"
+                        className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
+                        title="Download Specialized CV"
+                    >
+                        <Download size={16} />
+                    </a>
+                    <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
+                        View / Download CV
+                    </span>
+                </motion.div>
+            </div>
 
             <main>
                 {/* Hero Section 2.0 (Extreme Redesign) */}
@@ -159,54 +270,93 @@ const App = () => {
                                 </motion.div>
                             </motion.div>
 
-                            {/* Right Column: Profile with Floating Badges */}
+                            {/* Right Column: Profile with Floating Badges & 3D Element */}
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
                                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                                 transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="relative flex justify-center lg:justify-end"
+                                className="relative flex justify-center lg:justify-end perspective-[1000px]"
                             >
-                                <div className="relative z-10 w-full max-w-sm aspect-[4/5] rounded-[4rem] overflow-hidden border-2 border-[var(--border-color)] shadow-[0_0_50px_rgba(79,70,229,0.15)] group">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/40 to-transparent z-10"></div>
-                                    <img
-                                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop"
-                                        alt="Ankush Pahal"
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                                    />
+                                {/* Advanced Framer Motion Background Elements */}
+                                <motion.div
+                                    animate={{ rotate: 360, scale: [1, 1.05, 1] }}
+                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] aspect-square rounded-full border border-indigo-500/20 border-dashed z-0 pointer-events-none"
+                                />
+                                <motion.div
+                                    animate={{ rotate: -360, scale: [1, 1.1, 1] }}
+                                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] aspect-square rounded-full border border-blue-500/10 z-0 pointer-events-none"
+                                />
+                                <motion.div
+                                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] aspect-square bg-indigo-500/10 rounded-full blur-[80px] z-0 pointer-events-none"
+                                />
 
-                                    {/* Glassmorphic Overlay */}
-                                    <div className="absolute bottom-6 left-6 right-6 p-5 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 z-20 shadow-2xl">
-                                        <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1.5">Availability</p>
-                                        <p className="text-white text-sm font-bold leading-tight">Accepting high-impact engineering challenges.</p>
+                                {/* 3D Interactive Card Container */}
+                                <motion.div
+                                    ref={cardRef}
+                                    onMouseMove={handleMouseMove}
+                                    onMouseLeave={handleMouseLeave}
+                                    style={{
+                                        rotateX,
+                                        rotateY,
+                                        transformStyle: "preserve-3d",
+                                    }}
+                                    className="relative z-10 w-full max-w-sm"
+                                >
+                                    <div
+                                        style={{ transform: "translateZ(50px)" }}
+                                        className="w-full aspect-[4/5] rounded-[4rem] overflow-hidden border-2 border-[var(--border-color)] shadow-[0_0_50px_rgba(79,70,229,0.15)] group relative bg-[var(--bg-secondary)]"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/60 via-transparent to-transparent z-10 transition-opacity duration-300 group-hover:opacity-80"></div>
+                                        <img
+                                            src={meImage}
+                                            alt="Ankush Pahal"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                        />
+
+                                        {/* Glassmorphic Overlay (Popped out in 3D) */}
+                                        <div
+                                            style={{ transform: "translateZ(80px)" }}
+                                            className="absolute bottom-6 left-6 right-6 p-5 rounded-3xl bg-indigo-900/40 backdrop-blur-2xl border border-white/20 z-20 shadow-2xl transition-all duration-300 group-hover:bg-indigo-600/50"
+                                        >
+                                            <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1.5 drop-shadow-md">Availability</p>
+                                            <p className="text-white text-sm font-bold leading-tight drop-shadow-md">Accepting high-impact engineering challenges.</p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Floating Glass Badges */}
-                                <motion.div
-                                    animate={{ y: [0, -15, 0] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute -top-6 -left-6 z-20 px-4 py-2 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl flex items-center gap-2"
-                                >
-                                    <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
-                                    <span className="text-[10px] font-black text-white uppercase tracking-widest">AI Architect</span>
-                                </motion.div>
+                                    {/* Floating Glass Badges (Popped further out) */}
+                                    <motion.div
+                                        animate={{ y: [0, -15, 0] }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                        style={{ transform: "translateZ(100px)" }}
+                                        className="absolute -top-6 -left-6 z-30 px-4 py-2 rounded-2xl bg-indigo-900/60 backdrop-blur-xl border border-white/20 shadow-[-10px_-10px_30px_rgba(79,70,229,0.3)] flex items-center gap-2"
+                                    >
+                                        <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></div>
+                                        <span className="text-[10px] font-black text-white uppercase tracking-widest drop-shadow-sm">AI Architect</span>
+                                    </motion.div>
 
-                                <motion.div
-                                    animate={{ y: [0, 15, 0] }}
-                                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                    className="absolute top-1/2 -right-10 z-20 px-4 py-2 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl flex items-center gap-2"
-                                >
-                                    <Brain size={14} className="text-indigo-400" />
-                                    <span className="text-[10px] font-black text-white uppercase tracking-widest">LLM Scientist</span>
-                                </motion.div>
+                                    <motion.div
+                                        animate={{ y: [0, 15, 0] }}
+                                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                                        style={{ transform: "translateZ(120px)" }}
+                                        className="absolute top-1/2 -right-10 z-30 px-4 py-2 rounded-2xl bg-indigo-900/60 backdrop-blur-xl border border-white/20 shadow-[10px_10px_30px_rgba(79,70,229,0.3)] flex items-center gap-2"
+                                    >
+                                        <Brain size={14} className="text-indigo-400" />
+                                        <span className="text-[10px] font-black text-white uppercase tracking-widest drop-shadow-sm">LLM Scientist</span>
+                                    </motion.div>
 
-                                <motion.div
-                                    animate={{ x: [0, 10, 0] }}
-                                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 rounded-2xl bg-indigo-600/20 backdrop-blur-xl border border-indigo-500/30 shadow-2xl flex items-center gap-2"
-                                >
-                                    <Cpu size={14} className="text-indigo-400" />
-                                    <span className="text-[10px] font-black text-white uppercase tracking-widest">Open Source</span>
+                                    <motion.div
+                                        animate={{ x: [0, 10, 0] }}
+                                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                                        style={{ transform: "translateZ(90px)" }}
+                                        className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-2xl bg-indigo-600/40 backdrop-blur-xl border border-indigo-400/50 shadow-[0_10px_30px_rgba(79,70,229,0.4)] flex items-center gap-2"
+                                    >
+                                        <Cpu size={14} className="text-white" />
+                                        <span className="text-[10px] font-black text-white uppercase tracking-widest drop-shadow-sm">Open Source</span>
+                                    </motion.div>
                                 </motion.div>
 
                                 {/* Decorative Background Elements */}
@@ -243,7 +393,7 @@ const App = () => {
                     <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent"></div>
                 </div>
                 <Certifications />
-                <Interenships />
+                <Internships openMediaModal={openMediaModal} />
 
                 {/* Projects Section */}
                 <section id="projects" className="py-24 relative">
@@ -702,6 +852,14 @@ const App = () => {
                 onClose={() => setIsModalOpen(false)}
                 skills={skills}
                 theme={theme}
+            />
+
+            <MediaModal
+                isOpen={mediaModal.isOpen}
+                onClose={closeMediaModal}
+                type={mediaModal.type}
+                url={mediaModal.url}
+                title={mediaModal.title}
             />
         </div >
     );

@@ -36,10 +36,10 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.98, y: 20 }}
                         transition={{ type: "spring", damping: 30, stiffness: 200 }}
-                        className={`relative w-full max-w-[1400px] max-h-[92vh] ${isDark ? 'bg-[#0a0a0a] border-white/5 shadow-[0_0_120px_rgba(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-[0_40px_100px_rgba(0,0,0,0.1)]'} border rounded-[4rem] overflow-hidden flex flex-col`}
+                        className={`relative w-full max-w-[1400px] h-[95vh] lg:h-auto lg:max-h-[92vh] ${isDark ? 'bg-[#0a0a0a] border-white/5 shadow-[0_0_120px_rgba(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-[0_40px_100px_rgba(0,0,0,0.1)]'} border rounded-3xl lg:rounded-[4rem] overflow-hidden flex flex-col`}
                     >
                         {/* Header */}
-                        <div className={`p-6 md:p-8 border-b ${isDark ? 'border-white/[0.03]' : 'border-gray-100'} flex items-center justify-end sticky top-0 z-20 ${isDark ? 'bg-[#0a0a0a]' : 'bg-white'}`}>
+                        <div className={`p-4 sm:p-6 lg:p-8 border-b ${isDark ? 'border-white/[0.03]' : 'border-gray-100'} flex items-center justify-end sticky top-0 z-20 ${isDark ? 'bg-[#0a0a0a]' : 'bg-white'}`}>
                             <motion.button
                                 whileHover={{ scale: 1.1, rotate: 90 }}
                                 whileTap={{ scale: 0.9 }}
@@ -51,8 +51,8 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
                         </div>
 
                         {/* Scrollable Body */}
-                        <div className="flex-grow overflow-y-auto p-6 md:p-8 custom-scrollbar">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
+                        <div className="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-12 lg:gap-y-16">
                                 {skills.map((category, idx) => (
                                     <motion.div
                                         key={idx}
@@ -88,13 +88,13 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
                                                             filter: isDimmed ? 'grayscale(100%) blur(1px)' : 'grayscale(0%) blur(0px)',
                                                         }}
                                                         transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                                                        className={`p-6 rounded-[2rem] ${isActive ? catStyles + ' shadow-2xl scale-[1.05] z-10' : (isDark ? 'bg-white/[0.02] border-white/[0.05]' : 'bg-gray-50 border-gray-100')} border transition-all group flex gap-5 items-center cursor-default min-h-[80px]`}
+                                                        className={`p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] ${isActive ? catStyles + ' shadow-2xl scale-[1.05] z-10' : (isDark ? 'bg-white/[0.02] border-white/[0.05]' : 'bg-gray-50 border-gray-100')} border transition-all group flex gap-4 sm:gap-5 items-center cursor-default min-h-[70px] sm:min-h-[80px]`}
                                                     >
-                                                        <div className={`w-12 h-12 rounded-xl ${isActive ? 'bg-white/20 text-white' : (isDark ? 'bg-white/[0.04] text-indigo-400' : 'bg-white text-indigo-600 shadow-sm')} flex items-center justify-center shrink-0 border border-white/5 transition-all duration-500`}>
-                                                            <i className={`${skill.icon} text-2xl`}></i>
+                                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${isActive ? 'bg-white/20 text-white' : (isDark ? 'bg-white/[0.04] text-indigo-400' : 'bg-white text-indigo-600 shadow-sm')} flex items-center justify-center shrink-0 border border-white/5 transition-all duration-500`}>
+                                                            <i className={`${skill.icon} text-xl sm:text-2xl`}></i>
                                                         </div>
-                                                        <div className="flex items-center gap-3">
-                                                            <span className={`font-black uppercase tracking-widest text-sm ${isActive ? 'text-white' : (isDark ? 'text-white/80' : 'text-gray-900')}`}>{skill.name}</span>
+                                                        <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
+                                                            <span className={`font-black uppercase tracking-widest text-xs sm:text-sm ${isActive ? 'text-white' : (isDark ? 'text-white/80' : 'text-gray-900')}`}>{skill.name}</span>
                                                             {isActive && (
                                                                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className={`w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_white]`}></motion.div>
                                                             )}
@@ -109,8 +109,8 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
                         </div>
 
                         {/* Footer Decoration */}
-                        <div className={`p-8 border-t ${isDark ? 'border-white/[0.03] bg-white/[0.01]' : 'border-gray-100 bg-gray-50/30'} flex justify-between items-center px-12`}>
-                            <div className={`text-[10px] font-bold ${isDark ? 'text-white/20' : 'text-gray-400'} uppercase tracking-[0.4em]`}>
+                        <div className={`p-6 sm:p-8 border-t ${isDark ? 'border-white/[0.03] bg-white/[0.01]' : 'border-gray-100 bg-gray-50/30'} flex justify-between items-center px-6 sm:px-12`}>
+                            <div className={`text-[8px] sm:text-[10px] font-bold ${isDark ? 'text-white/20' : 'text-gray-400'} uppercase tracking-[0.2em] sm:tracking-[0.4em] truncate`}>
                                 Intelligence Stack • v8.0
                             </div>
                             <div className="flex gap-4">
