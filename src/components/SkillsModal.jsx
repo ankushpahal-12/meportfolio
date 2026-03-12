@@ -21,7 +21,7 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
         <AnimatePresence>
             {isOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-10">
-                    {/* Backdrop */}
+
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -29,8 +29,6 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
                         onClick={onClose}
                         className={`absolute inset-0 ${isDark ? 'bg-black/95' : 'bg-gray-900/40 opacity-100'}`}
                     />
-
-                    {/* Modal Content */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.98, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -38,7 +36,6 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
                         transition={{ type: "spring", damping: 30, stiffness: 200 }}
                         className={`relative w-full max-w-[1400px] h-[95vh] lg:h-auto lg:max-h-[92vh] ${isDark ? 'bg-[#0a0a0a] border-white/5 shadow-[0_0_120px_rgba(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-[0_40px_100px_rgba(0,0,0,0.1)]'} border rounded-3xl lg:rounded-[4rem] overflow-hidden flex flex-col`}
                     >
-                        {/* Header */}
                         <div className={`p-4 sm:p-6 lg:p-8 border-b ${isDark ? 'border-white/[0.03]' : 'border-gray-100'} flex items-center justify-end sticky top-0 z-20 ${isDark ? 'bg-[#0a0a0a]' : 'bg-white'}`}>
                             <motion.button
                                 whileHover={{ scale: 1.1, rotate: 90 }}

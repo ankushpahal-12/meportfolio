@@ -1,39 +1,67 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, ExternalLink, ShieldCheck, Cpu, Code } from 'lucide-react';
+import { Award, ExternalLink, ShieldCheck, Cpu, Code, Image as LucideImage, FileDown } from 'lucide-react';
+import cert1 from '../assets/cert1.png';
+import cert2 from '../assets/cert2.png';
+import cert3 from '../assets/cert3.png';
+import cert4 from '../assets/cert4.png';
 
-const Certifications = () => {
+const DriveIcon = ({ size = 20, className = "" }) => (
+    <svg 
+        width={size} 
+        height={size} 
+        viewBox="0 0 24 24" 
+        fill="currentColor" 
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+    >
+        <path d="M7.714 3h8.572l7.714 13.333H15.43L7.714 3z" fill="#0066DA" />
+        <path d="M15.429 16.333H0L3.857 23h23.143L23.143 16.333h-7.714z" fill="#FFC107" />
+        <path d="M3.857 23L0 16.333 7.714 3l3.857 6.667L3.857 23z" fill="#00AC47" />
+    </svg>
+);
+const Certifications = ({ openMediaModal }) => {
     const certifications = [
         {
-            title: "Professional ML Engineer",
-            issuer: "Google Cloud",
-            date: "2023",
+            title: "Essentials Automation Certification - 2024",
+            issuer: "Automation Anywhere 360",
+            date: "2025",
+            unit: "Essentials",
             icon: <Cpu className="w-6 h-6" />,
-            link: "#",
+            image: cert2,
+            driveLink: "https://drive.google.com/file/d/1ZP_wWVW6Kz3Pfs96WMarI0MyGqPmdZbE/view?usp=sharing",
+            verificationLink: "https://drive.google.com/file/d/1ZP_wWVW6Kz3Pfs96WMarI0MyGqPmdZbE/view?usp=sharing",
             color: "from-blue-500 to-cyan-500"
         },
         {
-            title: "TensorFlow Developer",
-            issuer: "DeepLearning.AI",
-            date: "2022",
-            icon: <Code className="w-6 h-6" />,
-            link: "#",
-            color: "from-orange-500 to-yellow-500"
-        },
-        {
-            title: "AWS Certified AI Practitioner",
-            issuer: "Amazon Web Services",
-            date: "2023",
+            title: "Python for Data Science",
+            issuer: "IBM",
+            date: "2025",
+            unit: "Foundations",
             icon: <ShieldCheck className="w-6 h-6" />,
-            link: "#",
+            image: cert3,
+            driveLink: "https://drive.google.com/file/d/16XiIxJeDbM16OYEJat65dJLjqN9bqTwQ/view?usp=sharing",
+            verificationLink: "https://drive.google.com/file/d/16XiIxJeDbM16OYEJat65dJLjqN9bqTwQ/view?usp=sharing",
             color: "from-indigo-500 to-purple-500"
         },
         {
-            title: "Neural Networks & Deep Learning",
+            title: "Foundations: Programming Refresher",
+            issuer: "Simplilearn",
+            date: "2026",
+            icon: <Code className="w-6 h-6" />,
+            image: cert4,
+            driveLink: "https://drive.google.com/file/d/10U7o5hcUNqGnTkB-9PZd6EsiNjX9-eXw/view?usp=sharing",
+            verificationLink: "https://drive.google.com/file/d/10U7o5hcUNqGnTkB-9PZd6EsiNjX9-eXw/view?usp=sharing",
+            color: "from-orange-500 to-yellow-500"
+        },
+        {
+            title: "The Bits and Bytes of Computer Networking",
             issuer: "Coursera",
-            date: "2021",
+            date: "2024",
             icon: <Award className="w-6 h-6" />,
-            link: "#",
+            image: cert1,
+            driveLink: "https://drive.google.com/file/d/1SVjdIuDcWsBxBfxXTSZ9YuPJZtkYVY7j/view?usp=sharing",
+            verificationLink: "https://drive.google.com/file/d/1SVjdIuDcWsBxBfxXTSZ9YuPJZtkYVY7j/view?usp=sharing",
             color: "from-teal-500 to-emerald-500"
         }
     ];
@@ -72,16 +100,31 @@ const Certifications = () => {
                             transition={{ delay: index * 0.1 }}
                             whileHover={{
                                 y: -10,
-                                scale: 1.05,
+                                scale: 1.02,
                                 transition: { duration: 0.3 }
                             }}
-                            className="group/card p-8 rounded-[2.5rem] bg-[var(--bg-tertiary)] border border-[var(--border-color)] hover:border-indigo-500/30 transition-all relative overflow-hidden h-full hover:!opacity-100 group-hover/list:opacity-40 duration-500"
+                            className="group/card rounded-[2.5rem] bg-[var(--bg-tertiary)] border border-[var(--border-color)] hover:border-indigo-500/30 transition-all relative overflow-hidden h-full hover:!opacity-100 group-hover/list:opacity-40 duration-500 cursor-pointer"
+                            onClick={() => cert.image && openMediaModal('image', cert.image, cert.title)}
                         >
-                            {/* Gradient Accent */}
-                            <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${cert.color}`}></div>
+                            {/* Certificate Image/Placeholder */}
+                            <div className="relative h-48 overflow-hidden bg-[var(--bg-secondary)]">
+                                {cert.image ? (
+                                    <img
+                                        src={cert.image}
+                                        alt={cert.title}
+                                        className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center opacity-20">
+                                        <LucideImage size={64} />
+                                    </div>
+                                )}
+                                <div className={`absolute inset-0 bg-gradient-to-t from-[var(--bg-tertiary)] via-transparent to-transparent opacity-60`}></div>
+                                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${cert.color}`}></div>
+                            </div>
 
-                            <div className="flex flex-col h-full">
-                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cert.color} flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-500/10 group-hover/card:scale-110 transition-transform`}>
+                            <div className="p-8 pt-6 flex flex-col h-full">
+                                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cert.color} flex items-center justify-center text-white mb-6 shadow-lg shadow-indigo-500/10 group-hover/card:scale-110 transition-transform`}>
                                     {cert.icon}
                                 </div>
                                 <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover/card:text-indigo-500 transition-colors">
@@ -90,16 +133,43 @@ const Certifications = () => {
                                 <p className="text-[var(--text-tertiary)] text-xs font-bold uppercase tracking-widest mb-4">
                                     {cert.issuer} • {cert.date}
                                 </p>
-                                <div className="mt-auto pt-6 border-t border-[var(--border-color)]">
-                                    <a
-                                        href={cert.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                <div className="mt-auto pt-6 border-t border-[var(--border-color)] flex items-center justify-between">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            cert.image && openMediaModal('image', cert.image, cert.title);
+                                        }}
                                         className="flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
                                     >
-                                        Verify Certificate
-                                        <ExternalLink size={14} />
-                                    </a>
+                                        View Certificate
+                                        <LucideImage size={14} />
+                                    </button>
+                                    <div className="flex gap-3">
+                                        {cert.driveLink && (
+                                            <a
+                                                href={cert.driveLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="text-[var(--text-tertiary)] hover:text-indigo-400 transition-colors flex items-center justify-center p-1 rounded-lg hover:bg-white/5"
+                                                title="View on Google Drive"
+                                            >
+                                                <DriveIcon size={20} />
+                                            </a>
+                                        )}
+                                        {cert.verificationLink && (
+                                            <a
+                                                href={cert.verificationLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="text-[var(--text-tertiary)] hover:text-indigo-400 transition-colors"
+                                                title="Verify Certification"
+                                            >
+                                                <ExternalLink size={18} />
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

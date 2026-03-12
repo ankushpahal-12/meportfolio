@@ -14,29 +14,46 @@ const ProjectCard = ({ project, index }) => {
             }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className="glass-card overflow-hidden group/card hover:!opacity-100 group-hover/list:opacity-40 transition-all duration-500"
+            className="glass-card overflow-hidden group/card hover:!opacity-100 group-hover/list:opacity-40 transition-all duration-500 flex flex-col h-full"
         >
-            <div className="p-6 h-full flex flex-col">
-                <div className="flex items-center justify-between mb-4">
+            {/* Project Image Section */}
+            <div className="relative h-48 overflow-hidden">
+                <img 
+                    src={project.image || "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-secondary)] via-transparent to-transparent opacity-60"></div>
+                
+                {/* Overlay Links */}
+                <div className="absolute top-4 right-4 flex gap-2 translate-y-[-10px] opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 transition-all duration-500">
+                    <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-indigo-500 transition-colors shadow-xl"
+                    >
+                        <Github size={18} />
+                    </a>
+                    <a
+                        href="#"
+                        className="p-2 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-indigo-500 transition-colors shadow-xl"
+                    >
+                        <ExternalLink size={18} />
+                    </a>
+                </div>
+            </div>
+
+            <div className="p-6 flex flex-col flex-grow">
+                <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
                         <Code2 size={24} />
                     </div>
-                    <div className="flex gap-3">
-                        <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[var(--text-tertiary)] hover:text-indigo-400 transition-colors"
-                        >
-                            <Github size={20} />
-                        </a>
-                        <a
-                            href="#"
-                            className="text-[var(--text-tertiary)] hover:text-indigo-400 transition-colors"
-                        >
-                            <ExternalLink size={20} />
-                        </a>
-                    </div>
+                    {project.category && (
+                        <span className="text-[10px] font-black text-indigo-500 uppercase tracking-widest px-2 py-1 rounded bg-indigo-500/5 border border-indigo-500/10">
+                            {project.category}
+                        </span>
+                    )}
                 </div>
 
                 <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-indigo-400 transition-colors">

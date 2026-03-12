@@ -19,6 +19,64 @@ import {
 import meImage from './assets/profile.jpg';
 import cvPdf from './assets/ankushcv.pdf';
 import ParticleBackground from './components/ParticleBackground';
+import { ReactLenis } from '@studio-freight/react-lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const MagneticCursor = () => {
+    const cursorRef = useRef(null);
+    const cursorFollowerRef = useRef(null);
+
+    useEffect(() => {
+        const moveCursor = (e) => {
+            gsap.to(cursorRef.current, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1,
+                ease: 'power2.out'
+            });
+            gsap.to(cursorFollowerRef.current, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.5,
+                ease: 'power2.out'
+            });
+        };
+
+        const handleHover = (e) => {
+            if (e.target.closest('button, a, .interactive')) {
+                gsap.to(cursorFollowerRef.current, {
+                    scale: 2,
+                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                    duration: 0.3
+                });
+            } else {
+                gsap.to(cursorFollowerRef.current, {
+                    scale: 1,
+                    backgroundColor: 'transparent',
+                    duration: 0.3
+                });
+            }
+        };
+
+        window.addEventListener('mousemove', moveCursor);
+        window.addEventListener('mouseover', handleHover);
+
+        return () => {
+            window.removeEventListener('mousemove', moveCursor);
+            window.removeEventListener('mouseover', handleHover);
+        };
+    }, []);
+
+    return (
+        <>
+            <div ref={cursorRef} className="fixed top-0 left-0 w-2 h-2 bg-indigo-500 rounded-full pointer-events-none z-[9999] mix-blend-difference" style={{ transform: 'translate(-50%, -50%)' }} />
+            <div ref={cursorFollowerRef} className="fixed top-0 left-0 w-8 h-8 border border-indigo-500/50 rounded-full pointer-events-none z-[9998] transition-transform duration-150 ease-out" style={{ transform: 'translate(-50%, -50%)' }} />
+        </>
+    );
+};
 
 const App = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -111,11 +169,52 @@ const App = () => {
         setTheme(prev => prev === 'dark' ? 'light' : 'dark');
     };
 
+    // GSAP Scroll Animations
+    useEffect(() => {
+        // Fade in sections on scroll
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            gsap.fromTo(section, 
+                { opacity: 0, y: 50 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                }
+            );
+        });
+
+        // Specific animation for project cards
+        gsap.from('.project-card', {
+            opacity: 0,
+            y: 30,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: 'back.out(1.7)',
+            scrollTrigger: {
+                trigger: '#projects',
+                start: 'top 70%'
+            }
+        });
+
+        return () => {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+        };
+    }, []);
+
     // Get AI & ML skills as primary subset
     const primarySkills = skills.find(cat => cat.category === "AI & ML")?.items || [];
 
     return (
-        <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative overflow-hidden">
+        <ReactLenis root>
+            <MagneticCursor />
+            <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative overflow-hidden">
             {/* Particle Background */}
             <ParticleBackground theme={theme} />
 
@@ -435,7 +534,7 @@ const App = () => {
                     <Education />
                     <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent"></div>
                 </div>
-                <Certifications />
+                <Certifications openMediaModal={openMediaModal} />
                 <Internships openMediaModal={openMediaModal} />
 
                 {/* Projects Section */}
@@ -905,6 +1004,7 @@ const App = () => {
                 title={mediaModal.title}
             />
         </div >
+        </ReactLenis>
     );
 };
 
