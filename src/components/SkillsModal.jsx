@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Code2, Cpu, Globe, Database, Terminal, Sparkles } from 'lucide-react';
 
 const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
     const [hoveredSkill, setHoveredSkill] = React.useState(null);
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     const isDark = theme === 'dark';

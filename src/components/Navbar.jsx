@@ -10,8 +10,6 @@ const Navbar = ({ theme, toggleTheme }) => {
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
-
-            // Active section detection
             const sections = ['home', 'about', 'education', 'certifications', 'projects', 'skills', 'contact'];
             const scrollPosition = window.scrollY + 100;
 
@@ -100,13 +98,16 @@ const Navbar = ({ theme, toggleTheme }) => {
                     </motion.button>
 
                     {/* Resume Button */}
-                    <motion.button
+                    <motion.a
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-4 py-2 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition-all hidden sm:block"
+                        href="https://drive.google.com/file/d/1DjeTpPTlevwMsqQMzmITPDJqiX_Vo2J9/view?usp=sharing"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition-all hidden sm:flex items-center justify-center pointer-events-auto"
                     >
                         Resume
-                    </motion.button>
+                    </motion.a>
 
                     {/* Mobile Toggle */}
                     <button
@@ -117,8 +118,6 @@ const Navbar = ({ theme, toggleTheme }) => {
                     </button>
                 </div>
             </motion.nav>
-
-            {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
@@ -144,9 +143,14 @@ const Navbar = ({ theme, toggleTheme }) => {
                                 </a>
                             ))}
                         </div>
-                        <button className="w-full mt-6 py-4 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-indigo-600/20">
+                        <a 
+                            href="https://drive.google.com/file/d/1DjeTpPTlevwMsqQMzmITPDJqiX_Vo2J9/view?usp=sharing"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full mt-6 py-4 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-indigo-600/20 flex items-center justify-center transition-all hover:bg-indigo-500"
+                        >
                             Download Resume
-                        </button>
+                        </a>
                     </motion.div>
                 )}
             </AnimatePresence>
