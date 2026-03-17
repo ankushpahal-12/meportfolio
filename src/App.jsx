@@ -353,6 +353,7 @@ const App = () => {
                                             {[
                                                 { Icon: Github, href: "https://github.com/ankushpahal-12" },
                                                 { Icon: Linkedin, href: "https://linkedin.com/in/pahalankush" },
+                                                { Icon: Twitter, href: "https://x.com/AnkushPahal5" },
                                                 { Icon: Mail, href: "#contact" },
                                                 {
                                                     Icon: Play,
@@ -736,10 +737,14 @@ const App = () => {
                                     <div className="mt-12 flex items-center gap-6">
                                         <p className="text-sm font-bold text-[var(--text-tertiary)] uppercase tracking-widest">Connect:</p>
                                         <div className="flex gap-4">
-                                            {[Github, Linkedin, Twitter].map((Icon, i) => (
+                                            {[
+                                                { Icon: Github, href: "https://github.com/ankushpahal-12" },
+                                                { Icon: Linkedin, href: "https://linkedin.com/in/pahalankush" },
+                                                { Icon: Twitter, href: "https://x.com/AnkushPahal5" }
+                                            ].map(({ Icon, href }, i) => (
                                                 <motion.a
                                                     key={i}
-                                                    href="#"
+                                                    href={href}
                                                     whileHover={{ y: -3 }}
                                                     className="w-10 h-10 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-400 hover:border-indigo-500/50 transition-all"
                                                 >
@@ -880,7 +885,7 @@ const App = () => {
                                     {[
                                         { Icon: Github, href: "https://github.com/ankushpahal-12" },
                                         { Icon: Linkedin, href: "https://linkedin.com/in/pahalankush" },
-                                        { Icon: Twitter, href: "" },
+                                        { Icon: Twitter, href: "https://x.com/AnkushPahal5" },
                                         { Icon: Mail, href: "mailto:ankushpayal58@gmail.com" }
                                     ].map(({ Icon, href }, i) => (
                                         <motion.a
