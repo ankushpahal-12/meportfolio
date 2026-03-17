@@ -238,161 +238,14 @@ const App = () => {
 
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                             <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                                {/* Left Column: Advanced Typography & Socials */}
-                                <motion.div
-                                    initial="hidden"
-                                    animate="visible"
-                                    variants={{
-                                        hidden: { opacity: 0 },
-                                        visible: {
-                                            opacity: 1,
-                                            transition: { staggerChildren: 0.15, delayChildren: 0.2 }
-                                        }
-                                    }}
-                                >
-                                    <motion.div
-                                        variants={{
-                                            hidden: { opacity: 0, scale: 0.8 },
-                                            visible: { opacity: 1, scale: 1 }
-                                        }}
-                                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8 shadow-inner"
-                                    >
-                                        <Sparkles size={14} className="animate-spin-slow text-indigo-500" />
-                                        Next-Gen Intelligence
-                                    </motion.div>
-
-                                    <motion.h1
-                                        variants={{
-                                            hidden: { opacity: 0, y: 30 },
-                                            visible: { opacity: 1, y: 0 }
-                                        }}
-                                        className="text-6xl md:text-8xl lg:text-[7.5rem] font-black text-[var(--text-primary)] mb-6 tracking-tight leading-[0.85] uppercase"
-                                    >
-                                        Ankush <br />
-                                        <span className="relative inline-block text-indigo-500">
-                                            Pahal.
-                                            <div className="absolute -inset-2 bg-indigo-500/20 blur-2xl -z-10 animate-pulse"></div>
-                                        </span>
-                                    </motion.h1>
-
-                                    <motion.div
-                                        variants={{
-                                            hidden: { opacity: 0, x: -20 },
-                                            visible: { opacity: 1, x: 0 }
-                                        }}
-                                        className="relative inline-block mb-10 group"
-                                    >
-                                        <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-400 animate-gradient-scroll py-1">
-                                            Architecting AI Systems for the Future.
-                                        </h2>
-                                        <div className="absolute -bottom-1 left-0 w-24 h-1.5 bg-indigo-600 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)]"></div>
-                                    </motion.div>
-
-                                    <motion.div
-                                        variants={{
-                                            hidden: { opacity: 0, y: 20 },
-                                            visible: { opacity: 1, y: 0 }
-                                        }}
-                                        className="flex items-center gap-6"
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            {[
-                                                { Icon: Github, href: "https://github.com/ankushpahal-12" },
-                                                { Icon: Linkedin, href: "https://linkedin.com/in/pahalankush" },
-                                                { Icon: Mail, href: "#contact" }
-                                            ].map(({ Icon, href }, i) => (
-                                                <motion.a
-                                                    key={i}
-                                                    href={href}
-                                                    whileHover={{ scale: 1.15, y: -4, rotate: 5 }}
-                                                    className="w-12 h-12 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-500 hover:border-indigo-500/50 shadow-xl transition-all backdrop-blur-md"
-                                                >
-                                                    <Icon size={20} />
-                                                </motion.a>
-                                            ))}
-                                        </div>
-                                        <button className="px-8 py-4 bg-indigo-600 text-white text-xs font-black uppercase tracking-widest rounded-xl shadow-2xl shadow-indigo-600/30 hover:bg-indigo-500 hover:-translate-y-1 transition-all flex items-center gap-3 group">
-                                            Explore Projects
-                                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                        </button>
-                                    </motion.div>
-                                </motion.div>
-
-                                {/* CV Buttons Component for Reuse */}
-                                {(() => {
-                                    const CVButtons = ({ className }) => (
-                                        <div className={`flex gap-4 p-4 shadow-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-xl border border-[var(--border-color)] ${className}`}>
-                                            <motion.div
-                                                initial={{ y: 50, opacity: 0 }}
-                                                animate={{ y: 0, opacity: 1 }}
-                                                transition={{ delay: 0.5 }}
-                                                className="relative group"
-                                            >
-                                                <button
-                                                    onClick={() => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV')}
-                                                    className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
-                                                >
-                                                    <Play size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
-                                                </button>
-                                                {/* Hover Download Button */}
-                                                <a
-                                                    href="https://www.w3schools.com/html/mov_bbb.mp4"
-                                                    download
-                                                    className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
-                                                    title="Download Video CV"
-                                                >
-                                                    <Download size={16} />
-                                                </a>
-                                                <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
-                                                    Watch / Download Video CV
-                                                </span>
-                                            </motion.div>
-
-                                            <motion.div
-                                                initial={{ y: 50, opacity: 0 }}
-                                                animate={{ y: 0, opacity: 1 }}
-                                                transition={{ delay: 0.6 }}
-                                                className="relative group"
-                                            >
-                                                <button
-                                                    onClick={() => openMediaModal('pdf', cvPdf, 'Specialized CV')}
-                                                    className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
-                                                >
-                                                    <FileText size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
-                                                </button>
-                                                {/* Hover Download Button */}
-                                                <a
-                                                    href={cvPdf}
-                                                    download="Ankush_Pahal_CV.pdf"
-                                                    className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
-                                                    title="Download Specialized CV"
-                                                >
-                                                    <Download size={16} />
-                                                </a>
-                                                <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
-                                                    View / Download CV
-                                                </span>
-                                            </motion.div>
-                                        </div>
-                                    );
-
-                                    return (
-                                        <>
-                                            {/* CV Buttons: Desktop Only (Fixed Sidebar on left) */}
-                                            <CVButtons className="hidden md:flex md:fixed md:left-0 md:top-1/2 md:-translate-y-1/2 md:z-[60] md:flex-col md:bg-transparent md:backdrop-blur-none md:border-transparent md:shadow-none md:p-6" />
-                                        </>
-                                    );
-                                })()}
-
-                                {/* Right Column: Profile with Floating Badges & 3D Element */}
+                                {/* Column: Profile with Floating Badges & 3D Element - TOP on Mobile */}
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
                                     animate={{ opacity: 1, scale: 1, rotate: 0 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
-                                    className="relative flex justify-center lg:justify-end perspective-[1000px]"
+                                    className="relative flex justify-center lg:justify-end perspective-[1000px] order-1 lg:order-2"
                                 >
                                     {/* Advanced Framer Motion Background Elements */}
-
                                     <motion.div
                                         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
                                         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -441,33 +294,199 @@ const App = () => {
                                     {/* Decorative Background Elements */}
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] -z-10 bg-indigo-500/5 rounded-full blur-[100px] animate-pulse"></div>
                                 </motion.div>
-                                <div className="md:hidden flex justify-center mt-[-2rem] relative z-40 w-full mb-8">
-                                    {(() => {
 
-                                        return (
-                                            <div className="flex flex-row justify-center items-center gap-4 p-4 shadow-2xl bg-[var(--bg-secondary)]/90 backdrop-blur-xl border border-[var(--border-color)] rounded-full w-max mt-4">
-                                                <div className="relative group">
-                                                    <button
-                                                        onClick={() => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV')}
-                                                        className="flex items-center justify-center w-12 h-12 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl"
+                                {/* Column: Advanced Typography & Socials - BOTTOM on Mobile */}
+                                <motion.div
+                                    initial="hidden"
+                                    animate="visible"
+                                    variants={{
+                                        hidden: { opacity: 0 },
+                                        visible: {
+                                            opacity: 1,
+                                            transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+                                        }
+                                    }}
+                                    className="order-2 lg:order-1"
+                                >
+                                    <motion.div
+                                        variants={{
+                                            hidden: { opacity: 0, scale: 0.8 },
+                                            visible: { opacity: 1, scale: 1 }
+                                        }}
+                                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8 shadow-inner"
+                                    >
+                                        <Sparkles size={14} className="animate-spin-slow text-indigo-500" />
+                                        Next-Gen Intelligence
+                                    </motion.div>
+
+                                    <motion.h1
+                                        variants={{
+                                            hidden: { opacity: 0, y: 30 },
+                                            visible: { opacity: 1, y: 0 }
+                                        }}
+                                        className="text-6xl md:text-8xl lg:text-[7.5rem] font-black text-[var(--text-primary)] mb-6 tracking-tight leading-[0.85] uppercase text-center lg:text-left"
+                                    >
+                                        Ankush <br />
+                                        <span className="relative inline-block text-indigo-500">
+                                            Pahal.
+                                            <div className="absolute -inset-2 bg-indigo-500/20 blur-2xl -z-10 animate-pulse"></div>
+                                        </span>
+                                    </motion.h1>
+
+                                    <motion.div
+                                        variants={{
+                                            hidden: { opacity: 0, x: -20 },
+                                            visible: { opacity: 1, x: 0 }
+                                        }}
+                                        className="relative block lg:inline-block mb-10 group text-center lg:text-left"
+                                    >
+                                        <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-400 animate-gradient-scroll py-1">
+                                            Architecting AI Systems for the Future.
+                                        </h2>
+                                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 w-24 h-1.5 bg-indigo-600 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)]"></div>
+                                    </motion.div>
+
+                                    <motion.div
+                                        variants={{
+                                            hidden: { opacity: 0, y: 20 },
+                                            visible: { opacity: 1, y: 0 }
+                                        }}
+                                        className="flex flex-col items-center lg:items-start gap-8"
+                                    >
+                                        <div className="flex flex-wrap justify-center lg:justify-start items-center gap-4">
+                                            {[
+                                                { Icon: Github, href: "https://github.com/ankushpahal-12" },
+                                                { Icon: Linkedin, href: "https://linkedin.com/in/pahalankush" },
+                                                { Icon: Mail, href: "#contact" },
+                                                { 
+                                                    Icon: Play, 
+                                                    label: "Video CV",
+                                                    onClick: () => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV'),
+                                                    mobileOnly: true 
+                                                },
+                                                { 
+                                                    Icon: FileText, 
+                                                    label: "CV", 
+                                                    onClick: () => openMediaModal('pdf', cvPdf, 'Specialized CV'),
+                                                    mobileOnly: true 
+                                                }
+                                            ].map((link, i) => (
+                                                <motion.a
+                                                    key={i}
+                                                    href={link.href || "#"}
+                                                    onClick={(e) => {
+                                                        if (link.onClick) {
+                                                            e.preventDefault();
+                                                            link.onClick();
+                                                        }
+                                                    }}
+                                                    whileHover={{ scale: 1.15, y: -4, rotate: 5 }}
+                                                    className={`w-12 h-12 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-500 hover:border-indigo-500/50 shadow-xl transition-all backdrop-blur-md ${link.mobileOnly ? 'lg:hidden' : ''}`}
+                                                    title={link.label}
+                                                >
+                                                    <link.Icon size={20} className={link.mobileOnly ? "text-indigo-500" : ""} />
+                                                </motion.a>
+                                            ))}
+                                            
+                                            <button
+                                                onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}
+                                                className="hidden lg:flex px-10 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl shadow-[0_10px_40px_rgba(79,70,229,0.3)] hover:shadow-[0_15px_60px_rgba(79,70,229,0.5)] hover:-translate-y-1.5 active:scale-95 transition-all duration-500 items-center justify-center gap-4 group relative overflow-hidden"
+                                            >
+                                                {/* Shimmer Effect */}
+                                                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer pointer-events-none"></div>
+                                                
+                                                <span className="relative z-10 flex items-center gap-3">
+                                                    Explore Projects
+                                                    <motion.div
+                                                        animate={{ x: [0, 5, 0] }}
+                                                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                                                     >
-                                                        <Play size={20} className="text-indigo-500" />
-                                                    </button>
-                                                </div>
-                                                <div className="w-px h-8 bg-[var(--border-color)]"></div>
-                                                <div className="relative group">
-                                                    <button
-                                                        onClick={() => openMediaModal('pdf', cvPdf, 'Specialized CV')}
-                                                        className="flex items-center justify-center w-12 h-12 rounded-full bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl"
-                                                    >
-                                                        <FileText size={20} className="text-indigo-500" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        );
-                                    })()}
-                                </div>
+                                                        <ArrowRight size={18} className="text-white group-hover:scale-110 transition-transform" />
+                                                    </motion.div>
+                                                </span>
+                                                
+                                                {/* Outer Glow Overlay */}
+                                                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                            </button>
+                                        </div>
+
+                                        <button
+                                            onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}
+                                            className="lg:hidden w-full px-8 py-5 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl shadow-[0_10px_30px_rgba(79,70,229,0.25)] hover:bg-indigo-500 transition-all flex items-center justify-center gap-4 relative overflow-hidden active:scale-95"
+                                        >
+                                            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer-slow pointer-events-none"></div>
+                                            Explore Projects
+                                            <ArrowRight size={18} />
+                                        </button>
+                                    </motion.div>
+                                </motion.div>
                             </div>
+
+                            {/* CV Buttons: Desktop Only (Fixed Sidebar on left) */}
+                            {(() => {
+                                const CVButtons = ({ className }) => (
+                                    <div className={`flex gap-4 p-4 shadow-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-xl border border-[var(--border-color)] ${className}`}>
+                                        <motion.div
+                                            initial={{ y: 50, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.5 }}
+                                            className="relative group"
+                                        >
+                                            <button
+                                                onClick={() => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV')}
+                                                className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
+                                            >
+                                                <Play size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
+                                            </button>
+                                            {/* Hover Download Button */}
+                                            <a
+                                                href="https://www.w3schools.com/html/mov_bbb.mp4"
+                                                download
+                                                className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
+                                                title="Download Video CV"
+                                            >
+                                                <Download size={16} />
+                                            </a>
+                                            <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
+                                                Watch / Download Video CV
+                                            </span>
+                                        </motion.div>
+
+                                        <motion.div
+                                            initial={{ y: 50, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.6 }}
+                                            className="relative group"
+                                        >
+                                            <button
+                                                onClick={() => openMediaModal('pdf', cvPdf, 'Specialized CV')}
+                                                className="flex items-center justify-center w-12 h-12 rounded-full md:rounded-2xl bg-[var(--bg-tertiary)] md:bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-primary)] hover:border-indigo-500/50 hover:text-indigo-500 transition-all shadow-xl hover:scale-110 group-hover:rounded-r-none relative z-10"
+                                            >
+                                                <FileText size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
+                                            </button>
+                                            {/* Hover Download Button */}
+                                            <a
+                                                href={cvPdf}
+                                                download="Ankush_Pahal_CV.pdf"
+                                                className="absolute inset-y-0 -right-10 w-12 flex items-center justify-center bg-indigo-500 text-white rounded-r-2xl opacity-0 -translate-x-full group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-0 shadow-xl"
+                                                title="Download Specialized CV"
+                                            >
+                                                <Download size={16} />
+                                            </a>
+                                            <span className="hidden md:block absolute left-28 px-3 py-1.5 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all shadow-xl pointer-events-none z-20">
+                                                View / Download CV
+                                            </span>
+                                        </motion.div>
+                                    </div>
+                                );
+
+                                return (
+                                    <>
+                                        {/* CV Buttons: Desktop Only (Fixed Sidebar on left) */}
+                                        <CVButtons className="hidden md:flex md:fixed md:left-0 md:top-1/2 md:-translate-y-1/2 md:z-[60] md:flex-col md:bg-transparent md:backdrop-blur-none md:border-transparent md:shadow-none md:p-6" />
+                                    </>
+                                );
+                            })()}
 
                             {/* Premium Scroll Indicator */}
                             <motion.div
