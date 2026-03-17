@@ -320,6 +320,7 @@ const App = () => {
                                     </motion.div>
 
                                     <motion.h1
+                                        aria-label="Ankush Pahal"
                                         className="text-6xl md:text-8xl lg:text-[7.5rem] font-black text-[var(--text-primary)] mb-6 tracking-tight leading-[0.85] uppercase text-center lg:text-left overflow-hidden"
                                     >
                                         <div className="hero-title-line inline-block">Ankush</div> <br />
@@ -379,7 +380,8 @@ const App = () => {
                                                     }}
                                                     whileHover={{ scale: 1.15, y: -4, rotate: 5 }}
                                                     className={`magnetic-item w-12 h-12 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-500 hover:border-indigo-500/50 shadow-xl transition-all backdrop-blur-md ${link.mobileOnly ? 'lg:hidden' : ''}`}
-                                                    title={link.label}
+                                                    title={link.label || link.Icon.name}
+                                                    aria-label={link.label || link.Icon.name}
                                                 >
                                                     <link.Icon size={20} className={link.mobileOnly ? "text-indigo-500" : ""} />
                                                 </motion.a>
