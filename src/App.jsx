@@ -727,7 +727,7 @@ const App = () => {
                                                 </div>
                                                 <div>
                                                     <p className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-widest mb-1">Location</p>
-                                                    <p className="text-[var(--text-primary)] font-semibold">Bengaluru, KA, India</p>
+                                                    <p className="text-[var(--text-primary)] font-semibold">Jhajjar Haryana, India</p>
                                                 </div>
                                             </div>
                                         </div>
