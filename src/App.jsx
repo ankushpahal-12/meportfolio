@@ -20,16 +20,15 @@ import meImage from './assets/me.png';
 import cvPdf from './assets/ankushcv.pdf';
 import ParticleBackground from './components/ParticleBackground';
 import { ReactLenis } from '@studio-freight/react-lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from './gsap';
+import { useGSAP } from './gsap/useGSAP';
+import { animations } from './gsap/animations';
 
 const MagneticCursor = () => {
     const cursorRef = useRef(null);
     const cursorFollowerRef = useRef(null);
 
-    useEffect(() => {
+    useGSAP(() => {
         const moveCursor = (e) => {
             gsap.to(cursorRef.current, {
                 x: e.clientX,
@@ -170,42 +169,43 @@ const App = () => {
     };
 
     // GSAP Scroll Animations
-    useEffect(() => {
+    useGSAP(() => {
         // Fade in sections on scroll
         const sections = document.querySelectorAll('section');
         sections.forEach(section => {
-            gsap.fromTo(section,
-                { opacity: 0, y: 50 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 80%',
-                        toggleActions: 'play none none none'
-                    }
-                }
-            );
+            animations.reveal(section, {
+                distance: 50,
+                start: 'top 80%',
+            });
+        });
+
+        // Premium section title reveals
+        animations.skewReveal('.section-title', {
+            duration: 1.2,
+            skew: 10,
+            distance: 80,
         });
 
         // Specific animation for project cards
-        gsap.from('.project-card', {
-            opacity: 0,
-            y: 30,
+        animations.staggerReveal('.project-card', {
+            trigger: '#projects',
+            start: 'top 70%',
             stagger: 0.1,
-            duration: 0.8,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-                trigger: '#projects',
-                start: 'top 70%'
-            }
+            distance: 30
         });
 
-        return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
+        // Premium title reveal
+        animations.skewReveal('.hero-title-line', {
+            duration: 1.5,
+            skew: 15,
+            distance: 120,
+        });
+
+        // Magnetic effect for social icons
+        const magneticElements = document.querySelectorAll('.magnetic-item');
+        magneticElements.forEach(el => {
+            animations.magnetic(el, { strength: 0.3 });
+        });
     }, []);
 
     // Get AI & ML skills as primary subset
@@ -320,17 +320,13 @@ const App = () => {
                                     </motion.div>
 
                                     <motion.h1
-                                        variants={{
-                                            hidden: { opacity: 0, y: 30 },
-                                            visible: { opacity: 1, y: 0 }
-                                        }}
-                                        className="text-6xl md:text-8xl lg:text-[7.5rem] font-black text-[var(--text-primary)] mb-6 tracking-tight leading-[0.85] uppercase text-center lg:text-left"
+                                        className="text-6xl md:text-8xl lg:text-[7.5rem] font-black text-[var(--text-primary)] mb-6 tracking-tight leading-[0.85] uppercase text-center lg:text-left overflow-hidden"
                                     >
-                                        Ankush <br />
-                                        <span className="relative inline-block text-indigo-500">
+                                        <div className="hero-title-line inline-block">Ankush</div> <br />
+                                        <div className="hero-title-line inline-block relative text-indigo-500">
                                             Pahal.
                                             <div className="absolute -inset-2 bg-indigo-500/20 blur-2xl -z-10 animate-pulse"></div>
-                                        </span>
+                                        </div>
                                     </motion.h1>
 
                                     <motion.div
@@ -358,17 +354,17 @@ const App = () => {
                                                 { Icon: Github, href: "https://github.com/ankushpahal-12" },
                                                 { Icon: Linkedin, href: "https://linkedin.com/in/pahalankush" },
                                                 { Icon: Mail, href: "#contact" },
-                                                { 
-                                                    Icon: Play, 
+                                                {
+                                                    Icon: Play,
                                                     label: "Video CV",
                                                     onClick: () => openMediaModal('video', 'https://www.w3schools.com/html/mov_bbb.mp4', 'Video CV'),
-                                                    mobileOnly: true 
+                                                    mobileOnly: true
                                                 },
-                                                { 
-                                                    Icon: FileText, 
-                                                    label: "CV", 
+                                                {
+                                                    Icon: FileText,
+                                                    label: "CV",
                                                     onClick: () => openMediaModal('pdf', cvPdf, 'Specialized CV'),
-                                                    mobileOnly: true 
+                                                    mobileOnly: true
                                                 }
                                             ].map((link, i) => (
                                                 <motion.a
@@ -381,20 +377,20 @@ const App = () => {
                                                         }
                                                     }}
                                                     whileHover={{ scale: 1.15, y: -4, rotate: 5 }}
-                                                    className={`w-12 h-12 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-500 hover:border-indigo-500/50 shadow-xl transition-all backdrop-blur-md ${link.mobileOnly ? 'lg:hidden' : ''}`}
+                                                    className={`magnetic-item w-12 h-12 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-500 hover:border-indigo-500/50 shadow-xl transition-all backdrop-blur-md ${link.mobileOnly ? 'lg:hidden' : ''}`}
                                                     title={link.label}
                                                 >
                                                     <link.Icon size={20} className={link.mobileOnly ? "text-indigo-500" : ""} />
                                                 </motion.a>
                                             ))}
-                                            
+
                                             <button
                                                 onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}
                                                 className="hidden lg:flex px-10 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl shadow-[0_10px_40px_rgba(79,70,229,0.3)] hover:shadow-[0_15px_60px_rgba(79,70,229,0.5)] hover:-translate-y-1.5 active:scale-95 transition-all duration-500 items-center justify-center gap-4 group relative overflow-hidden"
                                             >
                                                 {/* Shimmer Effect */}
                                                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer pointer-events-none"></div>
-                                                
+
                                                 <span className="relative z-10 flex items-center gap-3">
                                                     Explore Projects
                                                     <motion.div
@@ -404,7 +400,7 @@ const App = () => {
                                                         <ArrowRight size={18} className="text-white group-hover:scale-110 transition-transform" />
                                                     </motion.div>
                                                 </span>
-                                                
+
                                                 {/* Outer Glow Overlay */}
                                                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                             </button>
@@ -525,7 +521,7 @@ const App = () => {
                         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
                                 <div className="max-w-xl text-center md:text-left">
-                                    <h2 className="text-4xl font-black text-[var(--text-primary)] mb-6">Innovative Work</h2>
+                                    <h2 className="text-4xl font-black text-[var(--text-primary)] mb-6 section-title">Innovative Work</h2>
                                     <p className="text-[var(--text-secondary)] text-lg">
                                         Building robust solutions with cutting-edge technologies.
                                     </p>
@@ -559,7 +555,7 @@ const App = () => {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                 >
-                                    <h2 className="text-5xl md:text-6xl font-black text-[var(--text-primary)] mb-6 tracking-tight uppercase">
+                                    <h2 className="text-5xl md:text-6xl font-black text-[var(--text-primary)] mb-6 tracking-tight uppercase section-title">
                                         Technical <br />
                                         <span className="text-indigo-500">Expertise.</span>
                                     </h2>
@@ -672,7 +668,7 @@ const App = () => {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                 >
-                                    <h2 className="text-4xl font-black text-[var(--text-primary)] mb-8 tracking-tight">
+                                    <h2 className="text-4xl font-black text-[var(--text-primary)] mb-8 tracking-tight section-title">
                                         Let's build something <span className="text-indigo-500">remarkable.</span>
                                     </h2>
                                     <p className="text-[var(--text-secondary)] text-lg mb-12 max-w-lg leading-relaxed">
@@ -940,11 +936,11 @@ const App = () => {
                                             <div className="w-10 h-10 rounded-xl bg-[var(--bg-tertiary)] flex items-center justify-center border border-[var(--border-color)]">
                                                 <Phone size={18} />
                                             </div>
-                                            <span className="text-sm">+91 987 654 3210</span>
+                                            <span className="text-sm">+91 8571064140</span>
                                         </div>
                                     </li>
                                     <li className="pt-4">
-                                        <a 
+                                        <a
                                             href="https://drive.google.com/file/d/1DjeTpPTlevwMsqQMzmITPDJqiX_Vo2J9/view?usp=sharing"
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -990,7 +986,7 @@ const App = () => {
                     url={mediaModal.url}
                     title={mediaModal.title}
                 />
-            </div >
+            </div>
         </ReactLenis>
     );
 };

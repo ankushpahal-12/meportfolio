@@ -53,7 +53,7 @@ const About = () => {
                             <User size={14} />
                             Candidate Profile
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] tracking-tight mb-6 uppercase">
+                        <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] tracking-tight mb-6 uppercase section-title">
                             The Mind <br />
                             <span className="text-indigo-500">Building the Intelligence.</span>
                         </h2>
