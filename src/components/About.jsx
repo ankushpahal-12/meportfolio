@@ -65,9 +65,10 @@ const About = () => {
 
                     {/* Stat card - top left */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -100, scale: 0.8 }}
+                        whileInView={{ opacity: 1, x: 0, scale: 1 }}
                         viewport={{ once: true }}
+                        transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.2 }}
                         className="md:col-span-4 p-8 rounded-[2.5rem] bg-[var(--bg-tertiary)]/20 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group shadow-xl hover:bg-[var(--bg-tertiary)]/40 transition-all duration-500"
                     >
                         <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-1000">
@@ -89,10 +90,10 @@ const About = () => {
 
                     {/* Bio Content - center top */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: 100, scale: 0.8 }}
+                        whileInView={{ opacity: 1, x: 0, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
+                        transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.3 }}
                         className="md:col-span-8 p-10 rounded-[2.5rem] bg-[var(--bg-tertiary)]/20 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group shadow-xl hover:bg-[var(--bg-tertiary)]/40 transition-all duration-500"
                     >
                         <div className="flex flex-col sm:flex-row items-start gap-8 relative z-10">
@@ -120,10 +121,20 @@ const About = () => {
                     {journey.map((stage, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ 
+                                opacity: 0, 
+                                x: i === 0 ? -100 : (i === 2 ? 100 : 0), 
+                                y: i === 1 ? 100 : 0, 
+                                scale: 0.8 
+                            }}
+                            whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.1 * i }}
+                            transition={{ 
+                                type: "spring", 
+                                damping: 15, 
+                                stiffness: 100, 
+                                delay: 0.4 + (i * 0.1) 
+                            }}
                             className="md:col-span-4 p-8 rounded-[2.5rem] bg-[var(--bg-tertiary)]/10 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group/stage shadow-lg hover:border-indigo-500/30 transition-all duration-500 hover:bg-[var(--bg-tertiary)]/20"
                         >
                             <div className={`w-12 h-12 rounded-2xl ${stage.color} flex items-center justify-center mb-6 shadow-inner`}>
@@ -141,10 +152,10 @@ const About = () => {
 
                     {/* experience card - full width bottom */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: 100, scale: 0.9 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
+                        transition={{ type: "spring", damping: 20, stiffness: 80, delay: 0.6 }}
                         className="md:col-span-12 p-10 lg:p-14 rounded-[3.5rem] bg-gradient-to-br from-[var(--bg-tertiary)]/20 to-[var(--bg-primary)]/10 backdrop-blur-md border border-indigo-500/20 relative overflow-hidden group shadow-2xl hover:bg-[var(--bg-tertiary)]/30 transition-all duration-500"
                     >
                         <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Github, ExternalLink, Code2, Brain, Sparkles, Award, Eye } from 'lucide-react';
+import cert1 from '../assets/certificate.jpg';
 
 const Internships = ({ openMediaModal }) => {
     const internships = [
@@ -12,20 +13,22 @@ const Internships = ({ openMediaModal }) => {
             skills: ["LLM Scaling", "RAG Systems", "AI Architectures", "Prompt Engineering"],
             github: "https://github.com/ankushpahal-12",
             sourceCode: "https://github.com/ankushpahal-12",
-            certificate: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            // certificate: "",
+            certType: "pdf",
             type: "Internship",
             color: "from-indigo-600 via-blue-600 to-indigo-700",
             glowColor: "rgba(79, 70, 229, 0.4)"
         },
         {
-            title: "Machine Learning Trainee",
-            company: "All Soft Solutions in collaboration with IBM",
+            title: "Model Engineering Trainee",
+            company: "Live Training Phase",
             duration: "2 Months",
             description: "Deep-dive into industrial-grade model engineering. Mastered the lifecycle of high-performance models, from mathematical foundations to distributed training and edge deployment.",
             skills: ["Deep Learning", "Neural Nets", "Model Quantization", "GPU Compute"],
-            github: "https://github.com/ankushpahal-12",
-            sourceCode: "https://github.com/ankushpahal-12",
-            certificate: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            github: "https://github.com/ankushpahal-12/machine-learning-project",
+            sourceCode: "https://github.com/ankushpahal-12/machine-learning-project",
+            certificate: cert1,
+            certType: "image",
             type: "Live Training",
             color: "from-violet-600 via-purple-600 to-indigo-600",
             glowColor: "rgba(139, 92, 246, 0.4)"
@@ -141,7 +144,7 @@ const Internships = ({ openMediaModal }) => {
                                     </div>
 
                                     <button
-                                        onClick={() => openMediaModal('pdf', intern.certificate, `${intern.company} - Certificate`)}
+                                        onClick={() => openMediaModal(intern.certType || 'pdf', intern.certificate, `${intern.company} - Certificate`)}
                                         className="flex items-center gap-4 px-8 py-4 rounded-2xl bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[10px] font-black uppercase tracking-widest text-indigo-500 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all shadow-md group/btn"
                                     >
                                         <Eye size={18} className="group-hover/btn:scale-110 transition-transform" />
