@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 
 const About = () => {
+    const [hoveredIndex, setHoveredIndex] = React.useState(null);
+
     const journey = [
         {
             year: "Childhood",
@@ -69,7 +71,14 @@ const About = () => {
                         whileInView={{ opacity: 1, x: 0, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.2 }}
-                        className="md:col-span-4 p-8 rounded-[2.5rem] bg-[var(--bg-tertiary)]/20 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group shadow-xl hover:bg-[var(--bg-tertiary)]/40 transition-all duration-500"
+                        onMouseEnter={() => setHoveredIndex('snapshot')}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                        animate={
+                            hoveredIndex && hoveredIndex !== 'snapshot' 
+                            ? { opacity: 0.4, scale: 0.95, filter: 'blur(2px)' } 
+                            : { opacity: 1, scale: hoveredIndex === 'snapshot' ? 1.02 : 1, filter: 'blur(0px)' }
+                        }
+                        className="md:col-span-4 p-8 rounded-[2.5rem] bg-[var(--bg-tertiary)]/20 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group shadow-xl hover:bg-[var(--bg-tertiary)]/40 hover:border-indigo-500/30 transition-all duration-500"
                     >
                         <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity duration-1000">
                             <Sparkles size={120} className="text-indigo-500" />
@@ -94,7 +103,14 @@ const About = () => {
                         whileInView={{ opacity: 1, x: 0, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ type: "spring", damping: 15, stiffness: 100, delay: 0.3 }}
-                        className="md:col-span-8 p-10 rounded-[2.5rem] bg-[var(--bg-tertiary)]/20 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group shadow-xl hover:bg-[var(--bg-tertiary)]/40 transition-all duration-500"
+                        onMouseEnter={() => setHoveredIndex('bio')}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                        animate={
+                            hoveredIndex && hoveredIndex !== 'bio' 
+                            ? { opacity: 0.4, scale: 0.95, filter: 'blur(2px)' } 
+                            : { opacity: 1, scale: hoveredIndex === 'bio' ? 1.02 : 1, filter: 'blur(0px)' }
+                        }
+                        className="md:col-span-8 p-10 rounded-[2.5rem] bg-[var(--bg-tertiary)]/20 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group shadow-xl hover:bg-[var(--bg-tertiary)]/40 hover:border-indigo-500/30 transition-all duration-500"
                     >
                         <div className="flex flex-col sm:flex-row items-start gap-8 relative z-10">
                             <div className="w-16 h-16 rounded-3xl bg-indigo-600 flex-shrink-0 items-center justify-center text-white shadow-2xl shadow-indigo-600/30">
@@ -135,6 +151,13 @@ const About = () => {
                                 stiffness: 100, 
                                 delay: 0.4 + (i * 0.1) 
                             }}
+                            onMouseEnter={() => setHoveredIndex(`journey-${i}`)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                            animate={
+                                hoveredIndex && hoveredIndex !== `journey-${i}` 
+                                ? { opacity: 0.4, scale: 0.95, filter: 'blur(2px)' } 
+                                : { opacity: 1, scale: hoveredIndex === `journey-${i}` ? 1.05 : 1, filter: 'blur(0px)' }
+                            }
                             className="md:col-span-4 p-8 rounded-[2.5rem] bg-[var(--bg-tertiary)]/10 backdrop-blur-sm border border-[var(--border-color)] relative overflow-hidden group/stage shadow-lg hover:border-indigo-500/30 transition-all duration-500 hover:bg-[var(--bg-tertiary)]/20"
                         >
                             <div className={`w-12 h-12 rounded-2xl ${stage.color} flex items-center justify-center mb-6 shadow-inner`}>
@@ -156,6 +179,13 @@ const About = () => {
                         whileInView={{ opacity: 1, y: 0, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ type: "spring", damping: 20, stiffness: 80, delay: 0.6 }}
+                        onMouseEnter={() => setHoveredIndex('horizon')}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                        animate={
+                            hoveredIndex && hoveredIndex !== 'horizon' 
+                            ? { opacity: 0.4, scale: 0.98, filter: 'blur(2px)' } 
+                            : { opacity: 1, scale: hoveredIndex === 'horizon' ? 1.01 : 1, filter: 'blur(0px)' }
+                        }
                         className="md:col-span-12 p-10 lg:p-14 rounded-[3.5rem] bg-gradient-to-br from-[var(--bg-tertiary)]/20 to-[var(--bg-primary)]/10 backdrop-blur-md border border-indigo-500/20 relative overflow-hidden group shadow-2xl hover:bg-[var(--bg-tertiary)]/30 transition-all duration-500"
                     >
                         <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">

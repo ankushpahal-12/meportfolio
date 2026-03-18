@@ -70,7 +70,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                             key={link.id}
                             href={link.href}
                             className={`
-                                relative px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors
+                                relative px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors nav-item
                                 ${activeSection === link.id ? 'text-indigo-500' : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'}
                             `}
                         >
@@ -133,7 +133,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className={`
-                                        flex items-center justify-center p-4 rounded-2xl border transition-all text-[10px] font-bold uppercase tracking-widest
+                                        flex items-center justify-center p-4 rounded-2xl border transition-all text-[10px] font-bold uppercase tracking-widest nav-item
                                         ${activeSection === link.id
                                             ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-500'
                                             : 'bg-[var(--bg-tertiary)] border-[var(--border-color)] text-[var(--text-secondary)] hover:border-indigo-500/20'}

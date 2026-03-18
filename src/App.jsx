@@ -206,13 +206,32 @@ const App = () => {
         magneticElements.forEach(el => {
             animations.magnetic(el, { strength: 0.3 });
         });
+
+        // Floating elements
+        const floatingElements = document.querySelectorAll('.float-element');
+        floatingElements.forEach((el, i) => {
+            animations.float(el, { 
+                distance: 15 + (i * 5), 
+                duration: 3 + (i * 0.5),
+                delay: i * 0.2
+            });
+        });
+
+        // Navbar entrance
+        animations.staggerReveal('.nav-item', {
+            trigger: 'nav',
+            start: 'top top',
+            stagger: 0.1,
+            distance: 20,
+            duration: 0.8
+        });
     }, []);
 
     // Get AI & ML skills as primary subset
     const primarySkills = skills.find(cat => cat.category === "AI & ML")?.items || [];
 
     return (
-        <ReactLenis root>
+        <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
             <MagneticCursor />
             <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative overflow-hidden">
                 {/* Particle Background */}
@@ -231,8 +250,8 @@ const App = () => {
                         <div className="absolute inset-0 -z-10 overflow-hidden">
                             <div className="absolute inset-0 bg-grid-pattern opacity-[0.15] mask-radial-fade"></div>
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full">
-                                <div className="absolute top-[-10%] left-[10%] w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-                                <div className="absolute bottom-[-10%] right-[10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
+                                <div className="absolute top-[-10%] left-[10%] w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] animate-pulse-slow float-element"></div>
+                                <div className="absolute bottom-[-10%] right-[10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] animate-pulse-slow float-element" style={{ animationDelay: '3s' }}></div>
                             </div>
                         </div>
 
@@ -407,16 +426,33 @@ const App = () => {
                                                 {/* Outer Glow Overlay */}
                                                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                             </button>
+
+                                            <button
+                                                onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
+                                                className="hidden lg:flex px-10 py-4 bg-transparent border border-indigo-500/30 text-indigo-400 text-xs font-black uppercase tracking-[0.2em] rounded-xl hover:bg-indigo-500/10 hover:border-indigo-500/50 hover:-translate-y-1.5 active:scale-95 transition-all duration-500 items-center justify-center gap-3 group relative overflow-hidden"
+                                            >
+                                                <MessageSquare size={18} className="group-hover:scale-110 transition-transform" />
+                                                Contact Me
+                                            </button>
                                         </div>
 
-                                        <button
-                                            onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}
-                                            className="lg:hidden w-full px-8 py-5 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl shadow-[0_10px_30px_rgba(79,70,229,0.25)] hover:bg-indigo-500 transition-all flex items-center justify-center gap-4 relative overflow-hidden active:scale-95"
-                                        >
-                                            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer-slow pointer-events-none"></div>
-                                            Explore Projects
-                                            <ArrowRight size={18} />
-                                        </button>
+                                        <div className="lg:hidden w-full flex flex-col gap-3">
+                                            <button
+                                                onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}
+                                                className="w-full px-8 py-5 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl shadow-[0_10px_30px_rgba(79,70,229,0.25)] hover:bg-indigo-500 transition-all flex items-center justify-center gap-4 relative overflow-hidden active:scale-95"
+                                            >
+                                                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer-slow pointer-events-none"></div>
+                                                Explore Projects
+                                                <ArrowRight size={18} />
+                                            </button>
+                                            <button
+                                                onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
+                                                className="w-full px-8 py-5 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-black uppercase tracking-[0.2em] rounded-xl hover:bg-indigo-500/20 transition-all flex items-center justify-center gap-4 active:scale-95"
+                                            >
+                                                <MessageSquare size={18} />
+                                                Contact Me
+                                            </button>
+                                        </div>
                                     </motion.div>
                                 </motion.div>
                             </div>

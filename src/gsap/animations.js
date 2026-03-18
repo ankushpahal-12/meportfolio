@@ -35,8 +35,6 @@ export const animations = {
 
         return gsap.from(element, vars);
     },
-
-    // Staggered reveal for children
     staggerReveal: (elements, options = {}) => {
         const {
             stagger = 0.1,
@@ -75,7 +73,7 @@ export const animations = {
 
     // Magnetic effect for buttons/icons
     magnetic: (element, options = {}) => {
-        const { strength = 0.5, duration = 0.6 } = options;
+        const { strength = 0.5, duration = 0.8 } = options;
         const trigger = element;
         
         const move = (e) => {
@@ -88,7 +86,7 @@ export const animations = {
                 x: x * strength,
                 y: y * strength,
                 duration: duration,
-                ease: 'power2.out'
+                ease: 'power3.out'
             });
         };
         
@@ -96,7 +94,7 @@ export const animations = {
             gsap.to(element, {
                 x: 0,
                 y: 0,
-                duration: duration,
+                duration: duration * 1.5,
                 ease: 'elastic.out(1, 0.3)'
             });
         };
@@ -134,11 +132,9 @@ export const animations = {
             }
         });
     },
-
-    // Parallax effect for background elements
     parallax: (element, options = {}) => {
         const { speed = 0.2, trigger = element } = options;
-        
+
         return gsap.to(element, {
             y: (index, target) => -ScrollTrigger.maxScroll(window) * speed,
             ease: "none",
@@ -147,6 +143,48 @@ export const animations = {
                 start: "top bottom",
                 end: "bottom top",
                 scrub: true
+            }
+        });
+    },
+
+    // Floating animation
+    float: (element, options = {}) => {
+        const {
+            distance = 20,
+            duration = 3,
+            delay = 0,
+            ease = "sine.inOut"
+        } = options;
+
+        return gsap.to(element, {
+            y: `-=${distance}`,
+            duration,
+            delay,
+            ease,
+            repeat: -1,
+            yoyo: true
+        });
+    },
+
+    // Zoom reveal
+    zoomReveal: (element, options = {}) => {
+        const {
+            duration = 1.2,
+            scale = 0.8,
+            ease = 'power4.out',
+            trigger = element,
+            start = 'top 85%'
+        } = options;
+
+        return gsap.from(element, {
+            opacity: 0,
+            scale,
+            duration,
+            ease,
+            scrollTrigger: {
+                trigger,
+                start,
+                toggleActions: 'play none none reverse'
             }
         });
     }
