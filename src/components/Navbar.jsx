@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Code2, Sun, Moon } from 'lucide-react';
+import { Menu, X, Code2, Sun, Moon, Zap } from 'lucide-react';
 
 const Navbar = ({ theme, toggleTheme }) => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -92,9 +92,20 @@ const Navbar = ({ theme, toggleTheme }) => {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={toggleTheme}
-                        className="p-2 rounded-xl bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-indigo-500 transition-colors"
+                        title={theme === 'dark' ? 'Switch to Light' : theme === 'light' ? 'Switch to Cyber Mode' : 'Switch to Dark'}
+                        className={`p-2 rounded-xl transition-colors ${
+                            theme === 'cyber'
+                                ? 'bg-[#071a0c] border border-[rgba(0,255,65,0.3)] text-[#00ff41] shadow-[0_0_12px_rgba(0,255,65,0.3)]'
+                                : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:text-indigo-500'
+                        }`}
                     >
-                        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                        {theme === 'dark' ? (
+                            <Sun size={18} />
+                        ) : theme === 'light' ? (
+                            <Zap size={18} />
+                        ) : (
+                            <Moon size={18} />
+                        )}
                     </motion.button>
 
                     {/* Resume Button */}

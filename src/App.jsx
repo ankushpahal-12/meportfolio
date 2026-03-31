@@ -7,6 +7,9 @@ import Certifications from './components/Certifications';
 import About from './components/About';
 import Internships from './components/Internships';
 import MediaModal from './components/MediaModal';
+import KonamiEaster from './components/KonamiEaster';
+import ScrollProgress from './components/ScrollProgress';
+import AskAnkush from './components/AskAnkush';
 import { projects } from './data/projects';
 import { skills } from './data/skills';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
@@ -18,7 +21,7 @@ import {
 } from 'lucide-react';
 import meImage from './assets/me.png';
 import cvPdf from './assets/ankushcv.pdf';
-import ParticleBackground from './components/ParticleBackground';
+import StarField from './components/StarField';
 import { ReactLenis } from '@studio-freight/react-lenis';
 import { gsap, ScrollTrigger } from './gsap';
 import { useGSAP } from './gsap/useGSAP';
@@ -90,6 +93,7 @@ const App = () => {
         url: '',
         title: ''
     });
+
 
     // 3D Card Hover Effect State
     const cardRef = useRef(null);
@@ -165,7 +169,11 @@ const App = () => {
     };
 
     const toggleTheme = () => {
-        setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+        setTheme(prev => {
+            if (prev === 'dark') return 'light';
+            if (prev === 'light') return 'cyber';
+            return 'dark';
+        });
     };
 
     // GSAP Scroll Animations
@@ -210,8 +218,8 @@ const App = () => {
         // Floating elements
         const floatingElements = document.querySelectorAll('.float-element');
         floatingElements.forEach((el, i) => {
-            animations.float(el, { 
-                distance: 15 + (i * 5), 
+            animations.float(el, {
+                distance: 15 + (i * 5),
                 duration: 3 + (i * 0.5),
                 delay: i * 0.2
             });
@@ -233,9 +241,12 @@ const App = () => {
     return (
         <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
             <MagneticCursor />
+            <KonamiEaster />
+            <ScrollProgress />
+            <AskAnkush />
             <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative overflow-hidden">
-                {/* Particle Background */}
-                <ParticleBackground theme={theme} />
+                {/* Star Field Background */}
+                <StarField theme={theme} />
 
                 <Navbar theme={theme} toggleTheme={toggleTheme} />
 
@@ -695,6 +706,7 @@ const App = () => {
                         </div>
                     </section>
 
+
                     {/* Contact Section */}
                     <section id="contact" className="py-24 lg:py-40 relative">
                         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--border-color)] to-transparent"></div>
@@ -873,6 +885,14 @@ const App = () => {
                         </div>
                     </section>
                 </main>
+
+                <MediaModal
+                    isOpen={mediaModal.isOpen}
+                    onClose={closeMediaModal}
+                    type={mediaModal.type}
+                    url={mediaModal.url}
+                    title={mediaModal.title}
+                />
 
                 {/* Extraordinary Footer Section */}
                 <footer className="relative pt-20 pb-10 overflow-hidden border-t border-[var(--border-color)]">

@@ -5,13 +5,14 @@ import cert1 from '../assets/cert1.png';
 import cert2 from '../assets/cert2.png';
 import cert3 from '../assets/cert3.png';
 import cert4 from '../assets/cert4.png';
-
+import cert5 from '../assets/cert5.png';
+// import cert6 from '../assets/cert6.png';
 const DriveIcon = ({ size = 20, className = "" }) => (
-    <svg 
-        width={size} 
-        height={size} 
-        viewBox="0 0 24 24" 
-        fill="currentColor" 
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
     >
@@ -63,6 +64,32 @@ const Certifications = ({ openMediaModal }) => {
             driveLink: "https://drive.google.com/file/d/1SVjdIuDcWsBxBfxXTSZ9YuPJZtkYVY7j/view?usp=sharing",
             verificationLink: "https://drive.google.com/file/d/1SVjdIuDcWsBxBfxXTSZ9YuPJZtkYVY7j/view?usp=sharing",
             color: "from-teal-500 to-emerald-500"
+        },
+        // {
+        //     title: "MongoDB & Python Certified Developer",
+        //     issuer: "MongoDB University",
+        //     date: "2025",
+        //     unit: "Professional",
+        //     badge: "MongoDB Certified",
+        //     icon: <ShieldCheck className="w-6 h-6" />,
+        //     image: cert2,
+        //     driveLink: "https://drive.google.com/file/d/1ZP_wWVW6Kz3Pfs96WMarI0MyGqPmdZbE/view?usp=sharing",
+        //     verificationLink: "https://drive.google.com/file/d/1ZP_wWVW6Kz3Pfs96WMarI0MyGqPmdZbE/view?usp=sharing",
+        //     color: "from-green-500 to-emerald-500",
+        //     tags: ["MongoDB", "Python", "NoSQL"]
+        // },
+        {
+            title: "IBM RAG and AGENTIC AI",
+            issuer: "Coursera",
+            date: "2026",
+            unit: "Advanced",
+            badge: "Agentic AI Certified",
+            icon: <Cpu className="w-6 h-6" />,
+            image: cert5,
+            driveLink: "https://drive.google.com/file/d/1x5rJwdDURXfiUILKKJC233DJn1p-uzYc/view?usp=sharing",
+            verificationLink: "https://drive.google.com/file/d/1x5rJwdDURXfiUILKKJC233DJn1p-uzYc/view?usp=sharing",
+            color: "from-violet-500 to-fuchsia-500",
+            tags: ["Agentic Ai", "RAG", "LangChain"]
         }
     ];
 
@@ -90,7 +117,7 @@ const Certifications = ({ openMediaModal }) => {
                     </motion.h2>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 group/list">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 group/list">
                     {certifications.map((cert, index) => (
                         <motion.div
                             key={index}
@@ -130,9 +157,18 @@ const Certifications = ({ openMediaModal }) => {
                                 <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover/card:text-indigo-500 transition-colors">
                                     {cert.title}
                                 </h3>
-                                <p className="text-[var(--text-tertiary)] text-xs font-bold uppercase tracking-widest mb-4">
+                                <p className="text-[var(--text-tertiary)] text-xs font-bold uppercase tracking-widest mb-2">
                                     {cert.issuer} • {cert.date}
                                 </p>
+                                {cert.tags && (
+                                    <div className="flex flex-wrap gap-1.5 mb-3">
+                                        {cert.tags.map((tag, ti) => (
+                                            <span key={ti} className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-gradient-to-r ${cert.color} text-white opacity-90`}>
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                                 <div className="mt-auto pt-6 border-t border-[var(--border-color)] flex items-center justify-between">
                                     <button
                                         onClick={(e) => {

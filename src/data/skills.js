@@ -48,8 +48,26 @@ export const skills = [
             {
                 name: "Jupyter",
                 icon: "devicon-jupyter-plain colored",
-                color: "#F37626", // Orange
+                color: "#F37626",
                 description: "Project Jupyter exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages."
+            },
+            {
+                name: "LangChain",
+                icon: "devicon-python-plain colored",
+                color: "#1C3C3C",
+                description: "Framework for developing applications powered by language models, enabling RAG pipelines, agents, and chains."
+            },
+            {
+                name: "RAG Pipelines",
+                icon: "devicon-python-plain colored",
+                color: "#6366F1",
+                description: "Retrieval-Augmented Generation pipeline design and deployment for production-grade AI knowledge systems."
+            },
+            {
+                name: "MongoDB (Python)",
+                icon: "devicon-mongodb-plain colored",
+                color: "#47A248",
+                description: "MongoDB Certified Developer – integrating MongoDB Atlas with Python for scalable AI-driven data persistence."
             }
         ]
     },
@@ -132,6 +150,47 @@ export const skills = [
                 icon: "devicon-postgresql-plain colored",
                 color: "#4169E1", // Blue
                 description: "The World's Most Advanced Open Source Relational Database."
+            }
+        ]
+    },
+    {
+        category: "Agentic AI & Automation",
+        items: [
+            {
+                name: "n8n",
+                icon: "devicon-nodejs-plain colored",
+                color: "#EA4B71",
+                description: "Open-source workflow automation platform enabling AI agent orchestration and low-code integration pipelines."
+            },
+            {
+                name: "Blue Prism",
+                icon: "devicon-jenkins-plain colored",
+                color: "#1EB8E7",
+                description: "Enterprise-grade RPA platform for intelligent process automation and digital workforce management."
+            },
+            {
+                name: "Automation Anywhere 350",
+                icon: "devicon-python-plain colored",
+                color: "#FF6C37",
+                description: "Automation Anywhere A360 certified — building enterprise bots, cognitive automation, and IQ Bot solutions."
+            },
+            {
+                name: "LangChain Agents",
+                icon: "devicon-python-plain colored",
+                color: "#1C3C3C",
+                description: "Building multi-step reasoning agents with LangChain, tool-calling, memory, and autonomous decision loops."
+            },
+            {
+                name: "RAG Systems",
+                icon: "devicon-python-plain colored",
+                color: "#6366F1",
+                description: "End-to-end Retrieval-Augmented Generation systems — vector databases, embeddings, and context-aware LLM responses."
+            },
+            {
+                name: "CrewAI / AutoGen",
+                icon: "devicon-python-plain colored",
+                color: "#8B5CF6",
+                description: "Multi-agent orchestration frameworks for autonomous collaborative AI pipelines and agentic workflows."
             }
         ]
     }
