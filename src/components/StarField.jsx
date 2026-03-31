@@ -92,8 +92,6 @@ const StarField = ({ theme }) => {
         let scrollY = 0;
         const handleScroll = () => { scrollY = window.scrollY; };
         window.addEventListener('scroll', handleScroll, { passive: true });
-
-        // ─── main animation loop ──────────────────────────────────────
         let raf;
         let lastTime = 0;
 
@@ -107,10 +105,9 @@ const StarField = ({ theme }) => {
             const state = stateRef.current;
             if (!state) return;
 
-            // ── clear ──────────────────────────────────────────────────
-            ctx.clearRect(0, 0, W, H);
-
-            // ── nebula glow ────────────────────────────────────────────
+            const bgColor = theme === 'light' ? '#ffffff' : theme === 'cyber' ? '#010a04' : '#050a18';
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, W, H);
             state.nebula.forEach(n => {
                 const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, Math.max(n.rx, n.ry));
                 grad.addColorStop(0, n.color);
@@ -123,8 +120,6 @@ const StarField = ({ theme }) => {
                 ctx.fill();
                 ctx.restore();
             });
-
-            // ── stars (multi-layer with parallax) ─────────────────────
             state.layers.forEach((stars, li) => {
                 const parallaxOffset = scrollY * LAYERS[li].speedFactor * 0.5;
                 stars.forEach(s => {
@@ -134,7 +129,6 @@ const StarField = ({ theme }) => {
                         s.twinkleDir *= -1;
                     }
 
-                    // slow drift
                     s.x += s.driftX * (dt / 16);
                     s.y += s.driftY * (dt / 16) * s.speedFactor * 15;
 
@@ -144,8 +138,6 @@ const StarField = ({ theme }) => {
                     if (s.y > H) { s.x = rand(0, W); s.y = -2; }
 
                     const drawY = (s.y - parallaxOffset % H + H) % H;
-
-                    // draw glow halo for close stars
                     if (s.r > 1.3) {
                         ctx.save();
                         ctx.globalAlpha = s.opacity * 0.3;
@@ -157,8 +149,6 @@ const StarField = ({ theme }) => {
                         ctx.fill();
                         ctx.restore();
                     }
-
-                    // draw star core
                     ctx.save();
                     ctx.globalAlpha = s.opacity;
                     ctx.beginPath();
@@ -168,8 +158,6 @@ const StarField = ({ theme }) => {
                     ctx.restore();
                 });
             });
-
-            // ── shooting stars ─────────────────────────────────────────
             if (timestamp - state.lastShootingTime > SHOOTING_STAR_INTERVAL_MS + rand(-800, 800)) {
                 state.shooting.push(spawnShootingStar(W, H));
                 state.lastShootingTime = timestamp;
@@ -215,8 +203,6 @@ const StarField = ({ theme }) => {
                 ctx.restore();
             });
         };
-
-        // ─── init ─────────────────────────────────────────────────────
         window.addEventListener('resize', resize);
         resize();
         raf = requestAnimationFrame(draw);
@@ -233,7 +219,7 @@ const StarField = ({ theme }) => {
             ref={canvasRef}
             aria-hidden="true"
             className="fixed inset-0 pointer-events-none"
-            style={{ zIndex: -10 }}
+            style={{ zIndex: 1 }}
         />
     );
 };

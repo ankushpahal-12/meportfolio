@@ -244,9 +244,8 @@ const App = () => {
             <KonamiEaster />
             <ScrollProgress />
             <AskAnkush />
-            <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative overflow-hidden">
-                {/* Star Field Background */}
-                <StarField theme={theme} />
+            <StarField theme={theme} />
+            <div className="min-h-screen bg-transparent text-[var(--text-primary)] transition-colors duration-300 relative overflow-hidden z-[2]">
 
                 <Navbar theme={theme} toggleTheme={toggleTheme} />
 
