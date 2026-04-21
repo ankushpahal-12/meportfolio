@@ -1,55 +1,89 @@
-
 export const skills = [
+    {
+        category: "Main Skills",
+        items: [
+            {
+                name: "Python",
+                icon: "devicon-python-plain colored",
+                color: "#3776AB",
+                description: "Primary programming language used for AI systems, backend services, automation, and data processing."
+            },
+            {
+                name: "AI & ML",
+                icon: "devicon-tensorflow-original colored",
+                color: "#7C3AED",
+                description: "Core machine learning and AI capabilities, including model building, evaluation, and intelligent decision support."
+            },
+            {
+                name: "Agentic AI Systems",
+                icon: "devicon-python-plain colored",
+                color: "#0EA5E9",
+                description: "Multi-agent architectures for planning, retrieval, critique, and decision-making workflows."
+            },
+            {
+                name: "Retrieval-Augmented Generation (RAG)",
+                icon: "devicon-python-plain colored",
+                color: "#6366F1",
+                description: "Designing grounded retrieval pipelines with embeddings, context compression, and ranked evidence."
+            },
+            {
+                name: "FastAPI Backend Development",
+                icon: "devicon-fastapi-plain colored",
+                color: "#009688",
+                description: "Building high-performance Python APIs for AI services, orchestration, and system integration."
+            }
+        ]
+    },
     {
         category: "AI & ML",
         items: [
             {
                 name: "TensorFlow",
                 icon: "devicon-tensorflow-original colored",
-                color: "#FF6F00", // Orange
-                description: "An end-to-end open source platform for machine learning. specific focus on training deep neural networks and production deployment."
+                color: "#FF6F00",
+                description: "An end-to-end open source platform for machine learning, with a focus on training deep neural networks and production deployment."
             },
             {
                 name: "PyTorch",
                 icon: "devicon-pytorch-original colored",
-                color: "#EE4C2C", // Red
+                color: "#EE4C2C",
                 description: "An open source machine learning framework that accelerates the path from research prototyping to production deployment."
             },
             {
                 name: "Scikit-learn",
                 icon: "devicon-scikitlearn-plain colored",
-                color: "#F7931E", // Orange
+                color: "#F7931E",
                 description: "Simple and efficient tools for predictive data analysis. Accessible to everybody, and reusable in various contexts."
             },
             {
                 name: "Pandas",
                 icon: "devicon-pandas-plain colored",
-                color: "#150458", // Dark Blue
+                color: "#150458",
                 description: "A fast, powerful, flexible and easy to use open source data analysis and manipulation tool."
             },
             {
                 name: "NumPy",
                 icon: "devicon-numpy-plain colored",
-                color: "#013243", // Blue
-                description: "The fundamental package for scientific computing with Python. specific focus on array processing."
+                color: "#013243",
+                description: "The fundamental package for scientific computing with Python, with a focus on array processing."
             },
             {
                 name: "OpenCV",
                 icon: "devicon-opencv-plain colored",
-                color: "#5C3EE8", // Blue
-                description: "Open Source Computer Vision Library. specific focus on real-time computer vision."
+                color: "#5C3EE8",
+                description: "Open Source Computer Vision Library, with a focus on real-time computer vision."
             },
             {
                 name: "Keras",
                 icon: "devicon-keras-plain colored",
-                color: "#D00000", // Red
+                color: "#D00000",
                 description: "Deep Learning for humans. Keras is an API designed for human beings, not machines."
             },
             {
                 name: "Jupyter",
                 icon: "devicon-jupyter-plain colored",
                 color: "#F37626",
-                description: "Project Jupyter exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages."
+                description: "Open-source software, open standards, and services for interactive computing across dozens of programming languages."
             },
             {
                 name: "LangChain",
@@ -68,7 +102,7 @@ export const skills = [
                 icon: "devicon-mongodb-plain colored",
                 color: "#47A248",
                 description: "MongoDB Certified Developer – integrating MongoDB Atlas with Python for scalable AI-driven data persistence."
-            }
+            },
         ]
     },
     {
@@ -116,10 +150,34 @@ export const skills = [
         category: "Tools & frameworks",
         items: [
             {
+                name: "FastAPI",
+                icon: "devicon-fastapi-plain colored",
+                color: "#009688",
+                description: "High-performance Python APIs for AI services, agent orchestration, and backend integration."
+            },
+            {
+                name: "WebSockets",
+                icon: "devicon-python-plain colored",
+                color: "#0F766E",
+                description: "Real-time event streaming for live processing updates and collaborative dashboards."
+            },
+            {
                 name: "React",
                 icon: "devicon-react-original colored",
                 color: "#61DAFB", // Cyan
-                description: "A JavaScript library for building user interfaces. specific focus on component-based architecture."
+                description: "A JavaScript library for building responsive user interfaces with component-based architecture."
+            },
+            {
+                name: "MCP Integration",
+                icon: "devicon-python-plain colored",
+                color: "#4F46E5",
+                description: "Model Context Protocol integrations for tool-aware, connected AI workflows."
+            },
+            {
+                name: "n8n",
+                icon: "devicon-nodejs-plain colored",
+                color: "#EA4B71",
+                description: "Workflow automation for email routing, scheduling, and system integrations."
             },
             {
                 name: "Node.js",
@@ -146,6 +204,18 @@ export const skills = [
                 description: "Get your ideas to market faster with a developer data platform built on the leading modern database. MongoDB makes working with data easy."
             },
             {
+                name: "Pinecone / ChromaDB",
+                icon: "devicon-python-plain colored",
+                color: "#7C3AED",
+                description: "Vector databases for similarity search, retrieval, and RAG-powered knowledge access."
+            },
+            {
+                name: "Neo4j",
+                icon: "devicon-python-plain colored",
+                color: "#10B981",
+                description: "Knowledge graph storage for relationship-aware retrieval and structured reasoning."
+            },
+            {
                 name: "PostgreSQL",
                 icon: "devicon-postgresql-plain colored",
                 color: "#4169E1", // Blue
@@ -163,34 +233,34 @@ export const skills = [
                 description: "Open-source workflow automation platform enabling AI agent orchestration and low-code integration pipelines."
             },
             {
-                name: "Blue Prism",
-                icon: "devicon-jenkins-plain colored",
-                color: "#1EB8E7",
-                description: "Enterprise-grade RPA platform for intelligent process automation and digital workforce management."
+                name: "Google Calendar API",
+                icon: "devicon-googlecloud-plain colored",
+                color: "#4285F4",
+                description: "Scheduling automation for interview coordination and calendar event creation."
             },
             {
-                name: "Automation Anywhere 350",
-                icon: "devicon-python-plain colored",
-                color: "#FF6C37",
-                description: "Automation Anywhere A360 certified — building enterprise bots, cognitive automation, and IQ Bot solutions."
+                name: "Gmail API",
+                icon: "devicon-googlecloud-plain colored",
+                color: "#EA4335",
+                description: "Automated communication workflows for candidate outreach and interview updates."
             },
             {
-                name: "LangChain Agents",
+                name: "Workflow Orchestration",
                 icon: "devicon-python-plain colored",
                 color: "#1C3C3C",
-                description: "Building multi-step reasoning agents with LangChain, tool-calling, memory, and autonomous decision loops."
+                description: "Coordinating agents, APIs, and system actions across the hiring pipeline."
             },
             {
-                name: "RAG Systems",
-                icon: "devicon-python-plain colored",
-                color: "#6366F1",
-                description: "End-to-end Retrieval-Augmented Generation systems — vector databases, embeddings, and context-aware LLM responses."
+                name: "Real-Time Dashboards",
+                icon: "devicon-react-original colored",
+                color: "#61DAFB",
+                description: "Live visibility into screening progress, matching results, and human review queues."
             },
             {
-                name: "CrewAI / AutoGen",
+                name: "Feedback Loops",
                 icon: "devicon-python-plain colored",
                 color: "#8B5CF6",
-                description: "Multi-agent orchestration frameworks for autonomous collaborative AI pipelines and agentic workflows."
+                description: "Time-decayed learning rules that improve decisions from reviewer feedback."
             }
         ]
     }

@@ -13,11 +13,13 @@ import AskAnkush from './components/AskAnkush';
 import { projects } from './data/projects';
 import { skills } from './data/skills';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 import {
     Github, Linkedin, Mail, ArrowRight, ChevronRight, Code2,
     Cpu, Brain, Sparkles, MessageSquare, Copy, Check,
-    Phone, MapPin, Send, Twitter, ExternalLink, Play, FileText, Download
+    Phone, MapPin, Send, Twitter, ExternalLink, Play, FileText, Download,
+    CheckCircle2, TriangleAlert, X
 } from 'lucide-react';
 import meImage from './assets/me.png';
 import cvPdf from './assets/ankushcv.pdf';
@@ -26,6 +28,7 @@ import { ReactLenis } from '@studio-freight/react-lenis';
 import { gsap, ScrollTrigger } from './gsap';
 import { useGSAP } from './gsap/useGSAP';
 import { animations } from './gsap/animations';
+import { AnimatePresence } from 'framer-motion';
 
 const MagneticCursor = () => {
     const cursorRef = useRef(null);
@@ -77,6 +80,53 @@ const MagneticCursor = () => {
             <div ref={cursorRef} className="fixed top-0 left-0 w-2 h-2 bg-indigo-500 rounded-full pointer-events-none z-[9999] mix-blend-difference" style={{ transform: 'translate(-50%, -50%)' }} />
             <div ref={cursorFollowerRef} className="fixed top-0 left-0 w-8 h-8 border border-indigo-500/50 rounded-full pointer-events-none z-[9998] transition-transform duration-150 ease-out" style={{ transform: 'translate(-50%, -50%)' }} />
         </>
+    );
+};
+
+const Toast = ({ toast, onClose }) => {
+    return (
+        <AnimatePresence>
+            {toast ? (
+                <motion.div
+                    initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 20, scale: 0.96 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    className="fixed bottom-6 right-6 z-[120] w-[calc(100vw-2rem)] max-w-md"
+                >
+                    {(() => {
+                        const isSuccess = toast.type === 'success';
+
+                        return (
+                            <div className={`relative overflow-hidden rounded-2xl border shadow-2xl backdrop-blur-xl ${isSuccess ? 'border-emerald-400/30 bg-emerald-500/10' : 'border-rose-400/30 bg-rose-500/10'}`}>
+                                <div className={`absolute inset-y-0 left-0 w-1 ${isSuccess ? 'bg-emerald-400' : 'bg-rose-400'}`} />
+                                <div className="flex items-start gap-4 p-4 pr-12">
+                                    <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${isSuccess ? 'bg-emerald-400/15 text-emerald-300' : 'bg-rose-400/15 text-rose-300'}`}>
+                                        {isSuccess ? <CheckCircle2 size={22} /> : <TriangleAlert size={22} />}
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                        <p className="text-sm font-black uppercase tracking-[0.2em] text-[var(--text-primary)]">
+                                            {isSuccess ? 'Message sent' : 'Message failed'}
+                                        </p>
+                                        <p className="mt-1 text-sm leading-6 text-[var(--text-secondary)]">
+                                            {toast.message}
+                                        </p>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={onClose}
+                                        className="absolute right-3 top-3 rounded-lg p-2 text-[var(--text-secondary)] transition-colors hover:bg-white/10 hover:text-[var(--text-primary)]"
+                                        aria-label="Dismiss notification"
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    })()}
+                </motion.div>
+            ) : null}
+        </AnimatePresence>
     );
 };
 
@@ -142,12 +192,35 @@ const App = () => {
     }, [theme]);
 
     const [copiedField, setCopiedField] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [toast, setToast] = useState(null);
+    const toastTimerRef = useRef(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        subject: '',
         message: ''
     });
+
+    useEffect(() => {
+        return () => {
+            if (toastTimerRef.current) {
+                clearTimeout(toastTimerRef.current);
+            }
+        };
+    }, []);
+
+    const showToast = (type, message) => {
+        if (toastTimerRef.current) {
+            clearTimeout(toastTimerRef.current);
+        }
+
+        setToast({ type, message });
+
+        toastTimerRef.current = window.setTimeout(() => {
+            setToast(null);
+            toastTimerRef.current = null;
+        }, 4500);
+    };
 
     const handleCopy = (text, field) => {
         navigator.clipboard.writeText(text);
@@ -160,12 +233,58 @@ const App = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Placeholder for email service integration
-        console.log('Form submitted:', formData);
-        alert('Message sent successfully!');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setIsSubmitting(true);
+
+        try {
+            const adminParams = {
+                name: formData.name,
+                email: formData.email,
+                message: formData.message,
+                from_name: formData.name,
+                from_email: formData.email,
+                subject: 'Portfolio Enquiry',
+                message: formData.message,
+                to_name: 'Ankush Pahal',
+                to_email: 'ankushpayal58@gmail.com'
+            };
+
+            await emailjs.send(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_ADMIN_TEMPLATE_ID,
+                adminParams,
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            );
+
+            emailjs.send(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID,
+                {
+                    name: formData.name,
+                    email: formData.email,
+                    message: `Hi ${formData.name}, thanks for contacting me. I have received your message and will get back to you soon.`,
+                    from_name: 'Ankush Pahal',
+                    from_email: 'ankushpayal58@gmail.com',
+                    subject: 'Thanks for reaching out',
+                    message: `Hi ${formData.name}, thanks for contacting me. I have received your message and will get back to you soon.`,
+                    to_name: formData.name,
+                    to_email: formData.email,
+                    reply_to: 'ankushpayal58@gmail.com'
+                },
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+            ).catch((error) => {
+                console.error('Auto-reply email error:', error);
+            });
+
+            showToast('success', 'Your message has been sent. I will reply soon.');
+            setFormData({ name: '', email: '', message: '' });
+        } catch (error) {
+            console.error('Contact form error:', error);
+            showToast('error', 'Message could not be sent right now. Please email me directly at ankushpayal58@gmail.com.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const toggleTheme = () => {
@@ -235,12 +354,13 @@ const App = () => {
         });
     }, []);
 
-    // Get AI & ML skills as primary subset
-    const primarySkills = skills.find(cat => cat.category === "AI & ML")?.items || [];
+    // Get the curated main skills for the visible skills section
+    const primarySkills = skills.find(cat => cat.category === "Main Skills")?.items || [];
 
     return (
         <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
             <MagneticCursor />
+            <Toast toast={toast} onClose={() => setToast(null)} />
             <KonamiEaster />
             <ScrollProgress />
             <AskAnkush />
@@ -271,6 +391,7 @@ const App = () => {
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
                                     animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                                    whileHover={{ scale: 1.015, y: -4 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                     className="relative flex justify-center lg:justify-end perspective-[1000px] order-1 lg:order-2"
                                 >
@@ -280,6 +401,41 @@ const App = () => {
                                         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] aspect-square bg-indigo-500/10 rounded-full blur-[80px] z-0 pointer-events-none"
                                     />
+
+                                    <motion.div
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+                                        className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]"
+                                    >
+                                        <div className="w-[24rem] h-[24rem] rounded-full border border-dashed border-indigo-500/10" />
+                                    </motion.div>
+
+                                    <motion.div
+                                        animate={{ y: [0, -10, 0], x: [0, 6, 0] }}
+                                        transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                                        className="absolute -top-4 left-0 sm:left-6 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
+                                    >
+                                        <Brain size={18} className="text-indigo-400" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[var(--text-secondary)]">Agentic AI</span>
+                                    </motion.div>
+
+                                    <motion.div
+                                        animate={{ y: [0, 12, 0], x: [0, -8, 0] }}
+                                        transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+                                        className="absolute bottom-10 right-0 sm:right-8 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
+                                    >
+                                        <Cpu size={18} className="text-indigo-400" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[var(--text-secondary)]">RAG Systems</span>
+                                    </motion.div>
+
+                                    <motion.div
+                                        animate={{ y: [0, -8, 0] }}
+                                        transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
+                                        className="absolute top-1/2 -right-2 sm:right-12 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
+                                    >
+                                        <Code2 size={18} className="text-indigo-400" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[var(--text-secondary)]">FastAPI</span>
+                                    </motion.div>
 
                                     {/* 3D Interactive Card Container */}
                                     <motion.div
@@ -345,7 +501,7 @@ const App = () => {
                                         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8 shadow-inner"
                                     >
                                         <Sparkles size={14} className="animate-spin-slow text-indigo-500" />
-                                        Next-Gen Intelligence
+                                        AI Engineer | Agentic Systems
                                     </motion.div>
 
                                     <motion.h1
@@ -367,7 +523,7 @@ const App = () => {
                                         className="relative block lg:inline-block mb-10 group text-center lg:text-left"
                                     >
                                         <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-400 animate-gradient-scroll py-1">
-                                            Architecting AI Systems for the Future.
+                                            Agentic AI, RAG, FastAPI, and Automation.
                                         </h2>
                                         <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 w-24 h-1.5 bg-indigo-600 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)]"></div>
                                     </motion.div>
@@ -570,9 +726,9 @@ const App = () => {
                         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
                                 <div className="max-w-xl text-center md:text-left">
-                                    <h2 className="text-4xl font-black text-[var(--text-primary)] mb-6 section-title">Innovative Work</h2>
+                                    <h2 className="text-4xl font-black text-[var(--text-primary)] mb-6 section-title">Selected Projects</h2>
                                     <p className="text-[var(--text-secondary)] text-lg">
-                                        Building robust solutions with cutting-edge technologies.
+                                        Case studies focused on measurable results, technical depth, and practical impact.
                                     </p>
                                 </div>
                                 <button className="text-indigo-400 font-bold flex items-center gap-2 hover:gap-3 transition-all group px-6 py-3 rounded-xl bg-[var(--bg-tertiary)] hover:bg-[var(--bg-tertiary)]/80">
@@ -622,7 +778,7 @@ const App = () => {
                                         className="px-10 py-5 bg-indigo-600/10 border border-indigo-500/30 text-indigo-400 font-black uppercase tracking-widest rounded-2xl hover:bg-indigo-600 hover:text-white transition-all flex items-center gap-4 shadow-2xl group"
                                     >
                                         <Code2 size={24} className="group-hover:rotate-12 transition-transform" />
-                                        Detailed Catalog
+                                        Full Skills Catalog
                                     </button>
                                 </motion.div>
                             </div>
@@ -651,8 +807,35 @@ const App = () => {
                                         <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/0 to-indigo-600/0 group-hover:from-indigo-600/10 group-hover:to-transparent transition-all pointer-events-none duration-500"></div>
 
                                         <div className="relative z-10 flex flex-col items-center text-center">
-                                            <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-[var(--bg-primary)] flex items-center justify-center mb-4 md:mb-6 shadow-xl group-hover:shadow-indigo-500/30 group-hover:scale-110 transition-all duration-500 border border-[var(--border-color)] group-hover:border-indigo-500/40">
-                                                <i className={`${skill.icon} text-3xl md:text-4xl text-indigo-500 group-hover:rotate-6 transition-transform duration-500`}></i>
+                                            <div className="relative w-16 h-16 md:w-20 md:h-20 mb-4 md:mb-6 flex items-center justify-center">
+                                                <motion.svg
+                                                    viewBox="0 0 100 100"
+                                                    className="absolute inset-0 w-full h-full"
+                                                    animate={{ rotate: 360 }}
+                                                    transition={{ duration: 14 + (i * 0.6), repeat: Infinity, ease: 'linear' }}
+                                                >
+                                                    <circle
+                                                        cx="50"
+                                                        cy="50"
+                                                        r="43"
+                                                        fill="none"
+                                                        stroke="rgba(99, 102, 241, 0.12)"
+                                                        strokeWidth="2"
+                                                    />
+                                                    <circle
+                                                        cx="50"
+                                                        cy="50"
+                                                        r="43"
+                                                        fill="none"
+                                                        stroke="rgba(99, 102, 241, 0.45)"
+                                                        strokeWidth="2"
+                                                        strokeDasharray="10 12"
+                                                        strokeLinecap="round"
+                                                    />
+                                                </motion.svg>
+                                                <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-[var(--bg-primary)] flex items-center justify-center shadow-xl group-hover:shadow-indigo-500/30 group-hover:scale-110 transition-all duration-500 border border-[var(--border-color)] group-hover:border-indigo-500/40">
+                                                    <i className={`${skill.icon} text-3xl md:text-4xl text-indigo-500 group-hover:rotate-6 transition-transform duration-500`}></i>
+                                                </div>
                                             </div>
                                             <h4 className="text-sm md:text-xl font-black text-[var(--text-primary)] mb-2 uppercase tracking-tighter group-hover:text-indigo-400 transition-colors leading-tight">{skill.name}</h4>
                                             <div className="w-8 md:w-10 h-1 bg-[var(--border-color)] group-hover:bg-indigo-500 group-hover:w-16 md:group-hover:w-20 transition-all duration-500 rounded-full mb-3 md:mb-4"></div>
@@ -685,11 +868,11 @@ const App = () => {
                                             Advanced Strategy
                                         </div>
                                         <h3 className="text-3xl md:text-5xl font-black text-[var(--text-primary)] mb-8 tracking-tight leading-none uppercase">
-                                            Mastering the <br />
-                                            <span className="text-indigo-500">AI Frontier.</span>
+                                                Building AI Systems <br />
+                                                <span className="text-indigo-500">that ship.</span>
                                         </h3>
                                         <p className="text-[var(--text-secondary)] text-lg md:text-xl leading-relaxed font-medium mb-10 opacity-80">
-                                            Specializing in Deep Learning architectures, custom LLM fine-tuning, and production-grade RAG systems. I build intelligent solutions that scale with integrity and performance.
+                                                I specialize in agentic AI workflows, retrieval-augmented systems, FastAPI services, and automation pipelines built for real-world delivery.
                                         </p>
 
                                         <div className="flex flex-wrap gap-4">
@@ -722,8 +905,8 @@ const App = () => {
                                         Let's build something <span className="text-indigo-500">remarkable.</span>
                                     </h2>
                                     <p className="text-[var(--text-secondary)] text-lg mb-12 max-w-lg leading-relaxed">
-                                        I'm currently available for freelance projects and full-time opportunities.
-                                        If you have a project that needs a touch of intelligence and precision, reach out!
+                                        I'm currently open to AI engineering roles, automation projects, and full-time opportunities.
+                                        If you want to discuss an agentic AI system or a product that needs intelligent automation, reach out directly.
                                     </p>
 
                                     <div className="space-y-6">
@@ -781,6 +964,23 @@ const App = () => {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div className="mt-8 flex flex-wrap gap-3">
+                                        <a
+                                            href="mailto:ankushpayal58@gmail.com"
+                                            className="px-5 py-3 rounded-xl bg-indigo-600 text-white text-xs font-black uppercase tracking-widest shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition-all"
+                                        >
+                                            Email Directly
+                                        </a>
+                                        <a
+                                            href="https://www.linkedin.com/in/pahalankush"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="px-5 py-3 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] text-xs font-black uppercase tracking-widest hover:border-indigo-500/40 transition-all"
+                                        >
+                                            LinkedIn Profile
+                                        </a>
                                     </div>
 
                                     <div className="mt-12 flex items-center gap-6">
@@ -843,19 +1043,6 @@ const App = () => {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-widest ml-1">Subject</label>
-                                            <input
-                                                type="text"
-                                                name="subject"
-                                                value={formData.subject}
-                                                onChange={handleInputChange}
-                                                placeholder="Project Inquiry"
-                                                required
-                                                className="w-full px-5 py-4 rounded-2xl bg-[var(--bg-tertiary)] border border-[var(--border-color)] text-[var(--text-primary)] focus:outline-none focus:border-indigo-600 transition-colors"
-                                            />
-                                        </div>
-
-                                        <div className="space-y-2">
                                             <label className="text-xs font-bold text-[var(--text-tertiary)] uppercase tracking-widest ml-1">Message</label>
                                             <textarea
                                                 name="message"
@@ -870,9 +1057,10 @@ const App = () => {
 
                                         <button
                                             type="submit"
-                                            className="w-full py-5 bg-indigo-600 text-white font-bold rounded-2xl shadow-xl shadow-indigo-600/30 hover:bg-indigo-500 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group"
+                                            disabled={isSubmitting}
+                                            className="w-full py-5 bg-indigo-600 text-white font-bold rounded-2xl shadow-xl shadow-indigo-600/30 hover:bg-indigo-500 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed"
                                         >
-                                            Send Message
+                                            {isSubmitting ? 'Sending...' : 'Send Message'}
                                             <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                         </button>
                                     </form>
