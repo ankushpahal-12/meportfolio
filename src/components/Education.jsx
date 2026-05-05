@@ -71,7 +71,7 @@ const Education = () => {
             location: "Jalandhar, Punjab",
             description: "Core CS fundamentals with a focus on Artificial Intelligence and Systems.",
             percentage: 62,
-            achievements: ["GPA: 6.22/10.0", "AI Research lead"],
+            achievements: ["GPA: 6.29/10.0", "AI Research lead"],
             icon: <Award size={20} />
         }
     ];
