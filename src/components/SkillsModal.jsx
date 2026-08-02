@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Code2, Cpu, Globe, Database, Terminal, Sparkles } from 'lucide-react';
+import { X, Cpu, Settings, Code, Terminal, Sparkles } from 'lucide-react';
 
 const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
-    const [hoveredSkill, setHoveredSkill] = React.useState(null);
+    const [activeCategory, setActiveCategory] = useState(skills[0]?.category || "Main Skills");
+    const [hoveredSkill, setHoveredSkill] = useState(null);
 
     useEffect(() => {
         if (isOpen) {
@@ -18,114 +19,177 @@ const SkillsModal = ({ isOpen, onClose, skills, theme }) => {
 
     if (!isOpen) return null;
 
-    const isDark = theme === 'dark';
-
-    const getCategoryStyles = (category) => {
+    // Get Lucide Icon based on category name
+    const getCategoryIcon = (category) => {
         const cat = category.toLowerCase();
-        if (cat.includes('ai') || cat.includes('machine')) return 'bg-amber-600 text-white';
-        if (cat.includes('front')) return 'bg-indigo-600 text-white';
-        if (cat.includes('back')) return 'bg-emerald-600 text-white';
-        if (cat.includes('cloud') || cat.includes('devops')) return 'bg-sky-600 text-white';
-        return 'bg-violet-600 text-white';
+        if (cat.includes('main')) return <Sparkles size={16} />;
+        if (cat.includes('ai') || cat.includes('ml')) return <Cpu size={16} />;
+        if (cat.includes('language')) return <Code size={16} />;
+        if (cat.includes('tool') || cat.includes('framework')) return <Settings size={16} />;
+        return <Terminal size={16} />;
     };
+
+    // Filter skills by category
+    const activeSkillsList = skills.find(cat => cat.category === activeCategory)?.items || [];
 
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-10">
-
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 text-[var(--text-primary)]">
+                    {/* Backdrop Overlay */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className={`absolute inset-0 ${isDark ? 'bg-black/95' : 'bg-gray-900/40 opacity-100'}`}
+                        className="absolute inset-0 bg-black/85 backdrop-blur-sm"
                     />
+
+                    {/* Modal Window Container - Full Screen */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.98, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.98, y: 20 }}
-                        transition={{ type: "spring", damping: 30, stiffness: 200 }}
-                        className={`relative w-full max-w-[1400px] h-[95vh] lg:h-auto lg:max-h-[92vh] ${isDark ? 'bg-[#0a0a0a] border-white/5 shadow-[0_0_120px_rgba(0,0,0,0.5)]' : 'bg-white border-gray-100 shadow-[0_40px_100px_rgba(0,0,0,0.1)]'} border rounded-3xl lg:rounded-[4rem] overflow-hidden flex flex-col`}
+                        initial={{ opacity: 0, y: 25 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 25 }}
+                        transition={{ type: "spring", damping: 28, stiffness: 180 }}
+                        className="relative w-full h-full bg-[#070b15] overflow-hidden flex flex-col"
                     >
-                        <div className={`p-4 sm:p-6 lg:p-8 border-b ${isDark ? 'border-white/[0.03]' : 'border-gray-100'} flex items-center justify-end sticky top-0 z-20 ${isDark ? 'bg-[#0a0a0a]' : 'bg-white'}`}>
+                        {/* Header Bar */}
+                        <div className="px-6 py-4 bg-[#04060c] border-b border-indigo-500/10 flex items-center justify-between z-20">
+                            <div className="flex items-center gap-3">
+                                <div className="w-2.5 h-2.5 rounded-full bg-indigo-50 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></div>
+                                <h3 className="text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-indigo-400 font-mono">
+                                    Skills Portfolio
+                                </h3>
+                            </div>
                             <motion.button
                                 whileHover={{ scale: 1.1, rotate: 90 }}
                                 whileTap={{ scale: 0.9 }}
                                 onClick={onClose}
-                                className={`p-3 rounded-2xl ${isDark ? 'bg-white/[0.03] text-white/40 hover:text-white hover:bg-white/10' : 'bg-gray-100 text-gray-400 hover:text-gray-900 hover:bg-gray-200'} transition-all border ${isDark ? 'border-white/[0.05]' : 'border-transparent'}`}
+                                className="p-2 rounded-xl bg-[#070b15] border border-indigo-500/10 text-indigo-400 hover:text-white hover:border-indigo-500/40 transition-all cursor-pointer"
+                                aria-label="Close modal"
                             >
-                                <X size={20} />
+                                <X size={18} />
                             </motion.button>
                         </div>
 
-                        {/* Scrollable Body */}
-                        <div className="flex-grow overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-12 lg:gap-y-16">
-                                {skills.map((category, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.2 + idx * 0.1 }}
-                                        className="space-y-10"
-                                    >
-                                        <div className="flex items-center gap-6">
-                                            <div className={`font-black text-[12px] tracking-[0.4em] uppercase px-4 py-2 border rounded-full ${isDark ? 'text-indigo-500/80 border-indigo-500/20 bg-indigo-500/5' : 'text-indigo-600 border-indigo-100 bg-indigo-50'}`}>
-                                                0{idx + 1}
-                                            </div>
-                                            <h3 className={`text-2xl font-black ${isDark ? 'text-white/90' : 'text-gray-800'} uppercase tracking-tight`}>
-                                                {category.category}
-                                            </h3>
-                                        </div>
+                        {/* Modal Body Grid (Split layout) */}
+                        <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+                            {/* Left Column: Category navigation sidebar */}
+                            <div className="w-full md:w-[280px] bg-[#04060c]/50 border-r border-indigo-500/10 p-4 md:p-6 overflow-y-auto flex flex-row md:flex-col gap-2 shrink-0 scrollbar-none">
+                                {skills.map((category, idx) => {
+                                    const isActive = category.category === activeCategory;
+                                    return (
+                                        <button
+                                            key={idx}
+                                            onClick={() => setActiveCategory(category.category)}
+                                            className={`w-full text-left px-4 py-3 rounded-xl border font-black uppercase tracking-wider text-[10px] md:text-xs flex items-center gap-3 transition-all duration-300 cursor-pointer ${
+                                                isActive
+                                                    ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/20'
+                                                    : 'bg-[#070b15]/50 border-indigo-500/5 text-[var(--text-secondary)] hover:text-indigo-400 hover:border-indigo-500/20 hover:bg-[#070b15]'
+                                            }`}
+                                        >
+                                            <span className={isActive ? 'text-white' : 'text-indigo-500'}>
+                                                {getCategoryIcon(category.category)}
+                                            </span>
+                                            <span className="truncate">{category.category}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
 
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            {category.items.map((skill, i) => {
-                                                const skillId = `${idx}-${i}`;
-                                                const isDimmed = hoveredSkill && hoveredSkill !== skillId;
-                                                const isActive = hoveredSkill === skillId;
-                                                const catStyles = getCategoryStyles(category.category);
+                            {/* Right Column: Skills layout items with description */}
+                            <div className="flex-grow p-6 md:p-8 overflow-y-auto scrollbar-thin">
+                                <div className="mb-6">
+                                    <h4 className="text-xl font-black uppercase text-[var(--text-primary)] tracking-wide">
+                                        {activeCategory}
+                                    </h4>
+                                    <div className="w-12 h-[2px] bg-indigo-500 mt-2"></div>
+                                </div>
 
-                                                return (
-                                                    <motion.div
-                                                        key={i}
-                                                        onMouseEnter={() => setHoveredSkill(skillId)}
-                                                        onMouseLeave={() => setHoveredSkill(null)}
-                                                        animate={{
-                                                            opacity: isDimmed ? 0.15 : 1,
-                                                            scale: isActive ? 1.02 : 1,
-                                                            filter: isDimmed ? 'grayscale(100%) blur(1px)' : 'grayscale(0%) blur(0px)',
+                                <motion.div
+                                    layout
+                                    className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                                >
+                                    <AnimatePresence mode="popLayout">
+                                        {activeSkillsList.map((skill) => {
+                                            const isHovered = hoveredSkill === skill.name;
+                                            const brandColor = skill.color || '#6366f1';
+
+                                            return (
+                                                <motion.div
+                                                    key={skill.name}
+                                                    layout
+                                                    initial={{ opacity: 0, y: 15 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, scale: 0.95 }}
+                                                    transition={{ duration: 0.3 }}
+                                                    onMouseEnter={() => setHoveredSkill(skill.name)}
+                                                    onMouseLeave={() => setHoveredSkill(null)}
+                                                    style={{
+                                                        borderColor: isHovered ? brandColor : 'rgba(99, 102, 241, 0.1)',
+                                                        boxShadow: isHovered 
+                                                            ? `0 10px 30px -10px ${brandColor}40` 
+                                                            : 'none',
+                                                    }}
+                                                    className="p-5 rounded-2xl bg-[#090f1d]/60 border transition-all duration-300 flex flex-col gap-3 group relative cursor-default overflow-hidden"
+                                                >
+                                                    {/* Corner hover glow */}
+                                                    <div 
+                                                        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                                                        style={{
+                                                            background: `radial-gradient(150px circle at top right, ${brandColor}, transparent)`
                                                         }}
-                                                        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                                                        className={`p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] ${isActive ? catStyles + ' shadow-2xl scale-[1.05] z-10' : (isDark ? 'bg-white/[0.02] border-white/[0.05]' : 'bg-gray-50 border-gray-100')} border transition-all group flex gap-4 sm:gap-5 items-center cursor-default min-h-[70px] sm:min-h-[80px]`}
-                                                    >
-                                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${isActive ? 'bg-white/20 text-white' : (isDark ? 'bg-white/[0.04] text-indigo-400' : 'bg-white text-indigo-600 shadow-sm')} flex items-center justify-center shrink-0 border border-white/5 transition-all duration-500`}>
-                                                            <i className={`${skill.icon} text-xl sm:text-2xl`}></i>
+                                                    />
+
+                                                    <div className="flex items-center gap-4">
+                                                        <div 
+                                                            style={{
+                                                                backgroundColor: `${brandColor}10`,
+                                                                borderColor: `${brandColor}20`
+                                                            }}
+                                                            className="w-11 h-11 rounded-xl border flex items-center justify-center shrink-0"
+                                                        >
+                                                            <i className={`${skill.icon} text-xl`} style={{ color: brandColor }}></i>
                                                         </div>
-                                                        <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
-                                                            <span className={`font-black uppercase tracking-widest text-xs sm:text-sm ${isActive ? 'text-white' : (isDark ? 'text-white/80' : 'text-gray-900')}`}>{skill.name}</span>
-                                                            {isActive && (
-                                                                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className={`w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_white]`}></motion.div>
-                                                            )}
+                                                        <div className="flex-grow min-w-0">
+                                                            <div className="flex items-center justify-between">
+                                                                <span className="font-black uppercase tracking-widest text-xs sm:text-sm text-[var(--text-primary)] truncate">
+                                                                    {skill.name}
+                                                                </span>
+                                                                {isHovered && (
+                                                                    <div 
+                                                                        style={{ 
+                                                                            backgroundColor: brandColor,
+                                                                            boxShadow: `0 0 10px ${brandColor}` 
+                                                                        }} 
+                                                                        className="w-1.5 h-1.5 rounded-full"
+                                                                    />
+                                                                )}
+                                                            </div>
                                                         </div>
-                                                    </motion.div>
-                                                );
-                                            })}
-                                        </div>
-                                    </motion.div>
-                                ))}
+                                                    </div>
+
+                                                    {/* Skill description text content */}
+                                                    <p className="text-[10px] sm:text-xs text-[var(--text-secondary)] leading-relaxed font-medium">
+                                                        {skill.description || "Core component of software engineering stack."}
+                                                    </p>
+                                                </motion.div>
+                                            );
+                                        })}
+                                    </AnimatePresence>
+                                </motion.div>
                             </div>
                         </div>
 
-                        {/* Footer Decoration */}
-                        <div className={`p-6 sm:p-8 border-t ${isDark ? 'border-white/[0.03] bg-white/[0.01]' : 'border-gray-100 bg-gray-50/30'} flex justify-between items-center px-6 sm:px-12`}>
-                            <div className={`text-[8px] sm:text-[10px] font-bold ${isDark ? 'text-white/20' : 'text-gray-400'} uppercase tracking-[0.2em] sm:tracking-[0.4em] truncate`}>
-                                Intelligence Stack • v8.0
+                        {/* Footer decorative details */}
+                        <div className="px-6 py-4 bg-[#04060c] border-t border-indigo-500/10 flex items-center justify-between text-[8px] sm:text-[9px] font-bold text-[var(--text-tertiary)] uppercase tracking-[0.3em]">
+                            <div>
+                                Intelligence Stack • v9.0
                             </div>
-                            <div className="flex gap-4">
-                                <div className="w-2 h-2 rounded-full bg-indigo-500/40"></div>
-                                <div className="w-2 h-2 rounded-full bg-indigo-500/20"></div>
-                                <div className="w-2 h-2 rounded-full bg-indigo-500/10"></div>
+                            <div className="flex gap-2.5">
+                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/40"></div>
+                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/20"></div>
+                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500/10"></div>
                             </div>
                         </div>
                     </motion.div>

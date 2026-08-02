@@ -144,6 +144,22 @@ const App = () => {
         title: ''
     });
 
+    // Roles rotator state for home typewriter effect
+    const roles = [
+        "Agentic AI Engineer",
+        "RAG Systems Architect",
+        "Intelligent Automations Specialist",
+        "Full-Stack Python & JS Developer"
+    ];
+    const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
 
     // 3D Card Hover Effect State
     const cardRef = useRef(null);
@@ -413,16 +429,16 @@ const App = () => {
                                     <motion.div
                                         animate={{ y: [0, -10, 0], x: [0, 6, 0] }}
                                         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-                                        className="absolute -top-4 left-0 sm:left-6 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
+                                        className="absolute -top-6 left-2 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/85 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
                                     >
-                                        <Brain size={18} className="text-indigo-400" />
+                                        <Brain size={18} className="text-indigo-400 animate-pulse" />
                                         <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[var(--text-secondary)]">Agentic AI</span>
                                     </motion.div>
 
                                     <motion.div
                                         animate={{ y: [0, 12, 0], x: [0, -8, 0] }}
                                         transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-                                        className="absolute bottom-10 right-0 sm:right-8 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
+                                        className="absolute bottom-12 right-2 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/85 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
                                     >
                                         <Cpu size={18} className="text-indigo-400" />
                                         <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[var(--text-secondary)]">RAG Systems</span>
@@ -431,13 +447,13 @@ const App = () => {
                                     <motion.div
                                         animate={{ y: [0, -8, 0] }}
                                         transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-                                        className="absolute top-1/2 -right-2 sm:right-12 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
+                                        className="absolute top-1/2 -right-4 z-20 hidden sm:flex items-center gap-3 px-4 py-2 rounded-2xl bg-[var(--bg-secondary)]/85 backdrop-blur-md border border-[var(--border-color)] shadow-xl"
                                     >
                                         <Code2 size={18} className="text-indigo-400" />
                                         <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[var(--text-secondary)]">FastAPI</span>
                                     </motion.div>
 
-                                    {/* 3D Interactive Card Container */}
+                                    {/* 3D Interactive Card Container - Rectangular Cyber HUD redesign */}
                                     <motion.div
                                         ref={cardRef}
                                         onMouseMove={handleMouseMove}
@@ -447,19 +463,42 @@ const App = () => {
                                             rotateY,
                                             transformStyle: "preserve-3d",
                                         }}
-                                        className="relative z-10 w-full max-w-sm"
+                                        className="relative z-10 w-full max-w-[340px]"
                                     >
                                         <div
                                             style={{ transform: "translateZ(50px)" }}
-                                            className="w-full aspect-square rounded-full overflow-hidden border-2 border-[var(--border-color)] shadow-[0_0_50px_rgba(79,70,229,0.15)] group relative bg-[var(--bg-secondary)]"
+                                            className="w-full aspect-[4/5] rounded-[2rem] overflow-hidden border border-indigo-500/30 shadow-[0_0_50px_rgba(99,102,241,0.25)] group relative bg-[var(--bg-secondary)]/30 backdrop-blur-md"
                                         >
-                                            <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/60 via-transparent to-transparent z-10 transition-opacity duration-300 group-hover:opacity-80"></div>
+                                            {/* HUD Corner Tech Lines */}
+                                            <div className="hud-corner hud-tl" />
+                                            <div className="hud-corner hud-tr" />
+                                            <div className="hud-corner hud-bl" />
+                                            <div className="hud-corner hud-br" />
+
+                                            {/* Scanning Line overlay */}
+                                            <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden">
+                                                <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-indigo-400 to-transparent absolute top-0 animate-[scan_4s_linear_infinite]" />
+                                            </div>
+
+                                            {/* Dark gradient shadow bottom overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-[#060a18]/90 via-transparent to-transparent z-10"></div>
+                                            
                                             <img
                                                 src={meImage}
                                                 alt="Ankush Pahal"
-                                                className="w-full h-full object-cover scale-[1.7] transform transition-transform duration-1000 group-hover:scale-[1.8]"
+                                                className="w-full h-full object-cover scale-[1.3] transition-all duration-1000 object-top"
                                             />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/40 via-transparent to-transparent z-10"></div>
+
+                                            {/* Stats/Status indicators overlay inside the HUD */}
+                                            <div className="absolute bottom-5 left-5 right-5 z-20 flex justify-between items-center font-mono text-[9px] select-none">
+                                                <div className="text-indigo-400 bg-[#050a14]/90 border border-indigo-500/20 px-2 py-0.5 rounded-md backdrop-blur-sm flex items-center gap-1.5">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                                    SYS_STATUS: ONLINE
+                                                </div>
+                                                <div className="text-cyan-400 bg-[#050a14]/90 border border-cyan-500/20 px-2 py-0.5 rounded-md backdrop-blur-sm">
+                                                    LOC: HARYANA_IN
+                                                </div>
+                                            </div>
                                         </div>
 
                                         {/* Professional Thought Line (Quote) */}
@@ -520,12 +559,21 @@ const App = () => {
                                             hidden: { opacity: 0, x: -20 },
                                             visible: { opacity: 1, x: 0 }
                                         }}
-                                        className="relative block lg:inline-block mb-10 group text-center lg:text-left"
+                                        className="relative block mb-10 text-center lg:text-left h-12 flex items-center justify-center lg:justify-start"
                                     >
-                                        <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-indigo-400 animate-gradient-scroll py-1">
-                                            Agentic AI, RAG, FastAPI, and Automation.
-                                        </h2>
-                                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 w-24 h-1.5 bg-indigo-600 rounded-full shadow-[0_0_15px_rgba(79,70,229,0.5)]"></div>
+                                        <AnimatePresence mode="wait">
+                                            <motion.h2
+                                                key={currentRoleIndex}
+                                                initial={{ opacity: 0, y: 15 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -15 }}
+                                                transition={{ duration: 0.4, ease: "easeInOut" }}
+                                                className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-white to-cyan-400 py-1"
+                                            >
+                                                {roles[currentRoleIndex]}
+                                            </motion.h2>
+                                        </AnimatePresence>
+                                        <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 w-24 h-1 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
                                     </motion.div>
 
                                     <motion.div
@@ -564,7 +612,7 @@ const App = () => {
                                                         }
                                                     }}
                                                     whileHover={{ scale: 1.15, y: -4, rotate: 5 }}
-                                                    className={`magnetic-item w-12 h-12 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-500 hover:border-indigo-500/50 shadow-xl transition-all backdrop-blur-md ${link.mobileOnly ? 'lg:hidden' : ''}`}
+                                                    className={`magnetic-item w-12 h-12 rounded-xl bg-[var(--bg-secondary)]/50 border border-[var(--border-color)] flex items-center justify-center text-[var(--text-secondary)] hover:text-indigo-500 hover:border-indigo-500/50 shadow-xl transition-all backdrop-blur-md ${link.mobileOnly ? 'lg:hidden' : ''}`}
                                                     title={link.label || link.Icon.name}
                                                     aria-label={link.label || link.Icon.name}
                                                 >
@@ -619,6 +667,35 @@ const App = () => {
                                                 Contact Me
                                             </button>
                                         </div>
+                                    </motion.div>
+
+                                    {/* Quick Stats Bento Row */}
+                                    <motion.div
+                                        variants={{
+                                            hidden: { opacity: 0, y: 20 },
+                                            visible: { opacity: 1, y: 0 }
+                                        }}
+                                        className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-xl mt-12 border-t border-indigo-500/10 pt-8"
+                                    >
+                                        {[
+                                            { label: "Agentic Projects", val: "06+", link: "#projects" },
+                                            { label: "LeetCode Solved", val: "300+", link: "#skills" },
+                                            { label: "AI Certifications", val: "05+", link: "#certifications" },
+                                            { label: "Academic Stand", val: "AI Lead", link: "#education" }
+                                        ].map((stat, i) => (
+                                            <a 
+                                                key={i} 
+                                                href={stat.link}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    document.getElementById(stat.link.slice(1)).scrollIntoView({ behavior: 'smooth' });
+                                                }}
+                                                className="p-4 rounded-2xl bg-[var(--bg-secondary)]/40 border border-[var(--border-color)] hover:border-indigo-500/30 hover:bg-[var(--bg-secondary)]/60 transition-all duration-300 text-center group shadow-md"
+                                            >
+                                                <div className="text-xl sm:text-2xl font-black text-indigo-400 group-hover:scale-105 transition-transform duration-300">{stat.val}</div>
+                                                <div className="text-[9px] font-black text-[var(--text-tertiary)] uppercase tracking-wider mt-1 leading-none">{stat.label}</div>
+                                            </a>
+                                        ))}
                                     </motion.div>
                                 </motion.div>
                             </div>

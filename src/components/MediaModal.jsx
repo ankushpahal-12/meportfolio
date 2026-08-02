@@ -19,7 +19,7 @@ const MediaModal = ({ isOpen, onClose, type, url, title }) => {
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 lg:p-10 text-[var(--text-primary)]">
+                <div className="fixed inset-0 z-[110] flex items-center justify-center p-0 text-[var(--text-primary)]">
                     {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -29,13 +29,13 @@ const MediaModal = ({ isOpen, onClose, type, url, title }) => {
                         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
                     />
 
-                    {/* Modal Content - Sharp & Premium */}
+                    {/* Modal Content - Immersive Full-Screen */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: 30 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: 30 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 30 }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="relative w-full max-w-6xl h-[85vh] md:h-auto md:aspect-video bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-3xl md:rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(79,70,221,0.2)] flex flex-col"
+                        className="relative w-full h-full bg-[var(--bg-secondary)] overflow-hidden flex flex-col z-10"
                     >
                         {/* Custom Header */}
                         <div className="p-4 md:p-6 border-b border-[var(--border-color)] flex items-center justify-between bg-[var(--bg-tertiary)]">
