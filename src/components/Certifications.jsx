@@ -7,6 +7,7 @@ import cert3 from '../assets/cert3.png';
 import cert4 from '../assets/cert4.png';
 import cert5 from '../assets/cert5.png';
 // import cert6 from '../assets/cert6.png';
+import cert6 from '../assets/certificate.png'
 const DriveIcon = ({ size = 20, className = "" }) => (
     <svg
         width={size}
@@ -23,6 +24,19 @@ const DriveIcon = ({ size = 20, className = "" }) => (
 );
 const Certifications = ({ openMediaModal }) => {
     const certifications = [
+        {
+            title: "Microsoft Certified : SQL AI DEVELOPER ASSOCIATE",
+            issuer: "Microsoft",
+            date: "2026",
+            unit: "Associate",
+            badge: "Microsoft Certified",
+            icon: <ShieldCheck className="w-6 h-6" />,
+            image: cert6,
+            driveLink: "https://drive.google.com/file/d/1kDkdl2AVqaENz0l2p9wOOs3_lF3EeSbG/view?usp=drive_link",
+            verificationLink: "https://drive.google.com/file/d/1kDkdl2AVqaENz0l2p9wOOs3_lF3EeSbG/view?usp=drive_link",
+            color: "from-green-500 to-emerald-500",
+            tags: ["Sql", "Rag", "Vector Search"]
+        },
         {
             title: "Essentials Automation Certification - 2024",
             issuer: "Automation Anywhere 360",
@@ -65,19 +79,7 @@ const Certifications = ({ openMediaModal }) => {
             verificationLink: "https://drive.google.com/file/d/1SVjdIuDcWsBxBfxXTSZ9YuPJZtkYVY7j/view?usp=sharing",
             color: "from-teal-500 to-emerald-500"
         },
-        // {
-        //     title: "MongoDB & Python Certified Developer",
-        //     issuer: "MongoDB University",
-        //     date: "2025",
-        //     unit: "Professional",
-        //     badge: "MongoDB Certified",
-        //     icon: <ShieldCheck className="w-6 h-6" />,
-        //     image: cert2,
-        //     driveLink: "https://drive.google.com/file/d/1ZP_wWVW6Kz3Pfs96WMarI0MyGqPmdZbE/view?usp=sharing",
-        //     verificationLink: "https://drive.google.com/file/d/1ZP_wWVW6Kz3Pfs96WMarI0MyGqPmdZbE/view?usp=sharing",
-        //     color: "from-green-500 to-emerald-500",
-        //     tags: ["MongoDB", "Python", "NoSQL"]
-        // },
+
         {
             title: "IBM RAG and AGENTIC AI",
             issuer: "Coursera",

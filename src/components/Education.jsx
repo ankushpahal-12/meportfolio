@@ -70,8 +70,8 @@ const Education = () => {
             duration: "2023-2027",
             location: "Jalandhar, Punjab",
             description: "Core CS fundamentals with a focus on Artificial Intelligence and Systems.",
-            percentage: 64.5,
-            achievements: ["GPA: 6.45/10.0", "AI Research lead"],
+            percentage: 68.2,
+            achievements: ["GPA: 6.82/10.0", "AI Research lead"],
             icon: <Award size={20} />
         }
     ];
